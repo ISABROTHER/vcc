@@ -29,20 +29,20 @@ export default function Header() {
 
         {/* Desktop Menu */}
         <nav className="hidden lg:flex items-center gap-10 text-sm font-medium">
-          <NavLink to="/experiences" className={navLinkClasses}>
-            Experiences
+          <NavLink to="/see-do" className={navLinkClasses}>
+            See & Do
           </NavLink>
-          <NavLink to="/heritage" className={navLinkClasses}>
-            Heritage
+          <NavLink to="/accommodation" className={navLinkClasses}>
+            Accommodation
           </NavLink>
-          <NavLink to="/hotels" className={navLinkClasses}>
-            Hotels
-          </NavLink>
-          <NavLink to="/events" className={navLinkClasses}>
-            Events
+          <NavLink to="/eat-drink" className={navLinkClasses}>
+            Eat & Drink
           </NavLink>
           <NavLink to="/plan-trip" className={navLinkClasses}>
-            Plan Your Trip
+            Plan your trip
+          </NavLink>
+          <NavLink to="/partners" className={navLinkClasses}>
+            Our Partners
           </NavLink>
 
           {/* Desktop Book Button */}
@@ -86,35 +86,27 @@ export default function Header() {
           `}
         >
           <Link
-            to="/experiences"
+            to="/see-do"
             onClick={closeMenu}
             className="w-full rounded-xl px-4 py-3 text-left text-base font-medium text-black"
           >
-            Experiences
+            See & Do
           </Link>
 
           <Link
-            to="/heritage"
+            to="/accommodation"
             onClick={closeMenu}
             className="w-full rounded-xl px-4 py-3 text-left text-base font-medium text-black"
           >
-            Heritage
+            Accommodation
           </Link>
 
           <Link
-            to="/hotels"
+            to="/eat-drink"
             onClick={closeMenu}
             className="w-full rounded-xl px-4 py-3 text-left text-base font-medium text-black"
           >
-            Hotels
-          </Link>
-
-          <Link
-            to="/events"
-            onClick={closeMenu}
-            className="w-full rounded-xl px-4 py-3 text-left text-base font-medium text-black"
-          >
-            Events
+            Eat & Drink
           </Link>
 
           <Link
@@ -122,7 +114,15 @@ export default function Header() {
             onClick={closeMenu}
             className="w-full rounded-xl px-4 py-3 text-left text-base font-medium text-black"
           >
-            Plan Your Trip
+            Plan your trip
+          </Link>
+
+          <Link
+            to="/partners"
+            onClick={closeMenu}
+            className="w-full rounded-xl px-4 py-3 text-left text-base font-medium text-black"
+          >
+            Our Partners
           </Link>
 
           {/* Mobile Book Button */}
