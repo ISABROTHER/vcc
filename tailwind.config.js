@@ -3,12 +3,12 @@ export default {
   content: [
     './index.html',
     './src/**/*.{js,ts,jsx,tsx}',
-    './src/pages/**/*.{js,ts,jsx,tsx}', // This line is important
+    './src/pages/**/*.{js,ts,jsx,tsx}', // This includes your pages
   ],
   theme: {
     extend: {},
   },
   plugins: [
-    require('@tailwindcss/line-clamp'), // This plugin is required
+    require('@tailwindcss/line-clamp'), // This is required for line-clamp
   ],
 };
