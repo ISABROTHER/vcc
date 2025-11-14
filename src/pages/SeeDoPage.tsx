@@ -8,7 +8,7 @@ import {
   Ship,
   Drum,
   Sun,
-  Swimmer,
+  Waves as Swimmer,
   Bird,
   ShoppingBag,
   Ticket,
