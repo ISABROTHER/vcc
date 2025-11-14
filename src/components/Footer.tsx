@@ -26,27 +26,27 @@ export default function Footer() {
 
           <div>
             <h4 className="text-lg font-bold mb-4">Explore</h4>
+            {/* ALL LINKS UPDATED */}
             <ul className="space-y-2 text-blue-200">
               <li>
-                <a href="/#experiences" className="hover:text-white transition">
+                <Link to="/experiences" className="hover:text-white transition">
                   Experiences
-                </a>
+                </Link>
               </li>
-              {/* This is now a Link */}
               <li>
                 <Link to="/heritage" className="hover:text-white transition">
                   Heritage
                 </Link>
               </li>
               <li>
-                <a href="/#hotels" className="hover:text-white transition">
+                <Link to="/hotels" className="hover:text-white transition">
                   Hotels
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/#events" className="hover:text-white transition">
+                <Link to="/events" className="hover:text-white transition">
                   Events
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
