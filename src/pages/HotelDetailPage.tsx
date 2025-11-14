@@ -1,5 +1,5 @@
 import { useParams, Link } from 'react-router-dom';
-import { allAccommodations, FacilityIcon } from '../data/hotelData';
+import { allAccommodations, FacilityIcon } from '../data/hotelData'; // Corrected import path
 import { MapPin, Phone, Mail, Globe, ArrowLeft } from 'lucide-react';
 import CallToAction from '../components/CallToAction';
 
@@ -103,9 +103,14 @@ export default function HotelDetailPage() {
                   <span>{hotel.contact.address}</span>
                 </li>
               </ul>
-              <button className="w-full bg-amber-500 text-white py-3 rounded-lg hover:bg-amber-600 transition font-semibold mt-8">
-                Book Now
-              </button>
+              <a
+                href={hotel.contact.web}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full bg-amber-500 text-white py-3 rounded-lg hover:bg-amber-600 transition font-semibold mt-8 block text-center"
+              >
+                Visit Website
+              </a>
             </div>
           </div>
         </div>
