@@ -45,6 +45,7 @@ export default function Hotels() {
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             Find the perfect place to stay during your visit
+          </T
           </p>
         </div>
 
