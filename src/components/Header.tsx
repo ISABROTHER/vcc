@@ -14,21 +14,20 @@ export default function Header() {
           Visit <span className="text-yellow-600">Cape</span> Coast
         </Link>
 
-        {/* Desktop Menu */}
+        {/* Desktop Menu - ALL LINKS UPDATED */}
         <nav className="hidden lg:flex items-center gap-10 text-sm font-medium">
-          <a href="/#experiences" className="text-black hover:text-yellow-600">
+          <Link to="/experiences" className="text-black hover:text-yellow-600">
             Experiences
-          </a>
-          {/* This is now a Link to the new page */}
+          </Link>
           <Link to="/heritage" className="text-black hover:text-yellow-600">
             Heritage
           </Link>
-          <a href="/#hotels" className="text-black hover:text-yellow-600">
+          <Link to="/hotels" className="text-black hover:text-yellow-600">
             Hotels
-          </a>
-          <a href="/#events" className="text-black hover:text-yellow-600">
+          </Link>
+          <Link to="/events" className="text-black hover:text-yellow-600">
             Events
-          </a>
+          </Link>
           <a href="#plan" className="text-black hover:text-yellow-600">
             Plan Your Trip
           </a>
@@ -48,7 +47,7 @@ export default function Header() {
         </button>
       </div>
 
-      {/* MOBILE DROPDOWN */}
+      {/* MOBILE DROPDOWN - ALL LINKS UPDATED */}
       <div
         className={`
           mx-auto w-full max-w-7xl px-6 lg:hidden overflow-hidden
@@ -73,15 +72,14 @@ export default function Header() {
             }
           `}
         >
-          <a
-            href="/#experiences"
+          <Link
+            to="/experiences"
             onClick={() => setMenuOpen(false)}
             className="w-full rounded-xl px-4 py-3 text-left text-base font-medium text-black"
           >
             Experiences
-          </a>
+          </Link>
 
-          {/* This is now a Link */}
           <Link
             to="/heritage"
             onClick={() => setMenuOpen(false)}
@@ -90,21 +88,21 @@ export default function Header() {
             Heritage
           </Link>
 
-          <a
-            href="/#hotels"
+          <Link
+            to="/hotels"
             onClick={() => setMenuOpen(false)}
             className="w-full rounded-xl px-4 py-3 text-left text-base font-medium text-black"
           >
             Hotels
-          </a>
+          </Link>
 
-          <a
-            href="/#events"
+          <Link
+            to="/events"
             onClick={() => setMenuOpen(false)}
             className="w-full rounded-xl px-4 py-3 text-left text-base font-medium text-black"
           >
             Events
-          </a>
+          </Link>
 
           <a
             href="#plan"
@@ -122,4 +120,4 @@ export default function Header() {
       </div>
     </header>
   );
-} 
+}
