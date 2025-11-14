@@ -119,4 +119,4 @@ export default function HotelDetailPage() {
       <CallToAction />
     </div>
   );
-}
+} 
