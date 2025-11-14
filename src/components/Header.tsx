@@ -5,38 +5,40 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="w-full border-b bg-white fixed top-0 left-0 z-50">
-      {/* Top bar */}
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4">
-        {/* Logo */}
-        <div className="text-2xl font-bold text-blue-900 tracking-tight">
-          Visit Cape Coast
+    <header className="w-full bg-white border-b border-gray-200 fixed top-0 left-0 z-50">
+      {/* Luxury Top Bar */}
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
+        
+        {/* Luxury Serif Logo */}
+        <div className="font-serif text-3xl font-semibold text-black tracking-wide">
+          Visit <span className="text-yellow-600">Cape</span> Coast
         </div>
 
-        {/* Desktop menu */}
-        <nav className="hidden gap-8 text-sm font-medium lg:flex">
-          <a href="#experiences" className="hover:text-blue-900 transition">
+        {/* Desktop Menu */}
+        <nav className="hidden lg:flex items-center gap-10 text-sm font-medium">
+          <a href="#experiences" className="text-gray-800 hover:text-black">
             Experiences
           </a>
-          <a href="#heritage" className="hover:text-blue-900 transition">
+          <a href="#heritage" className="text-gray-800 hover:text-black">
             Heritage
           </a>
-          <a href="#hotels" className="hover:text-blue-900 transition">
+          <a href="#hotels" className="text-gray-800 hover:text-black">
             Hotels
           </a>
-          <a href="#events" className="hover:text-blue-900 transition">
+          <a href="#events" className="text-gray-800 hover:text-black">
             Events
           </a>
-          <a href="#plan" className="hover:text-blue-900 transition">
+          <a href="#plan" className="text-gray-800 hover:text-black">
             Plan Your Trip
           </a>
 
-          <button className="bg-amber-500 text-white px-6 py-2 rounded-full font-semibold shadow-sm hover:bg-amber-600 transition">
+          {/* Luxury Book Button */}
+          <button className="bg-yellow-600 text-white px-7 py-2.5 rounded-full font-semibold shadow-md border border-yellow-700">
             Book Now
           </button>
         </nav>
 
-        {/* Mobile menu button */}
+        {/* Mobile Menu Toggle */}
         <button
           onClick={() => setMenuOpen((prev) => !prev)}
           className="inline-flex items-center rounded-full border px-3 py-2 lg:hidden"
@@ -45,47 +47,53 @@ export default function Header() {
         </button>
       </div>
 
-      {/* MOBILE DROPDOWN MENU */}
+      {/* MOBILE DROPDOWN — Luxury Spacing */}
       {menuOpen && (
-        <div className="mx-auto block w-full max-w-7xl px-4 pb-4 lg:hidden">
-          <div className="flex flex-col gap-2 rounded-2xl border bg-white p-4 shadow-md">
+        <div className="mx-auto block w-full max-w-7xl px-6 lg:hidden">
+          <div className="mt-7 flex flex-col gap-4 rounded-2xl border bg-white p-6 shadow-lg">
+            
             <a
               href="#experiences"
               onClick={() => setMenuOpen(false)}
-              className="w-full rounded-xl px-4 py-2 text-left text-sm font-medium hover:bg-gray-100"
+              className="w-full rounded-xl px-4 py-3 text-left text-base font-medium text-gray-900"
             >
               Experiences
             </a>
+
             <a
               href="#heritage"
               onClick={() => setMenuOpen(false)}
-              className="w-full rounded-xl px-4 py-2 text-left text-sm font-medium hover:bg-gray-100"
+              className="w-full rounded-xl px-4 py-3 text-left text-base font-medium text-gray-900"
             >
               Heritage
             </a>
+
             <a
               href="#hotels"
               onClick={() => setMenuOpen(false)}
-              className="w-full rounded-xl px-4 py-2 text-left text-sm font-medium hover:bg-gray-100"
+              className="w-full rounded-xl px-4 py-3 text-left text-base font-medium text-gray-900"
             >
               Hotels
             </a>
+
             <a
               href="#events"
               onClick={() => setMenuOpen(false)}
-              className="w-full rounded-xl px-4 py-2 text-left text-sm font-medium hover:bg-gray-100"
+              className="w-full rounded-xl px-4 py-3 text-left text-base font-medium text-gray-900"
             >
               Events
             </a>
+
             <a
               href="#plan"
               onClick={() => setMenuOpen(false)}
-              className="w-full rounded-xl px-4 py-2 text-left text-sm font-medium hover:bg-gray-100"
+              className="w-full rounded-xl px-4 py-3 text-left text-base font-medium text-gray-900"
             >
               Plan Your Trip
             </a>
 
-            <button className="w-full bg-amber-500 text-white px-4 py-3 rounded-xl font-semibold shadow hover:bg-amber-600 transition">
+            {/* Luxury Book Button Mobile */}
+            <button className="w-full bg-yellow-600 text-white px-4 py-3 rounded-xl font-semibold shadow border border-yellow-700">
               Book Now
             </button>
           </div>
