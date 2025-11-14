@@ -40,6 +40,9 @@ export default function Header() {
           </NavLink>
           <NavLink to="/plan-trip" className={navLinkClasses}>
             Plan your trip
+          </Click>
+          <NavLink to="/tourist-info" className={navLinkClasses}>
+            Tourist Info
           </NavLink>
           <NavLink to="/partners" className={navLinkClasses}>
             Our Partners
@@ -115,6 +118,14 @@ export default function Header() {
             className="w-full rounded-xl px-4 py-3 text-left text-base font-medium text-black"
           >
             Plan your trip
+          </Link>
+
+          <Link
+            to="/tourist-info"
+            onClick={closeMenu}
+            className="w-full rounded-xl px-4 py-3 text-left text-base font-medium text-black"
+          >
+            Tourist Info
           </Link>
 
           <Link
