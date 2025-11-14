@@ -95,20 +95,9 @@ export default function Hero() {
         </div>
         {/* END: Improved Search Box */}
 
-        <div className="mt-12 flex flex-wrap justify-center gap-4">
-          <button className="bg-white/20 backdrop-blur-sm text-white px-6 py-2 rounded-full hover:bg-white/30 transition">
-            Castle Tours
-          </button>
-          <button className="bg-white/20 backdrop-blur-sm text-white px-6 py-2 rounded-full hover:bg-white/30 transition">
-            Kakum National Park
-          </button>
-          <button className="bg-white/20 backdrop-blur-sm text-white px-6 py-2 rounded-full hover:bg-white/30 transition">
-            Beach Experiences
-          </button>
-          <button className="bg-white/20 backdrop-blur-sm text-white px-6 py-2 rounded-full hover:bg-white/30 transition">
-            Food Tours
-          </button>
-        </div>
+        {/* The section with the filter buttons (Castle Tours, Kakum, etc.) 
+          has been removed as requested. 
+        */}
       </div>
     </section>
   );
