@@ -8,7 +8,7 @@ export default function AccommodationPage() {
         <p className="mt-6 text-lg leading-8 text-gray-600">
           Find the perfect place to stay, from luxury resorts to cozy guesthouses,
           all offering world-class hospitality.
-        </f>
+        </p>
       </div>
     </div>
   );
