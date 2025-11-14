@@ -24,9 +24,15 @@ export default function Hero() {
 
         {/* START: Improved Search Box */}
         <div className="bg-white/10 backdrop-blur-lg rounded-2xl shadow-2xl p-4 max-w-3xl mx-auto">
+          {/* On mobile (default), this is 'flex-col', stacking the dropdown container and the button.
+            On desktop ('md:'), this becomes 'flex-row' for a horizontal layout.
+          */}
           <div className="flex flex-col md:flex-row gap-4 items-center">
-            {/* Dropdown Container */}
-            <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-4 w-full md:w-auto">
+            {/* Dropdown Container:
+              On mobile (default), this is 'grid-cols-1' (stacked).
+              On desktop ('md:'), this becomes 'grid-cols-2' (side-by-side).
+            */}
+            <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
               {/* Month Dropdown */}
               <div className="relative w-full">
                 <Calendar
@@ -55,14 +61,13 @@ export default function Hero() {
                 />
               </div>
 
-              {/* Activity Dropdown (NOW WITH REAL DATA) */}
+              {/* Activity Dropdown */}
               <div className="relative w-full">
                 <Sparkles
                   size={20}
                   className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-700 pointer-events-none"
                 />
                 <select className="w-full pl-12 pr-10 py-3 rounded-lg text-gray-900 bg-white/90 border border-transparent appearance-none focus:outline-none focus:ring-2 focus:ring-amber-500">
-                  {/* THIS IS THE CORRECTED LINE: */}
                   <option value="">Select Activity</option>
                   <option value="all">All Activities</option>
                   <option value="canopy_walk">Kakum Canopy Walk</option>
@@ -81,7 +86,7 @@ export default function Hero() {
               </div>
             </div>
 
-            {/* Search Button */}
+            {/* Search Button (full-width on mobile, auto-width on desktop) */}
             <button className="bg-amber-500 text-white px-6 py-3 rounded-lg hover:bg-amber-600 transition flex items-center justify-center gap-2 font-semibold w-full md:w-auto">
               <Search size={20} />
               <span>Find & book activities</span>
@@ -90,20 +95,9 @@ export default function Hero() {
         </div>
         {/* END: Improved Search Box */}
 
-        <div className="mt-12 flex flex-wrap justify-center gap-4">
-          <button className="bg-white/20 backdrop-blur-sm text-white px-6 py-2 rounded-full hover:bg-white/30 transition">
-            Castle Tours
-          </button>
-          <button className="bg-white/20 backdrop-blur-sm text-white px-6 py-2 rounded-full hover:bg-white/30 transition">
-            Kakum National Park
-          </button>
-          <button className="bg-white/20 backdrop-blur-sm text-white px-6 py-2 rounded-full hover:bg-white/30 transition">
-            Beach Experiences
-          </button>
-          <button className="bg-white/20 backdrop-blur-sm text-white px-6 py-2 rounded-full hover:bg-white/30 transition">
-            Food Tours
-          </button>
-        </div>
+        {/* The section with the filter buttons (Castle Tours, Kakum, etc.) 
+          has been removed as requested. 
+        */}
       </div>
     </section>
   );
