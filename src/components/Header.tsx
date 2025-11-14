@@ -40,7 +40,7 @@ export default function Header() {
           </NavLink>
           <NavLink to="/plan-trip" className={navLinkClasses}>
             Plan your trip
-          </Click>
+          </NavLink>
           <NavLink to="/tourist-info" className={navLinkClasses}>
             Tourist Info
           </NavLink>
