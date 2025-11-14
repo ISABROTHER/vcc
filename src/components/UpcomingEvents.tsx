@@ -11,7 +11,7 @@ interface Event {
   image_url: string;
 }
 
-export default function UpcomingEvents() {
+export default function Events() {
   const [events, setEvents] = useState<Event[]>([]);
 
   useEffect(() => {
@@ -29,14 +29,14 @@ export default function UpcomingEvents() {
   }
 
   return (
-    <section id="upcoming-events" className="py-20 bg-white">
+    <section id="events" className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold text-blue-900 mb-4">
-            Upcoming Event Calendar
+            Events & Festivals
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Specific dates for upcoming events. Add your event by contacting us.
+            Experience vibrant cultural celebrations and exciting events
           </p>
         </div>
 
@@ -75,7 +75,7 @@ export default function UpcomingEvents() {
                 </button>
               </div>
             </div>
-          ))}
+          ))} 
         </div>
 
         {events.length === 0 && (
