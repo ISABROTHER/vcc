@@ -1,630 +1,106 @@
 import { useState } from 'react';
-import {
-  MapPin,
-  Star,
-  X,
-  Search,
-  SlidersHorizontal,
-} from 'lucide-react';
+import { MapPin } from 'lucide-react';
+import { allAccommodations } from '../data/hotelData'; // 1. Import data
+import { Link } from 'react-router-dom'; // 2. Import Link
 
-type Accommodation = {
-  name: string;
-  description: string;
-  category: string;
-  price_range: string;
-  rating: number;
-  image_url: string;
-  details_url?: string;
-};
-
-const allAccommodations: Accommodation[] = [
-  // 1. Hotels
-  {
-    name: 'Ridge Royal Hotel',
-    description: 'Premium business & leisure hotel with pool and conference rooms.',
-    category: 'hotels',
-    price_range: 'GHS 1200-2000',
-    rating: 4.8,
-    image_url:
-      'https://images.pexels.com/photos/271618/pexels-photo-271618.jpeg?auto=compress&cs=tinysrgb&w=800',
-    details_url: '#',
-  },
-  {
-    name: 'Lemon Beach Resort',
-    description: 'Boutique, beachfront resort, very popular with tourists.',
-    category: 'hotels',
-    price_range: 'GHS 900-1500',
-    rating: 4.7,
-    image_url:
-      'https://images.pexels.com/photos/189296/pexels-photo-189296.jpeg?auto=compress&cs=tinysrgb&w=800',
-    details_url: '#',
-  },
-  {
-    name: 'Elmina Beach Resort',
-    description:
-      'Large hotel with stunning oceanfront views, pool, and event spaces.',
-    category: 'hotels',
-    price_range: 'GHS 800-1300',
-    rating: 4.2,
-    image_url:
-      'https://images.pexels.com/photos/2034335/pexels-photo-2034335.jpeg?auto=compress&cs=tinysrgb&w=800',
-    details_url: '#',
-  },
-  // 2. Guest Houses
-  {
-    name: 'Brynx Haven Guest House',
-    description: 'Clean, modern, and friendly pricing, located in a quiet area.',
-    category: 'guest_houses',
-    price_range: 'GHS 400-600',
-    rating: 4.5,
-    image_url:
-      'https://images.pexels.com/photos/1134176/pexels-photo-1134176.jpeg?auto=compress&cs=tinysrgb&w=800',
-    details_url: '#',
-  },
-  {
-    name: 'Mighty Victory Hotel',
-    description:
-      'Popular with academic visitors and families. Affordable, convenient location.',
-    category: 'guest_houses',
-    price_range: 'GHS 350-550',
-    rating: 4.0,
-    image_url:
-      'https://images.pexels.com/photos/3225531/pexels-photo-3225531.jpeg?auto=compress&cs=tinysrgb&w=800',
-    details_url: '#',
-  },
-  {
-    name: 'Prospect Lodge',
-    description:
-      'Comfortable rooms in a peaceful environment. Good for couples.',
-    category: 'guest_houses',
-    price_range: 'GHS 450-700',
-    rating: 4.3,
-    image_url:
-      'https://images.pexels.com/photos/276724/pexels-photo-276724.jpeg?auto=compress&cs=tinysrgb&w=800',
-    details_url: '#',
-  },
-  // 3. Beachfront Lodges
-  {
-    name: 'Brenu Beach Lodge',
-    description:
-      'One of the best beach lodges near Cape Coast. Calm, quiet, ocean view cabins.',
-    category: 'beachfront',
-    price_range: 'GHS 500-800',
-    rating: 4.6,
-    image_url:
-      'https://images.pexels.com/photos/1032650/pexels-photo-1032650.jpeg?auto=compress&cs=tinysrgb&w=800',
-    details_url: '#',
-  },
-  {
-    name: 'Coconut Grove Beach Resort',
-    description:
-      'Very popular coastal hotel with a large pool, lawns, and beachfront rooms.',
-    category: 'beachfront',
-    price_range: 'GHS 900-1600',
-    rating: 4.4,
-    image_url:
-      'https://images.pexels.com/photos/2096983/pexels-photo-2096983.jpeg?auto=compress&cs=tinysrgb&w=800',
-    details_url: '#',
-  },
-  {
-    name: 'Oasis Beach Resort',
-    description:
-      'Backpacker lodge with beachfront rooms and an amazing beach bar vibe.',
-    category: 'beachfront',
-    price_range: 'GHS 200-500',
-    rating: 4.1,
-    image_url:
-      'https://images.pexels.com/photos/1320686/pexels-photo-1320686.jpeg?auto=compress&cs=tinysrgb&w=800',
-    details_url: '#',
-  },
-  // 4. Airbnb & Vacation Rentals
-  {
-    name: 'Kískaikkaa Villa',
-    description:
-      'Modern, entire villa, very good for groups with a stylish interior.',
-    category: 'airbnb',
-    price_range: 'GHS 2500-4000',
-    rating: 4.9,
-    image_url:
-      'https://images.pexels.com/photos/4172877/pexels-photo-4172877.jpeg?auto=compress&cs=tinysrgb&w=800',
-    details_url: '#',
-  },
-  {
-    name: 'Atlantic Blue Beach Apartment',
-    description:
-      'Beautiful beachfront apartment, perfect for long stays.',
-    category: 'airbnb',
-    price_range: 'GHS 1000-1800',
-    rating: 4.8,
-    image_url:
-      'https://images.pexels.com/photos/3144580/pexels-photo-3144580.jpeg?auto=compress&cs=tinysrgb&w=800',
-    details_url: '#',
-  },
-  {
-    name: 'Cape Coast Family Stay Airbnb',
-    description:
-      'Entire home, fully serviced. Great for families or small teams.',
-    category: 'airbnb',
-    price_range: 'GHS 800-1400',
-    rating: 4.6,
-    image_url:
-      'https://images.pexels.com/photos/2102587/pexels-photo-2102587.jpeg?auto=compress&cs=tinysrgb&w=800',
-    details_url: '#',
-  },
-  // 5. Boutique & Heritage Stays
-  {
-    name: 'One Africa Guest House',
-    description:
-      'African heritage-themed lodge, popular with diaspora travelers.',
-    category: 'boutique',
-    price_range: 'GHS 500-900',
-    rating: 4.5,
-    image_url:
-      'https://images.pexels.com/photos/6782473/pexels-photo-6782473.jpeg?auto=compress&cs=tinysrgb&w=800',
-    details_url: '#',
-  },
-  {
-    name: 'Baobab Guesthouse',
-    description:
-      'Social enterprise accommodation with great food and a cultural feel.',
-    category: 'boutique',
-    price_range: 'GHS 400-700',
-    rating: 4.6,
-    image_url:
-      'https://images.pexels.com/photos/161758/governor-s-mansion-montgomery-alabama-grand-staircase-161758.jpeg?auto=compress&cs=tinysrgb&w=800',
-    details_url: '#',
-  },
-  {
-    name: 'Almond Tree Guest House',
-    description:
-      'Peaceful, boutique-style stay with a beautiful garden and ocean view.',
-    category: 'boutique',
-    price_range: 'GHS 600-1000',
-    rating: 4.7,
-    image_url:
-      'https://images.pexels.com/photos/261102/pexels-photo-261102.jpeg?auto=compress&cs=tinysrgb&w=800',
-    details_url: '#',
-  },
-  // 6. Budget Stays
-  {
-    name: 'Hans Cottage Botel',
-    description:
-      'Famous nature lodge with a crocodile pond, popular with backpackers.',
-    category: 'budget',
-    price_range: 'GHS 250-450',
-    rating: 3.9,
-    image_url:
-      'https://images.pexels.com/photos/70441/pexels-photo-70441.jpeg?auto=compress&cs=tinysrgb&w=800',
-    details_url: '#',
-  },
-  {
-    name: 'Fairhill Guest House',
-    description:
-      'Very affordable, simple rooms. Good for students & travellers on a budget.',
-    category: 'budget',
-    price_range: 'GHS 200-350',
-    rating: 3.8,
-    image_url:
-      'https://images.pexels.com/photos/1457842/pexels-photo-1457842.jpeg?auto=compress&cs=tinysrgb&w=800',
-    details_url: '#',
-  },
-  {
-    name: 'Ebusua Hostel (City)',
-    description:
-      'Budget-friendly with a student vibe and easy access to town.',
-    category: 'budget',
-    price_range: 'GHS 150-300',
-    rating: 3.7,
-    image_url:
-      'https://images.pexels.com/photos/1267438/pexels-photo-1267438.jpeg?auto=compress&cs=tinysrgb&w=800',
-    details_url: '#',
-  },
-];
-
+// NEW: Updated filter categories to match your list
 const categories = [
   'all',
-  'hotels',
-  'guest_houses',
+  'hotel_and_guest_house',
   'beachfront',
   'airbnb',
-  'boutique',
-  'budget',
-];
-
-const categoryColors: Record<string, string> = {
-  hotels: 'bg-blue-100 text-blue-900 border-blue-200',
-  guest_houses: 'bg-emerald-100 text-emerald-900 border-emerald-200',
-  beachfront: 'bg-cyan-100 text-cyan-900 border-cyan-200',
-  airbnb: 'bg-pink-100 text-pink-900 border-pink-200',
-  boutique: 'bg-purple-100 text-purple-900 border-purple-200',
-  budget: 'bg-amber-100 text-amber-900 border-amber-200',
-};
-
-const defaultFacilities = [
-  'Wheelchair accessible',
-  'Sauna',
-  'Restaurant',
-  'Television',
-  'Breakfast included',
-  'Sea view',
-  'Suitable for children and family',
-  'Bar',
-  'Family room',
-  'Allergy-friendly',
-  'Private bathroom',
-  'Fitness room',
-  'Towels',
-  'Paid parking',
-  'Wi-Fi included',
-];
-
-const defaultMemberships = [
-  'Green Key',
-  'Environmentally certified company',
-  'Green travel',
+  'cultural',
 ];
 
 export default function Hotels() {
   const [selectedCategory, setSelectedCategory] = useState('all');
-  const [search, setSearch] = useState('');
-  const [minRating, setMinRating] = useState<number | null>(null);
-  const [activeHotel, setActiveHotel] = useState<Accommodation | null>(null);
 
-  const normalizedSearch = search.toLowerCase().trim();
-
-  const filteredHotels = allAccommodations.filter((hotel) => {
-    const matchesCategory =
-      selectedCategory === 'all' || hotel.category === selectedCategory;
-    const matchesSearch =
-      !normalizedSearch ||
-      hotel.name.toLowerCase().includes(normalizedSearch) ||
-      hotel.description.toLowerCase().includes(normalizedSearch);
-    const matchesRating =
-      minRating === null || hotel.rating >= minRating;
-
-    return matchesCategory && matchesSearch && matchesRating;
-  });
-
-  const handleCardClick = (hotel: Accommodation) => {
-    setActiveHotel(hotel);
-  };
-
-  const handleReadMoreClick = (
-    event: React.MouseEvent,
-    hotel: Accommodation
-  ) => {
-    event.stopPropagation(); // prevent opening modal
-    const url = hotel.details_url || '#';
-    window.open(url, '_blank');
-  };
+  // Filtering happens on the static 'allAccommodations' array
+  const filteredHotels =
+    selectedCategory === 'all'
+      ? allAccommodations
+      : allAccommodations.filter(
+          (hotel) => hotel.category === selectedCategory
+        );
 
   return (
-    <section
-      id="hotels"
-      className="relative py-16 sm:py-20 bg-gradient-to-b from-blue-50 via-white to-blue-50"
-    >
-      {/* subtle background accents */}
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -top-10 -right-10 h-40 w-40 rounded-full bg-blue-200/40 blur-3xl" />
-        <div className="absolute bottom-0 -left-10 h-40 w-40 rounded-full bg-blue-100/40 blur-3xl" />
-      </div>
-
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center mb-8 sm:mb-10">
-          <p className="inline-flex items-center rounded-full bg-blue-100/80 px-4 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-blue-900 mb-4 shadow-sm">
-            Stay in Cape Coast
-          </p>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-blue-900 mb-3 sm:mb-4">
+    <section id="hotels" className="py-20 bg-gray-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-12">
+          <h2 className="text-4xl md:text-5xl font-bold text-blue-900 mb-4">
             Hotels & Accommodation
           </h2>
-          <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-2xl md:max-w-3xl mx-auto">
-            Browse beach resorts, guest houses, apartments and more — filtered
-            by your style and preferences.
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            Find the perfect place to stay during your visit
           </p>
         </div>
 
-        {/* Search + filters bar */}
-        <div className="mb-8 sm:mb-10 space-y-4">
-          <div className="flex flex-col md:flex-row gap-3 md:gap-4 items-stretch md:items-center">
-            {/* Search */}
-            <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
-              <input
-                type="text"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search by hotel name or description..."
-                className="w-full rounded-full border border-gray-200 bg-white/80 px-9 py-2.5 text-sm sm:text-base text-gray-800 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-100 outline-none transition"
-              />
-            </div>
-
-            {/* Rating filter */}
-            <div className="flex items-center gap-2 md:w-56">
-              <div className="inline-flex items-center justify-center rounded-full bg-white/80 border border-gray-200 px-3 py-2 text-xs sm:text-sm text-gray-700 shadow-sm w-full">
-                <SlidersHorizontal className="mr-2 h-4 w-4 text-gray-400" />
-                <select
-                  value={minRating ?? ''}
-                  onChange={(e) =>
-                    setMinRating(
-                      e.target.value ? Number(e.target.value) : null
-                    )
-                  }
-                  className="bg-transparent border-none focus:ring-0 focus:outline-none w-full text-xs sm:text-sm"
-                >
-                  <option value="">All ratings</option>
-                  <option value="4.5">4.5+ (Top rated)</option>
-                  <option value="4.0">4.0+ (Very good)</option>
-                  <option value="3.5">3.5+ (Good)</option>
-                </select>
-              </div>
-            </div>
-          </div>
-
-          {/* Category filters with colour */}
-          <div className="flex flex-wrap justify-center gap-2.5 sm:gap-3">
-            {categories.map((category) => {
-              const isActive = selectedCategory === category;
-              const isAll = category === 'all';
-              const baseColor =
-                categoryColors[category] ||
-                'bg-gray-100 text-gray-800 border-gray-200';
-
-              return (
-                <button
-                  key={category}
-                  onClick={() => setSelectedCategory(category)}
-                  className={`px-4 sm:px-5 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm capitalize border transition-all duration-200 shadow-sm flex items-center gap-2 ${
-                    isActive
-                      ? `scale-[1.03] ring-2 ring-offset-1 ring-blue-200 ${
-                          isAll ? 'bg-blue-900 text-white border-blue-900' : ''
-                        }`
-                      : ''
-                  } ${
-                    isAll && !isActive
-                      ? 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50'
-                      : !isAll
-                      ? `${baseColor} hover:brightness-95`
-                      : ''
-                  }`}
-                >
-                  <span className="h-2 w-2 rounded-full bg-white/60" />
-                  {isAll ? 'All stays' : category.replace('_', ' ')}
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Summary line */}
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-2 text-xs sm:text-sm text-gray-500">
-            <span className="font-medium text-gray-700">
-              Showing {filteredHotels.length}{' '}
-              {selectedCategory === 'all'
-                ? 'places to stay in Cape Coast'
-                : `${selectedCategory.replace('_', ' ')} options`}
-              {minRating && ` • Rated ${minRating}+`}
-            </span>
-            <span className="hidden sm:inline-flex items-center gap-1">
-              <span className="h-1 w-1 rounded-full bg-gray-300" />
-              Tap a card for a quick view, or use “Read more” to open a full page.
-            </span>
-          </div>
+        {/* Filter buttons */}
+        <div className="flex flex-wrap justify-center gap-3 mb-12">
+          {categories.map((category) => (
+            <button
+              key={category}
+              onClick={() => setSelectedCategory(category)}
+              className={`px-6 py-2 rounded-full capitalize transition ${
+                selectedCategory === category
+                  ? 'bg-blue-900 text-white'
+                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              }`}
+            >
+              {category.replace(/_/g, ' ')}
+            </button>
+          ))}
         </div>
 
-        {/* Card grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 sm:gap-7 lg:gap-8">
-          {filteredHotels.map((hotel) => {
-            const categoryClass =
-              categoryColors[hotel.category] ||
-              'bg-gray-100 text-gray-800 border-gray-200';
-
-            return (
-              <article
-                key={hotel.name}
-                onClick={() => handleCardClick(hotel)}
-                className="group cursor-pointer bg-white/90 backdrop-blur-sm rounded-2xl overflow-hidden shadow-md hover:shadow-2xl border border-gray-100 transition-all duration-300 hover:-translate-y-1 flex flex-col"
-              >
-                <div className="relative h-52 sm:h-56 md:h-60 overflow-hidden">
-                  <img
-                    src={hotel.image_url}
-                    alt={hotel.name}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/5 to-transparent opacity-80 group-hover:opacity-100 transition-opacity" />
-
-                  <div className="absolute top-3 right-3">
-                    <div className="bg-white/95 backdrop-blur-sm px-3 py-1.5 rounded-full flex items-center gap-1.5 shadow-sm">
-                      <Star size={14} className="text-amber-500 fill-amber-500" />
-                      <span className="text-xs font-semibold text-gray-800">
-                        {hotel.rating.toFixed(1)}
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="absolute bottom-3 left-3 right-3 flex items-end justify-between gap-2">
-                    <span
-                      className={`inline-flex items-center rounded-full border px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide shadow-sm ${categoryClass}`}
-                    >
-                      {hotel.category.replace('_', ' ')}
-                    </span>
-                    <div className="hidden sm:flex items-center gap-1 rounded-full bg-black/40 px-3 py-1 text-xs text-white">
-                      <MapPin size={14} />
-                      <span>Cape Coast</span>
-                    </div>
-                  </div>
+        {/* Grid maps static data */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {filteredHotels.map((hotel) => (
+            <div
+              key={hotel.id}
+              className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition group"
+            >
+              <div className="relative h-64 overflow-hidden">
+                <img
+                  src={hotel.image_url}
+                  alt={hotel.name}
+                  className="w-full h-full object-cover group-hover:scale-110 transition duration-500"
+                />
+              </div>
+              <div className="p-6">
+                <span className="inline-block bg-blue-100 text-blue-900 px-3 py-1 rounded-full text-sm font-semibold mb-3 capitalize">
+                  {hotel.category.replace(/_/g, ' ')}
+                </span>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">
+                  {hotel.name}
+                </h3>
+                <p className="text-gray-600 mb-4 line-clamp-2">
+                  {hotel.description}
+                </p>
+                <div className="flex items-center gap-2 text-gray-600 mb-4">
+                  <MapPin size={18} />
+                  <span>{hotel.contact.address}</span>
                 </div>
-
-                <div className="flex flex-col flex-1 p-4 sm:p-5 md:p-6">
-                  <header className="mb-3 sm:mb-4">
-                    <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-1 line-clamp-1">
-                      {hotel.name}
-                    </h3>
-                    <p className="text-sm sm:text-[15px] text-gray-600 line-clamp-3">
-                      {hotel.description}
-                    </p>
-                  </header>
-
-                  <div className="flex items-center gap-2 text-gray-600 text-xs sm:text-sm mb-3 sm:mb-4">
-                    <div className="flex items-center gap-1.5">
-                      <MapPin size={16} className="text-blue-800" />
-                      <span>Cape Coast</span>
-                    </div>
-                  </div>
-
-                  <div className="mt-auto">
-                    <button
-                      onClick={(e) => handleReadMoreClick(e, hotel)}
-                      className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-blue-900 text-white py-2.5 sm:py-3 text-sm sm:text-[15px] font-semibold shadow-md hover:bg-blue-800 hover:shadow-lg active:scale-[0.98] transition-all"
-                    >
-                      Read more
-                    </button>
-                  </div>
-                </div>
-              </article>
-            );
-          })}
+                {/* 3. Button is now a Link */}
+                <Link
+                  to={`/hotels/${hotel.id}`}
+                  className="w-full bg-blue-900 text-white py-3 rounded-lg hover:bg-blue-800 transition font-semibold block text-center"
+                >
+                  Read More
+                </Link>
+              </div>
+            </div>
+          ))}
         </div>
 
         {filteredHotels.length === 0 && (
           <div className="text-center py-12">
             <p className="text-gray-500 text-lg">
-              No accommodations match your filters yet. Try removing some filters.
+              No accommodations found in this category yet.
             </p>
           </div>
         )}
       </div>
-
-      {/* Details modal (card click) */}
-      {activeHotel && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4 sm:px-6"
-          onClick={() => setActiveHotel(null)}
-        >
-          <div
-            className="relative w-full max-w-3xl max-h-[90vh] overflow-hidden rounded-2xl bg-white shadow-2xl flex flex-col"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Image + close */}
-            <div className="relative h-48 sm:h-56 md:h-64 overflow-hidden">
-              <img
-                src={activeHotel.image_url}
-                alt={activeHotel.name}
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />
-              <button
-                onClick={() => setActiveHotel(null)}
-                className="absolute top-3 right-3 inline-flex items-center justify-center rounded-full bg-black/60 p-1.5 text-white hover:bg-black/80"
-              >
-                <X size={18} />
-              </button>
-              <div className="absolute bottom-3 left-4 right-4 flex flex-col gap-1">
-                <div className="inline-flex items-center gap-2 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-blue-900 w-fit">
-                  <span className="capitalize">
-                    {activeHotel.category.replace('_', ' ')}
-                  </span>
-                  <span className="h-1 w-1 rounded-full bg-blue-300" />
-                  <div className="inline-flex items-center gap-1 text-[11px] text-gray-700">
-                    <Star size={12} className="text-amber-500 fill-amber-500" />
-                    <span>{activeHotel.rating.toFixed(1)}</span>
-                  </div>
-                </div>
-                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-white drop-shadow">
-                  {activeHotel.name}
-                </h3>
-                <div className="inline-flex items-center gap-1 text-sm text-gray-100">
-                  <MapPin size={14} />
-                  <span>Cape Coast • Ghana</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Scrollable body */}
-            <div className="flex-1 overflow-y-auto px-4 sm:px-6 py-4 sm:py-5 space-y-6">
-              {/* About */}
-              <section>
-                <h4 className="text-sm font-semibold uppercase tracking-wide text-blue-900 mb-2">
-                  Overview
-                </h4>
-                <p className="text-sm sm:text-[15px] text-gray-700 leading-relaxed">
-                  {activeHotel.description}{' '}
-                  This stay offers a comfortable base for exploring the city,
-                  beaches and heritage attractions in and around Cape Coast. It is
-                  well suited for holiday-makers, families, work trips and
-                  weekend getaways.
-                </p>
-              </section>
-
-              {/* Facilities */}
-              <section>
-                <h4 className="text-sm font-semibold uppercase tracking-wide text-blue-900 mb-2">
-                  Facilities
-                </h4>
-                <div className="flex flex-wrap gap-1.5 sm:gap-2">
-                  {defaultFacilities.map((item) => (
-                    <span
-                      key={item}
-                      className="inline-flex items-center rounded-full border border-gray-200 bg-gray-50 px-2.5 py-1 text-[11px] sm:text-xs text-gray-700"
-                    >
-                      {item}
-                    </span>
-                  ))}
-                </div>
-              </section>
-
-              {/* Contact */}
-              <section>
-                <h4 className="text-sm font-semibold uppercase tracking-wide text-blue-900 mb-2">
-                  Contact (add per property)
-                </h4>
-                <div className="space-y-1 text-sm sm:text-[15px] text-gray-700">
-                  <p>
-                    <span className="font-semibold">Phone:</span>{' '}
-                    <span className="text-gray-600">
-                      Add phone number for this property
-                    </span>
-                  </p>
-                  <p>
-                    <span className="font-semibold">Email:</span>{' '}
-                    <span className="text-gray-600">
-                      Add email address for this property
-                    </span>
-                  </p>
-                  <p>
-                    <span className="font-semibold">Website:</span>{' '}
-                    <span className="text-blue-700">
-                      Add official website link
-                    </span>
-                  </p>
-                  <p>
-                    <span className="font-semibold">Address:</span>{' '}
-                    <span className="text-gray-600">
-                      Add street address / GPS location in Cape Coast
-                    </span>
-                  </p>
-                </div>
-              </section>
-
-              {/* Memberships & certifications */}
-              <section>
-                <h4 className="text-sm font-semibold uppercase tracking-wide text-blue-900 mb-2">
-                  Memberships & certifications
-                </h4>
-                <div className="flex flex-wrap gap-1.5 sm:gap-2">
-                  {defaultMemberships.map((item) => (
-                    <span
-                      key={item}
-                      className="inline-flex items-center rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-[11px] sm:text-xs text-emerald-800"
-                    >
-                      {item}
-                    </span>
-                  ))}
-                </div>
-              </section>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* 4. All Modal code is REMOVED */}
     </section>
   );
 }
