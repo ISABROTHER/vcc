@@ -62,8 +62,8 @@ export default function Hero() {
                   className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-700 pointer-events-none"
                 />
                 <select className="w-full pl-12 pr-10 py-3 rounded-lg text-gray-900 bg-white/90 border border-transparent appearance-none focus:outline-none focus:ring-2 focus:ring-amber-500">
-                  <option value="">Select Activity</Ghanas-coastal-gem
-</p>
+                  {/* THIS IS THE CORRECTED LINE: */}
+                  <option value="">Select Activity</option>
                   <option value="all">All Activities</option>
                   <option value="canopy_walk">Kakum Canopy Walk</option>
                   <option value="beach_tours">Beach Tours</option>
