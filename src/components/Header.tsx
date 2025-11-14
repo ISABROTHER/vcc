@@ -37,25 +37,27 @@ export default function Header() {
         </button>
       </div>
 
-      {/* MOBILE DROPDOWN — SOFT GOLD FUTURISTIC */}
+      {/* MOBILE DROPDOWN — REDUCED SPEED (500ms) */}
       <div
         className={`
           mx-auto w-full max-w-7xl px-6 lg:hidden overflow-hidden
-          transition-all duration-300 
-          ease-[cubic-bezier(0.16,1,0.3,1)]
-          ${menuOpen ? "max-h-[600px]" : "max-h-0"}
+          transition-all duration-500 
+          ease-[cubic-bezier(0.25,1,0.5,1)]
+          ${menuOpen ? "max-h-[700px]" : "max-h-0"}
         `}
       >
         <div
           className={`
-            mt-2 rounded-2xl border border-yellow-500/40 
+            mt-3 rounded-2xl border border-yellow-500/40 
             bg-yellow-300/20 backdrop-blur-md
             shadow-xl p-6 flex flex-col gap-4
-            transform transition-all duration-300 
-            ease-[cubic-bezier(0.16,1,0.3,1)]
+
+            transform transition-all duration-500 
+            ease-[cubic-bezier(0.25,1,0.5,1)]
+
             ${menuOpen 
               ? "opacity-100 translate-y-0 scale-100" 
-              : "opacity-0 -translate-y-3 scale-95"}
+              : "opacity-0 -translate-y-5 scale-95"}
           `}
         >
           <a
