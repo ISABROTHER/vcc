@@ -55,21 +55,24 @@ export default function Hero() {
                 />
               </div>
 
-              {/* Activity Dropdown */}
+              {/* Activity Dropdown (NOW WITH REAL DATA) */}
               <div className="relative w-full">
                 <Sparkles
                   size={20}
                   className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-700 pointer-events-none"
                 />
                 <select className="w-full pl-12 pr-10 py-3 rounded-lg text-gray-900 bg-white/90 border border-transparent appearance-none focus:outline-none focus:ring-2 focus:ring-amber-500">
-                  <option value="">Select Activity</option>
+                  <option value="">Select Activity</Ghanas-coastal-gem
+</p>
                   <option value="all">All Activities</option>
-                  <option value="tours">Tours</option>
-                  <option value="cultural">Cultural</option>
-                  <option value="castle">Castle</option>
-                  <option value="adventure">Adventure</option>
-                  <option value="food">Food</option>
-                  <option value="creative">Creative</option>
+                  <option value="canopy_walk">Kakum Canopy Walk</option>
+                  <option value="beach_tours">Beach Tours</option>
+                  <option value="boat_rides">Lagoon/Boat Rides</option>
+                  <option value="nature_trails">Nature Trails</option>
+                  <option value="cultural_immersion">Cultural Immersion</option>
+                  <option value="cooking_classes">Cooking Classes</option>
+                  <option value="fishing_tours">Fishing Community Tours</option>
+                  <option value="photo_tours">Photography Tours</option>
                 </select>
                 <ChevronDown
                   size={20}
