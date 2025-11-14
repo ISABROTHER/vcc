@@ -24,16 +24,49 @@ export default function Hero() {
 
         <div className="bg-white rounded-2xl shadow-2xl p-4 max-w-3xl mx-auto">
           <div className="flex flex-col md:flex-row gap-4">
-            <div className="flex-1">
-              <input
-                type="text"
-                placeholder="What do you want to experience?"
-                className="w-full px-4 py-3 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
+            {/* START: New dropdown inputs */}
+            <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-4">
+              <select className="w-full px-4 py-3 rounded-lg text-gray-800 bg-gray-50 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <option value="">Select Month</option>
+                <option value="any">Any Month</option>
+                <option value="jan">January</option>
+                <option value="feb">February</option>
+                <option value="mar">March</option>
+                <option value="apr">April</option>
+                <option value="may">May</option>
+                <option value="jun">June</option>
+                <option value="jul">July</option>
+                <option value="aug">August</option>
+                <option value="sep">September</option>
+                <option value="oct">October</option>
+                <option value="nov">November</option>
+                <option value="dec">December</option>
+              </select>
+
+              <select className="w-full px-4 py-3 rounded-lg text-gray-800 bg-gray-50 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <option value="">Select Activity</option>
+                <option value="all">All Activities</option>
+                <option value="tours">Tours</option>
+                <option value="cultural">Cultural</option>
+                <option value="castle">Castle</option>
+                <option value="adventure">Adventure</option>
+                <option value="food">Food</option>
+                <option value="creative">Creative</option>
+              </select>
+
+              <select className="w-full px-4 py-3 rounded-lg text-gray-800 bg-gray-50 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <option value="">Sort By (Order)</option>
+                <option value="popular">Popularity</option>
+                <option value="price_asc">Price (Low to High)</option>
+                <option value="price_desc">Price (High to Low)</option>
+              </select>
             </div>
-            <button className="bg-amber-500 text-white px-8 py-3 rounded-lg hover:bg-amber-600 transition flex items-center justify-center gap-2 font-semibold">
+            {/* END: New dropdown inputs */}
+
+            {/* Updated button */}
+            <button className="bg-amber-500 text-white px-6 py-3 rounded-lg hover:bg-amber-600 transition flex items-center justify-center gap-2 font-semibold">
               <Search size={20} />
-              Search
+              <span>Find & book activities</span>
             </button>
           </div>
         </div>
@@ -51,7 +84,7 @@ export default function Hero() {
           <button className="bg-white/20 backdrop-blur-sm text-white px-6 py-2 rounded-full hover:bg-white/30 transition">
             Food Tours
           </button>
-        </div> 
+        </div>
       </div>
     </section>
   );
