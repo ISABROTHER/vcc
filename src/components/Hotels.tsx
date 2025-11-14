@@ -65,7 +65,7 @@ const allAccommodations: Hotel[] = [
     contact: {
       phone: '+233 33 209 1818',
       email: 'info@ridgeroyal.com',
-      web: 'ridgeroyal.com',
+      web: 'https://ridgeroyal.com',
       address: 'Ridge, Cape Coast, Ghana',
     },
   },
@@ -89,7 +89,7 @@ const allAccommodations: Hotel[] = [
     contact: {
       phone: '+233 24 412 3456',
       email: 'info@brynxhaven.com',
-      web: 'brynxhaven.com',
+      web: 'http://www.brynxhaven.com',
       address: 'Adisadel, Cape Coast, Ghana',
     },
   },
@@ -113,7 +113,7 @@ const allAccommodations: Hotel[] = [
     contact: {
       phone: '+233 33 213 2255',
       email: 'info@mightyvictory.com',
-      web: 'mightyvictory.com',
+      web: 'http://www.mightyvictory.com',
       address: 'Ola, Cape Coast, Ghana',
     },
   },
@@ -140,7 +140,7 @@ const allAccommodations: Hotel[] = [
     contact: {
       phone: '+233 33 213 3646',
       email: 'info@coconutgrove.com',
-      web: 'coconutgrove.com',
+      web: 'http://www.coconutgrove.com',
       address: 'Elmina, Ghana',
     },
   },
@@ -165,7 +165,7 @@ const allAccommodations: Hotel[] = [
     contact: {
       phone: '+233 24 489 1572',
       email: 'info@oasisbeach.com',
-      web: 'oasisbeach.com',
+      web: 'http://www.oasisbeach.com',
       address: 'Victoria Park, Cape Coast, Ghana',
     },
   },
@@ -189,7 +189,7 @@ const allAccommodations: Hotel[] = [
     contact: {
       phone: '+233 55 555 1234',
       email: 'info@lemonbeach.com',
-      web: 'lemonbeach.com',
+      web: 'http://www.lemonbeach.com',
       address: 'Elmina, Ghana',
     },
   },
@@ -216,7 +216,7 @@ const allAccommodations: Hotel[] = [
     contact: {
       phone: 'Via Airbnb',
       email: 'Via Airbnb',
-      web: 'airbnb.com',
+      web: 'https://www.airbnb.com',
       address: 'Cape Coast, Ghana',
     },
   },
@@ -240,7 +240,7 @@ const allAccommodations: Hotel[] = [
     contact: {
       phone: 'Via Airbnb',
       email: 'Via Airbnb',
-      web: 'airbnb.com',
+      web: 'https://www.airbnb.com',
       address: 'Cape Coast, Ghana',
     },
   },
@@ -267,7 +267,7 @@ const allAccommodations: Hotel[] = [
     contact: {
       phone: '+233 24 458 2513',
       email: 'info@oneafrica.com',
-      web: 'oneafrica.com',
+      web: 'http://www.oneafrica.com',
       address: 'Elmina, Ghana',
     },
   },
@@ -291,7 +291,7 @@ const allAccommodations: Hotel[] = [
     contact: {
       phone: '+233 55 112 2334',
       email: 'info@baobabgh.com',
-      web: 'baobabgh.com',
+      web: 'http://www.baobabgh.com',
       address: 'Cape Coast, Ghana',
     },
   },
@@ -315,7 +315,7 @@ const allAccommodations: Hotel[] = [
     contact: {
       phone: '+233 33 213 3646',
       email: 'info@hanscottage.com',
-      web: 'hanscottage.com',
+      web: 'http://www.hanscottage.com',
       address: 'Kakum National Park Road, Ghana',
     },
   },
@@ -459,7 +459,7 @@ export default function Hotels() {
           <div className="text-center py-12">
             <p className="text-gray-500 text-lg">
               No accommodations found in this category yet.
-            </p>
+            </WELCOME>
           </div>
         )}
       </div>
