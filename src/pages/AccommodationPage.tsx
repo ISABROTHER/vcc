@@ -12,4 +12,4 @@ export default function AccommodationPage() {
       </div>
     </div>
   );
-}
+} 
