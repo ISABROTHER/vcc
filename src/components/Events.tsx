@@ -9,14 +9,20 @@ import {
   PartyPopper,
   School,
   Palmtree,
+  Camera,
+  Moon,
+  Sparkles,
+  Utensils,
+  Award,
 } from 'lucide-react';
 
-// --- Data for new static sections ---
+// --- Data for new static sections, based on your list ---
+
 const majorFestivals = [
   {
-    title: 'Fetu Afahye',
+    title: 'Oguaa Fetu Afahye',
     description:
-      'The major traditional festival of Cape Coast, with a durbar of chiefs and vibrant processions.',
+      'The major traditional festival of Cape Coast, with a durbar of chiefs and vibrant processions every September.',
     icon: PartyPopper,
     image:
       'https://images.pexels.com/photos/17911681/pexels-photo-17911681/free-photo-of-a-man-in-a-traditional-ghanaian-kente-cloth.jpeg?auto=compress&cs=tinysrgb&w=800',
@@ -39,7 +45,13 @@ const majorFestivals = [
   },
 ];
 
-const otherEvents = [
+const secondaryEvents = [
+  {
+    title: 'Diaspora & Heritage',
+    description:
+      'Participate in naming ceremonies, heritage vigils, and "Beyond the Return" activities.',
+    icon: BookOpen,
+  },
   {
     title: 'University & Youth Events',
     description:
@@ -47,22 +59,34 @@ const otherEvents = [
     icon: School,
   },
   {
-    title: 'Diaspora & Heritage Events',
+    title: 'Art, Food & Lifestyle',
     description:
-      'Participate in naming ceremonies, heritage vigils, and "Beyond the Return" activities.',
-    icon: BookOpen,
+      'Discover local talent at creative expos, fashion shows, and artisan craft markets.',
+    icon: Sparkles,
   },
   {
-    title: 'Beach & Lifestyle',
+    title: 'Beach & Nature Events',
     description:
       'Enjoy beach carnivals, seafood pop-ups, surfing lessons, and live DJ nights on the coast.',
     icon: Palmtree,
   },
+];
+
+const futureEvents = [
   {
-    title: 'Artisan & Creative Markets',
-    description:
-      'Discover local talent at creative expos, fashion shows, and artisan craft markets.',
-    icon: MapPin,
+    title: 'Cape Coast Heritage Marathon',
+    description: 'Run through historic streets, past the Castle, and along the ocean.',
+    icon: Award,
+  },
+  {
+    title: 'Cape Coast Photo Festival',
+    description: 'Workshops, exhibitions, and photo walks through the city’s most scenic spots.',
+    icon: Camera,
+  },
+  {
+    title: 'The Castle Night Experience',
+    description: 'Exclusive night tours with storytelling and traditional performances.',
+    icon: Moon,
   },
 ];
 // --- End of new data ---
@@ -109,12 +133,12 @@ export default function Events() {
 
         {/* 2. Major Festivals Section (NEW) */}
         <div className="mb-20">
-          <h3 className="text-3xl md:text-4xl font-bold text-blue-900 mb-4 text-center">
-            Major Festivals
+          <h3 className="text-3xl md:text-4xl font-bold text-blue-900 mb-4 text-left">
+            Major Traditional Festivals
           </h3>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto text-center mb-12">
+          <p className="text-lg text-gray-600 max-w-3xl text-left mb-12">
             These are the unmissable, large-scale events that define the
-            region's culture.
+            region's culture and attract visitors from around the world.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {majorFestivals.map((festival) => (
@@ -122,22 +146,24 @@ export default function Events() {
                 key={festival.title}
                 className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition group"
               >
-                <div className="relative h-64 overflow-hidden">
+                <div className="relative h-72 overflow-hidden">
                   <img
                     src={festival.image}
                     alt={festival.title}
                     className="w-full h-full object-cover group-hover:scale-110 transition duration-500"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                  <div className="absolute bottom-4 left-4">
-                    <festival.icon size={28} className="text-amber-400 mb-2" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                  <div className="absolute bottom-6 left-6">
+                    <div className="p-3 bg-amber-500 rounded-full inline-flex mb-3 shadow-lg">
+                      <festival.icon size={24} className="text-white" />
+                    </div>
                     <h3 className="text-2xl font-bold text-white">
                       {festival.title}
                     </h3>
                   </div>
                 </div>
                 <div className="p-6">
-                  <p className="text-gray-600">{festival.description}</p>
+                  <p className="text-gray-700">{festival.description}</p>
                 </div>
               </div>
             ))}
@@ -146,14 +172,14 @@ export default function Events() {
 
         {/* 3. Other Event Types Section (NEW) */}
         <div className="mb-20">
-          <h3 className="text-3xl md:text-4xl font-bold text-blue-900 mb-4 text-center">
+          <h3 className="text-3xl md:text-4xl font-bold text-blue-900 mb-4 text-left">
             The Vibe of the City
           </h3>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto text-center mb-12">
+          <p className="text-lg text-gray-600 max-w-3xl text-left mb-12">
             Beyond the major festivals, there is always something happening.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {otherEvents.map((event) => (
+            {secondaryEvents.map((event) => (
               <div
                 key={event.title}
                 className="bg-white rounded-xl p-8 shadow-lg hover:shadow-xl transition"
@@ -164,20 +190,47 @@ export default function Events() {
                 <h3 className="text-xl font-bold text-gray-900 mb-3">
                   {event.title}
                 </h3>
-                <p className="text-gray-600">{event.description}</p>
+                <p className="text-gray-700">{event.description}</p>
               </div>
             ))}
           </div>
         </div>
 
-        {/* 4. Upcoming Events Calendar (Original Supabase section) */}
+        {/* 4. "SolveX-led" Future Events Section (NEW) */}
+        <div className="mb-20">
+          <div className="relative bg-gradient-to-br from-blue-900 to-blue-800 rounded-2xl py-16 px-8 text-center text-white overflow-hidden">
+            <Sparkles className="absolute -top-8 -left-8 w-40 h-40 text-white/5 opacity-50" />
+            <Sparkles className="absolute -bottom-12 -right-4 w-48 h-48 text-white/5 opacity-50" />
+            <h3 className="text-3xl md:text-4xl font-bold mb-4">
+              The Future of Cape Coast Events
+            </h3>
+            <p className="text-lg text-blue-100 max-w-2xl mx-auto mb-12">
+              We are developing new, signature events to make Cape Coast a
+              year-round destination.
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+              {futureEvents.map((event) => (
+                <div
+                  key={event.title}
+                  className="bg-white/10 backdrop-blur-sm rounded-xl p-6 text-left"
+                >
+                  <event.icon className="mb-4 text-amber-400" size={32} />
+                  <h4 className="text-xl font-bold mb-3">{event.title}</h4>
+                  <p className="text-blue-100">{event.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* 5. Upcoming Events Calendar (Original Supabase section) */}
         <div>
           <div className="text-center mb-12">
             <h3 className="text-3xl md:text-4xl font-bold text-blue-900 mb-4">
               Upcoming Event Calendar
             </h3>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Specific dates for upcoming events. Add your event by contacting
+              Specific dates for events. Add your event by contacting
               us.
             </p>
           </div>
