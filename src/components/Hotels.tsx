@@ -568,4 +568,4 @@ export default function Hotels() {
       )}
     </section>
   );
-}
+} 
