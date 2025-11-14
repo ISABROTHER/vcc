@@ -5,100 +5,93 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="w-full bg-white border-b border-gray-200 fixed top-0 left-0 z-50">
-      {/* Luxury Top Bar */}
+    <header className="fixed top-0 left-0 w-full z-50 bg-yellow-600/95 border-b border-yellow-700 shadow-lg">
+      {/* Top Bar */}
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
         
-        {/* Luxury Serif Logo */}
-        <div className="font-serif text-3xl font-semibold text-black tracking-wide">
-          Visit <span className="text-yellow-600">Cape</span> Coast
+        {/* Logo */}
+        <div className="text-2xl font-bold tracking-wide text-white">
+          Visit <span className="text-black">Cape</span> Coast
         </div>
 
         {/* Desktop Menu */}
         <nav className="hidden lg:flex items-center gap-10 text-sm font-medium">
-          <a href="#experiences" className="text-gray-800 hover:text-black">
-            Experiences
-          </a>
-          <a href="#heritage" className="text-gray-800 hover:text-black">
-            Heritage
-          </a>
-          <a href="#hotels" className="text-gray-800 hover:text-black">
-            Hotels
-          </a>
-          <a href="#events" className="text-gray-800 hover:text-black">
-            Events
-          </a>
-          <a href="#plan" className="text-gray-800 hover:text-black">
-            Plan Your Trip
-          </a>
+          <a href="#experiences" className="text-white hover:text-black">Experiences</a>
+          <a href="#heritage" className="text-white hover:text-black">Heritage</a>
+          <a href="#hotels" className="text-white hover:text-black">Hotels</a>
+          <a href="#events" className="text-white hover:text-black">Events</a>
+          <a href="#plan" className="text-white hover:text-black">Plan Your Trip</a>
 
-          {/* Luxury Book Button */}
-          <button className="bg-yellow-600 text-white px-7 py-2.5 rounded-full font-semibold shadow-md border border-yellow-700">
+          {/* Book Button */}
+          <button className="px-7 py-2.5 rounded-full font-semibold bg-black text-yellow-400 shadow-md hover:bg-gray-900">
             Book Now
           </button>
         </nav>
 
-        {/* Mobile Menu Toggle */}
+        {/* Mobile Toggle */}
         <button
           onClick={() => setMenuOpen((prev) => !prev)}
-          className="inline-flex items-center rounded-full border px-3 py-2 lg:hidden"
+          className="inline-flex items-center rounded-full border px-3 py-2 lg:hidden border-black bg-yellow-500 text-black"
         >
           {menuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
         </button>
       </div>
 
-      {/* MOBILE DROPDOWN — Luxury Spacing */}
-      {menuOpen && (
-        <div className="mx-auto block w-full max-w-7xl px-6 lg:hidden">
-          <div className="mt-7 flex flex-col gap-4 rounded-2xl border bg-white p-6 shadow-lg">
-            
-            <a
-              href="#experiences"
-              onClick={() => setMenuOpen(false)}
-              className="w-full rounded-xl px-4 py-3 text-left text-base font-medium text-gray-900"
-            >
-              Experiences
-            </a>
+      {/* MOBILE MENU — GOLD THEME */}
+      <div
+        className={`
+          mx-auto w-full max-w-7xl px-6 lg:hidden overflow-hidden
+          transition-all duration-300 ease-out
+          ${menuOpen ? "max-h-[500px] opacity-100 translate-y-0" : "max-h-0 opacity-0 -translate-y-3"}
+        `}
+      >
+        <div className="mt-4 flex flex-col gap-4 rounded-2xl border border-yellow-700 bg-yellow-500 p-6 shadow-xl">
+          
+          <a
+            href="#experiences"
+            onClick={() => setMenuOpen(false)}
+            className="w-full rounded-xl px-4 py-3 text-left text-base font-medium text-black"
+          >
+            Experiences
+          </a>
 
-            <a
-              href="#heritage"
-              onClick={() => setMenuOpen(false)}
-              className="w-full rounded-xl px-4 py-3 text-left text-base font-medium text-gray-900"
-            >
-              Heritage
-            </a>
+          <a
+            href="#heritage"
+            onClick={() => setMenuOpen(false)}
+            className="w-full rounded-xl px-4 py-3 text-left text-base font-medium text-black"
+          >
+            Heritage
+          </a>
 
-            <a
-              href="#hotels"
-              onClick={() => setMenuOpen(false)}
-              className="w-full rounded-xl px-4 py-3 text-left text-base font-medium text-gray-900"
-            >
-              Hotels
-            </a>
+          <a
+            href="#hotels"
+            onClick={() => setMenuOpen(false)}
+            className="w-full rounded-xl px-4 py-3 text-left text-base font-medium text-black"
+          >
+            Hotels
+          </a>
 
-            <a
-              href="#events"
-              onClick={() => setMenuOpen(false)}
-              className="w-full rounded-xl px-4 py-3 text-left text-base font-medium text-gray-900"
-            >
-              Events
-            </a>
+          <a
+            href="#events"
+            onClick={() => setMenuOpen(false)}
+            className="w-full rounded-xl px-4 py-3 text-left text-base font-medium text-black"
+          >
+            Events
+          </a>
 
-            <a
-              href="#plan"
-              onClick={() => setMenuOpen(false)}
-              className="w-full rounded-xl px-4 py-3 text-left text-base font-medium text-gray-900"
-            >
-              Plan Your Trip
-            </a>
+          <a
+            href="#plan"
+            onClick={() => setMenuOpen(false)}
+            className="w-full rounded-xl px-4 py-3 text-left text-base font-medium text-black"
+          >
+            Plan Your Trip
+          </a>
 
-            {/* Luxury Book Button Mobile */}
-            <button className="w-full bg-yellow-600 text-white px-4 py-3 rounded-xl font-semibold shadow border border-yellow-700">
-              Book Now
-            </button>
-          </div>
+          <button className="w-full bg-black text-yellow-400 px-4 py-3 rounded-xl font-semibold shadow-md">
+            Book Now
+          </button>
         </div>
-      )}
+      </div>
     </header>
   );
 }
