@@ -1,8 +1,16 @@
 import { useState } from 'react';
-import { MapPin, Star } from 'lucide-react';
+import { MapPin, Star, X } from 'lucide-react';
 
-// All your static data, categorized
-const allAccommodations = [
+type Accommodation = {
+  name: string;
+  description: string;
+  category: string;
+  price_range: string;
+  rating: number;
+  image_url: string;
+};
+
+const allAccommodations: Accommodation[] = [
   // 1. Hotels
   {
     name: 'Ridge Royal Hotel',
@@ -188,7 +196,6 @@ const allAccommodations = [
   },
 ];
 
-// Filter categories
 const categories = [
   'all',
   'hotels',
@@ -199,8 +206,46 @@ const categories = [
   'budget',
 ];
 
+const defaultFacilities = [
+  'Wheelchair accessible',
+  'Dog friendly',
+  'Sauna',
+  'Restaurant',
+  'Possibility to wash and dry clothes',
+  'Television',
+  'Double room',
+  'Breakfast included',
+  'Sea view',
+  'Suitable for children and family',
+  'Bar',
+  'Family room',
+  'Allergy-friendly',
+  'With bathtub',
+  'Private bathroom',
+  'Fitness room',
+  'Towels',
+  'Paid parking',
+  'Pets allowed in rooms',
+  '0 - 1 kilometer',
+  'Possibility for a baby bed',
+  'Wheelchair-accessible room',
+  'Vegetarian options',
+  'Hairdryer',
+  'Wi-Fi included',
+  'Adapted for mobility impairments',
+  'Airport bus stop',
+  'Suite',
+];
+
+const defaultMemberships = [
+  'Green Key',
+  'Environmentally certified company',
+  'Green travel',
+];
+
 export default function Hotels() {
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const [activeHotel, setActiveHotel] = useState<Accommodation | null>(null);
 
   const filteredHotels =
     selectedCategory === 'all'
@@ -263,7 +308,7 @@ export default function Hotels() {
             </span>
             <span className="hidden sm:inline-flex items-center gap-1">
               <span className="h-1 w-1 rounded-full bg-gray-300" />
-              Tap a card to explore. Prices are per night and indicative.
+              Tap a card to read more. Details vary by property.
             </span>
           </div>
         </div>
@@ -310,7 +355,10 @@ export default function Hotels() {
                   <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-1 line-clamp-1">
                     {hotel.name}
                   </h3>
-                  <p className="text-sm sm:text-[15px] text-gray-600 line-clamp-2">
+                  <p className="text-xs font-semibold text-blue-900 uppercase tracking-wide mb-1.5">
+                    About this stay
+                  </p>
+                  <p className="text-sm sm:text-[15px] text-gray-600 line-clamp-3">
                     {hotel.description}
                   </p>
                 </header>
@@ -322,29 +370,18 @@ export default function Hotels() {
                   </div>
                   <span className="hidden sm:inline-flex h-1 w-1 rounded-full bg-gray-300" />
                   <span className="hidden sm:inline-flex text-gray-500">
-                    Verified listing
+                    Central location • Easy access to attractions
                   </span>
                 </div>
 
                 <div className="mt-auto">
-                  <div className="flex items-baseline justify-between mb-3 sm:mb-4">
-                    <div>
-                      <p className="text-xs uppercase tracking-wide text-gray-500">
-                        From
-                      </p>
-                      <p className="text-lg sm:text-xl font-extrabold text-blue-900">
-                        {hotel.price_range}
-                      </p>
-                    </div>
-                    <p className="text-xs sm:text-sm text-gray-500">
-                      per night • taxes may apply
-                    </p>
-                  </div>
-
-                  <button className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-blue-900 text-white py-2.5 sm:py-3 text-sm sm:text-[15px] font-semibold shadow-md hover:bg-blue-800 hover:shadow-lg active:scale-[0.98] transition-all">
-                    Check Availability
+                  <button
+                    onClick={() => setActiveHotel(hotel)}
+                    className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-blue-900 text-white py-2.5 sm:py-3 text-sm sm:text-[15px] font-semibold shadow-md hover:bg-blue-800 hover:shadow-lg active:scale-[0.98] transition-all"
+                  >
+                    Read more
                   </button>
-                </div> 
+                </div>
               </div>
             </article>
           ))}
@@ -358,6 +395,145 @@ export default function Hotels() {
           </div>
         )}
       </div>
+
+      {/* Details modal */}
+      {activeHotel && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4 sm:px-6"
+          onClick={() => setActiveHotel(null)}
+        >
+          <div
+            className="relative w-full max-w-3xl max-h-[90vh] overflow-hidden rounded-2xl bg-white shadow-2xl flex flex-col"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Image + close */}
+            <div className="relative h-48 sm:h-56 md:h-64 overflow-hidden">
+              <img
+                src={activeHotel.image_url}
+                alt={activeHotel.name}
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />
+              <button
+                onClick={() => setActiveHotel(null)}
+                className="absolute top-3 right-3 inline-flex items-center justify-center rounded-full bg-black/60 p-1.5 text-white hover:bg-black/80"
+              >
+                <X size={18} />
+              </button>
+              <div className="absolute bottom-3 left-4 right-4 flex flex-col gap-1">
+                <div className="inline-flex items-center gap-2 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-blue-900 w-fit">
+                  <span className="capitalize">
+                    {activeHotel.category.replace('_', ' ')}
+                  </span>
+                  <span className="h-1 w-1 rounded-full bg-blue-300" />
+                  <div className="inline-flex items-center gap-1 text-[11px] text-gray-700">
+                    <Star size={12} className="text-amber-500 fill-amber-500" />
+                    <span>{activeHotel.rating.toFixed(1)}</span>
+                  </div>
+                </div>
+                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-white drop-shadow">
+                  {activeHotel.name}
+                </h3>
+                <div className="inline-flex items-center gap-1 text-sm text-gray-100">
+                  <MapPin size={14} />
+                  <span>Cape Coast • Ghana</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Scrollable body */}
+            <div className="flex-1 overflow-y-auto px-4 sm:px-6 py-4 sm:py-5 space-y-6">
+              {/* About */}
+              <section>
+                <h4 className="text-sm font-semibold uppercase tracking-wide text-blue-900 mb-2">
+                  About us
+                </h4>
+                <p className="text-sm sm:text-[15px] text-gray-700 leading-relaxed">
+                  {activeHotel.description}{' '}
+                  This stay offers a central, convenient base for exploring
+                  nearby attractions, culture, food, and coastal experiences in and
+                  around Cape Coast. Enjoy easy access to key sites, restaurants,
+                  markets, and the seafront, whether you are here for leisure,
+                  family visits, or work.
+                </p>
+                <p className="mt-2 text-sm sm:text-[15px] text-gray-700 leading-relaxed">
+                  Many guests combine their stay with visits to historic castles,
+                  beaches, and nature spots. Depending on the property, you will
+                  typically find comfortable rooms, friendly staff, and a relaxed
+                  atmosphere that suits both short and longer stays.
+                </p>
+              </section>
+
+              {/* Facilities */}
+              <section>
+                <h4 className="text-sm font-semibold uppercase tracking-wide text-blue-900 mb-2">
+                  Facilities
+                </h4>
+                <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                  {defaultFacilities.map((item) => (
+                    <span
+                      key={item}
+                      className="inline-flex items-center rounded-full border border-gray-200 bg-gray-50 px-2.5 py-1 text-[11px] sm:text-xs text-gray-700"
+                    >
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              </section>
+
+              {/* Contact */}
+              <section>
+                <h4 className="text-sm font-semibold uppercase tracking-wide text-blue-900 mb-2">
+                  Contact
+                </h4>
+                <div className="space-y-1 text-sm sm:text-[15px] text-gray-700">
+                  <p>
+                    <span className="font-semibold">Phone:</span>{' '}
+                    <span className="text-gray-600">
+                      Add phone number for this property
+                    </span>
+                  </p>
+                  <p>
+                    <span className="font-semibold">Email:</span>{' '}
+                    <span className="text-gray-600">
+                      Add email address for this property
+                    </span>
+                  </p>
+                  <p>
+                    <span className="font-semibold">Website:</span>{' '}
+                    <span className="text-blue-700">
+                      Add official website link
+                    </span>
+                  </p>
+                  <p>
+                    <span className="font-semibold">Address:</span>{' '}
+                    <span className="text-gray-600">
+                      Add street address / GPS location in Cape Coast
+                    </span>
+                  </p>
+                </div>
+              </section>
+
+              {/* Memberships & certifications */}
+              <section>
+                <h4 className="text-sm font-semibold uppercase tracking-wide text-blue-900 mb-2">
+                  Memberships & certifications
+                </h4>
+                <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                  {defaultMemberships.map((item) => (
+                    <span
+                      key={item}
+                      className="inline-flex items-center rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-[11px] sm:text-xs text-emerald-800"
+                    >
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              </section>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
