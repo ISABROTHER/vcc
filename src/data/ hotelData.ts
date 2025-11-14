@@ -358,4 +358,4 @@ export const FacilityIcon = ({ facility }: { facility: string }): ReactElement =
   if (lowerFacility.includes('cultural'))
     return <Sparkles size={16} className="mr-2 text-blue-600" />;
   return <Check size={16} className="mr-2 text-blue-600" />;
-}; 
+};
