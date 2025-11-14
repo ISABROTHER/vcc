@@ -23,9 +23,19 @@ export default function Hero() {
         </p>
 
         <div className="bg-white rounded-2xl shadow-2xl p-4 max-w-3xl mx-auto">
+          {/* On mobile (flex-col): 
+            - The grid div stacks on top.
+            - The button stacks below.
+            - Inside the grid div, grid-cols-2 places the dropdowns side-by-side.
+            
+            On desktop (md:flex-row):
+            - The grid div is on the left (flex-1).
+            - The button is on the right.
+            - Inside the grid div, grid-cols-2 places the dropdowns side-by-side.
+          */}
           <div className="flex flex-col md:flex-row gap-4">
-            {/* START: New dropdown inputs */}
-            <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-4">
+            {/* START: Updated dropdown inputs */}
+            <div className="flex-1 grid grid-cols-2 gap-4">
               <select className="w-full px-4 py-3 rounded-lg text-gray-800 bg-gray-50 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500">
                 <option value="">Select Month</option>
                 <option value="any">Any Month</option>
@@ -53,15 +63,8 @@ export default function Hero() {
                 <option value="food">Food</option>
                 <option value="creative">Creative</option>
               </select>
-
-              <select className="w-full px-4 py-3 rounded-lg text-gray-800 bg-gray-50 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                <option value="">Sort By (Order)</option>
-                <option value="popular">Popularity</option>
-                <option value="price_asc">Price (Low to High)</option>
-                <option value="price_desc">Price (High to Low)</option>
-              </select>
             </div>
-            {/* END: New dropdown inputs */}
+            {/* END: Updated dropdown inputs (Popularity/Order removed) */}
 
             {/* Updated button */}
             <button className="bg-amber-500 text-white px-6 py-3 rounded-lg hover:bg-amber-600 transition flex items-center justify-center gap-2 font-semibold">
