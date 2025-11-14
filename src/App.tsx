@@ -21,7 +21,7 @@ function App() {
       <CallToAction />
       <Footer />
     </div>
-  );
+  ); 
 }
 
 export default App;
