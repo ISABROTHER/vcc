@@ -37,11 +37,11 @@ export default function Header() {
         </button>
       </div>
 
-      {/* MOBILE DROPDOWN — REDUCED SPEED (500ms) */}
+      {/* MOBILE DROPDOWN — 50% SLOWER */}
       <div
         className={`
           mx-auto w-full max-w-7xl px-6 lg:hidden overflow-hidden
-          transition-all duration-500 
+          transition-all duration-700 
           ease-[cubic-bezier(0.25,1,0.5,1)]
           ${menuOpen ? "max-h-[700px]" : "max-h-0"}
         `}
@@ -52,7 +52,7 @@ export default function Header() {
             bg-yellow-300/20 backdrop-blur-md
             shadow-xl p-6 flex flex-col gap-4
 
-            transform transition-all duration-500 
+            transform transition-all duration-700 
             ease-[cubic-bezier(0.25,1,0.5,1)]
 
             ${menuOpen 
