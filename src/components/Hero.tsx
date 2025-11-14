@@ -24,14 +24,7 @@ export default function Hero() {
 
         {/* START: Improved Search Box */}
         <div className="bg-white/10 backdrop-blur-lg rounded-2xl shadow-2xl p-4 max-w-3xl mx-auto">
-          {/* On mobile (default), this is 'flex-col', stacking the dropdown container and the button.
-            On desktop ('md:'), this becomes 'flex-row' for a horizontal layout.
-          */}
           <div className="flex flex-col md:flex-row gap-4 items-center">
-            {/* Dropdown Container:
-              On mobile (default), this is 'grid-cols-1' (stacked).
-              On desktop ('md:'), this becomes 'grid-cols-2' (side-by-side).
-            */}
             <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
               {/* Month Dropdown */}
               <div className="relative w-full">
@@ -61,7 +54,7 @@ export default function Hero() {
                 />
               </div>
 
-              {/* Activity Dropdown */}
+              {/* Activity Dropdown (NOW WITH REAL DATA & OPTGROUPS) */}
               <div className="relative w-full">
                 <Sparkles
                   size={20}
@@ -70,14 +63,54 @@ export default function Hero() {
                 <select className="w-full pl-12 pr-10 py-3 rounded-lg text-gray-900 bg-white/90 border border-transparent appearance-none focus:outline-none focus:ring-2 focus:ring-amber-500">
                   <option value="">Select Activity</option>
                   <option value="all">All Activities</option>
-                  <option value="canopy_walk">Kakum Canopy Walk</option>
-                  <option value="beach_tours">Beach Tours</option>
-                  <option value="boat_rides">Lagoon/Boat Rides</option>
-                  <option value="nature_trails">Nature Trails</option>
-                  <option value="cultural_immersion">Cultural Immersion</option>
-                  <option value="cooking_classes">Cooking Classes</option>
-                  <option value="fishing_tours">Fishing Community Tours</option>
-                  <option value="photo_tours">Photography Tours</option>
+
+                  <optgroup label="Activities">
+                    <option value="kakum_canopy_walk">Kakum Canopy Walk</option>
+                    <option value="beach_tours">Beach Tours</option>
+                    <option value="lagoon_boat_rides">Lagoon/Boat Rides</option>
+                    <option value="nature_trails">Nature Trails</option>
+                    <option value="cultural_immersion">Cultural Immersion</option>
+                    <option value="cooking_classes">Cooking Classes (Local)</option>
+                    <option value="fishing_community_tours">Fishing Community Tours</option>
+                    <option value="photography_tours">Photography Tours</option>
+                  </optgroup>
+
+                  <optgroup label="Attractions & Landmarks">
+                    <option value="cape_coast_castle">Cape Coast Castle</option>
+                    <option value="elmina_castle">Elmina Castle</option>
+                    <option value="kakum_national_park">Kakum National Park</option>
+                    <option value="hans_cottage">Hans Cottage Crocodile Pond</option>
+                    <option value="assin_manso_slave_river">Assin Manso Slave River</option>
+                    <option value="fort_victoria">Fort Victoria</option>
+                    <option value="fort_william_lighthouse">Fort William (Lighthouse)</option>
+                    <option value="elmina_fishing_harbor">Elmina Fishing Harbor</option>
+                    <option value="brenu_beach">Brenu Beach</option>
+                    <option value="monkey_forest_resort">Monkey Forest Resort</option>
+                  </optgroup>
+
+                  <optgroup label="Culture & Events">
+                    <option value="oguaa_fetu_afahye">Oguaa Fetu Afahye</option>
+                    <option value="panafest">PANAFEST & Emancipation</option>
+                    <option value="bakatue_festival">Bakatue Festival (Elmina)</option>
+                    <option value="cultural_drumming_dance">Cultural Drumming & Dance</option>
+                    <option value="local_artisan_markets">Local Artisan Markets</option>
+                  </optgroup>
+
+                  <optgroup label="Shopping">
+                    <option value="cape_coast_cultural_centre">Cape Coast Cultural Centre</option>
+                    <option value="kotokuraba_market">Kotokuraba Market</option>
+                    <option value="art_wood_carving_shops">Art & Wood Carving Shops</option>
+                  </optgroup>
+
+                  <optgroup label="Eat & Drink">
+                    <option value="akoo_house">Eat at: Akoo House</option>
+                    <option value="hans_cottage_restaurant">Eat at: Hans Cottage</option>
+                    <option value="oasis_beach_restaurant">Eat at: Oasis Beach</option>
+                    <option value="local_chop_bars">Eat at: Local Chop Bars</option>
+                    <option value="castle_cafe">Drink at: Castle Café</option>
+                    <option value="oasis_nightlife">Nightlife: Oasis Nightlife</option>
+                    <option value="beach_bars">Nightlife: Beach Bars</option>
+                  </optgroup>
                 </select>
                 <ChevronDown
                   size={20}
@@ -94,10 +127,6 @@ export default function Hero() {
           </div>
         </div>
         {/* END: Improved Search Box */}
-
-        {/* The section with the filter buttons (Castle Tours, Kakum, etc.) 
-          has been removed as requested. 
-        */}
       </div>
     </section>
   );
