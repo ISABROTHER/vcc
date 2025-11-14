@@ -1,24 +1,31 @@
+import { Routes, Route, Outlet } from 'react-router-dom';
 import Header from './components/Header';
-import Hero from './components/Hero';
-import WhyVisit from './components/WhyVisit';
-import Experiences from './components/Experiences';
-import Heritage from './components/Heritage';
-import Hotels from './components/Hotels';
-import Events from './components/Events';
 import Footer from './components/Footer';
+import HomePage from './pages/HomePage';
+import HeritagePage from './pages/HeritagePage';
+
+// This component ensures the Header and Footer are on every page
+const AppLayout = () => (
+  <div className="min-h-screen">
+    <Header />
+    <main>
+      <Outlet /> {/* This is where your page content (HomePage, HeritagePage, etc.) will be rendered */}
+    </main>
+    <Footer />
+  </div>
+);
 
 function App() {
   return (
-    <div className="min-h-screen">
-      <Header />
-      <Hero />
-      <WhyVisit />
-      <Experiences />
-      <Heritage />
-      <Hotels />
-      <Events />
-      <Footer />
-    </div>
+    <Routes>
+      <Route element={<AppLayout />}>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/heritage" element={<HeritagePage />} />
+        {/* You can add more pages here later, like: */}
+        {/* <Route path="/hotels" element={<HotelsPage />} /> */}
+        {/* <Route path="/events" element={<EventsPage />} /> */}
+      </Route>
+    </Routes>
   );
 }
 
