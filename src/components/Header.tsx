@@ -1,26 +1,49 @@
-import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { useState } from 'react';
+import { Menu, X } from 'lucide-react';
+import { Link, NavLink } from 'react-router-dom';
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
 
+  const closeMenu = () => setMenuOpen(false);
+
+  const navLinkClasses = ({ isActive }: { isActive: boolean }) =>
+    `pb-1 border-b-2 ${
+      isActive
+        ? 'text-yellow-600 border-yellow-600'
+        : 'text-black border-transparent hover:text-yellow-600'
+    } transition-colors duration-200`;
+
   return (
-    <header className="fixed top-0 left-0 w-full z-50 bg-white border-b border-gray-200 shadow-sm">
+    <header className="sticky top-0 left-0 w-full z-50 bg-white border-b border-gray-200 shadow-sm">
       {/* Top Bar */}
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-        
         {/* Logo */}
-        <div className="text-2xl font-semibold tracking-wide text-black">
+        <Link
+          to="/"
+          onClick={closeMenu}
+          className="text-2xl font-semibold tracking-wide text-black"
+        >
           Visit <span className="text-yellow-600">Cape</span> Coast
-        </div>
+        </Link>
 
         {/* Desktop Menu */}
         <nav className="hidden lg:flex items-center gap-10 text-sm font-medium">
-          <a href="#experiences" className="text-black hover:text-yellow-600">Experiences</a>
-          <a href="#heritage" className="text-black hover:text-yellow-600">Heritage</a>
-          <a href="#hotels" className="text-black hover:text-yellow-600">Hotels</a>
-          <a href="#events" className="text-black hover:text-yellow-600">Events</a>
-          <a href="#plan" className="text-black hover:text-yellow-600">Plan Your Trip</a>
+          <NavLink to="/experiences" className={navLinkClasses}>
+            Experiences
+          </NavLink>
+          <NavLink to="/heritage" className={navLinkClasses}>
+            Heritage
+          </NavLink>
+          <NavLink to="/hotels" className={navLinkClasses}>
+            Hotels
+          </NavLink>
+          <NavLink to="/events" className={navLinkClasses}>
+            Events
+          </NavLink>
+          <NavLink to="/plan-trip" className={navLinkClasses}>
+            Plan Your Trip
+          </NavLink>
 
           {/* Desktop Book Button */}
           <button className="px-7 py-2.5 rounded-full font-semibold bg-yellow-600 text-white hover:bg-yellow-700 shadow-md">
@@ -37,13 +60,13 @@ export default function Header() {
         </button>
       </div>
 
-      {/* MOBILE DROPDOWN — 50% SLOWER */}
+      {/* MOBILE DROPDOWN */}
       <div
         className={`
           mx-auto w-full max-w-7xl px-6 lg:hidden overflow-hidden
           transition-all duration-700 
           ease-[cubic-bezier(0.25,1,0.5,1)]
-          ${menuOpen ? "max-h-[700px]" : "max-h-0"}
+          ${menuOpen ? 'max-h-[700px]' : 'max-h-0'}
         `}
       >
         <div
@@ -55,50 +78,52 @@ export default function Header() {
             transform transition-all duration-700 
             ease-[cubic-bezier(0.25,1,0.5,1)]
 
-            ${menuOpen 
-              ? "opacity-100 translate-y-0 scale-100" 
-              : "opacity-0 -translate-y-5 scale-95"}
+            ${
+              menuOpen
+                ? 'opacity-100 translate-y-0 scale-100'
+                : 'opacity-0 -translate-y-5 scale-95'
+            }
           `}
         >
-          <a
-            href="#experiences"
-            onClick={() => setMenuOpen(false)}
+          <Link
+            to="/experiences"
+            onClick={closeMenu}
             className="w-full rounded-xl px-4 py-3 text-left text-base font-medium text-black"
           >
             Experiences
-          </a>
+          </Link>
 
-          <a
-            href="#heritage"
-            onClick={() => setMenuOpen(false)}
+          <Link
+            to="/heritage"
+            onClick={closeMenu}
             className="w-full rounded-xl px-4 py-3 text-left text-base font-medium text-black"
           >
             Heritage
-          </a>
+          </Link>
 
-          <a
-            href="#hotels"
-            onClick={() => setMenuOpen(false)}
+          <Link
+            to="/hotels"
+            onClick={closeMenu}
             className="w-full rounded-xl px-4 py-3 text-left text-base font-medium text-black"
           >
             Hotels
-          </a>
+          </Link>
 
-          <a
-            href="#events"
-            onClick={() => setMenuOpen(false)}
+          <Link
+            to="/events"
+            onClick={closeMenu}
             className="w-full rounded-xl px-4 py-3 text-left text-base font-medium text-black"
           >
             Events
-          </a>
+          </Link>
 
-          <a
-            href="#plan"
-            onClick={() => setMenuOpen(false)}
+          <Link
+            to="/plan-trip"
+            onClick={closeMenu}
             className="w-full rounded-xl px-4 py-3 text-left text-base font-medium text-black"
           >
             Plan Your Trip
-          </a>
+          </Link>
 
           {/* Mobile Book Button */}
           <button className="w-full bg-black text-yellow-400 px-4 py-3 rounded-xl font-semibold shadow-md">
