@@ -12,4 +12,4 @@ export default function EatDrinkPage() {
       </div>
     </div>
   );
-}
+} 
