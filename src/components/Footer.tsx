@@ -1,5 +1,4 @@
 import { Mail, Phone, MapPin, Facebook, Instagram, Twitter } from 'lucide-react';
-import { Link } from 'react-router-dom'; // Import Link
 
 export default function Footer() {
   return (
@@ -26,27 +25,26 @@ export default function Footer() {
 
           <div>
             <h4 className="text-lg font-bold mb-4">Explore</h4>
-            {/* ALL LINKS UPDATED */}
             <ul className="space-y-2 text-blue-200">
               <li>
-                <Link to="/experiences" className="hover:text-white transition">
+                <a href="#experiences" className="hover:text-white transition">
                   Experiences
-                </Link>
+                </a>
               </li>
               <li>
-                <Link to="/heritage" className="hover:text-white transition">
+                <a href="#heritage" className="hover:text-white transition">
                   Heritage
-                </Link>
+                </a>
               </li>
               <li>
-                <Link to="/hotels" className="hover:text-white transition">
+                <a href="#hotels" className="hover:text-white transition">
                   Hotels
-                </Link>
+                </a>
               </li>
               <li>
-                <Link to="/events" className="hover:text-white transition">
+                <a href="#events" className="hover:text-white transition">
                   Events
-                </Link>
+                </a>
               </li>
             </ul>
           </div>
