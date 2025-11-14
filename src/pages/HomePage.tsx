@@ -11,6 +11,9 @@ export default function HomePage() {
     <>
       <Hero />
       <WhyVisit />
+      {/* These components below are still named based on the old files */}
+      {/* You may want to rename src/components/Experiences.tsx to SeeDo.tsx, etc. */}
+      {/* Or, create new components for the homepage sections. */}
       <Experiences />
       <Heritage />
       <Hotels />
