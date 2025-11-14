@@ -174,7 +174,10 @@ export default function Hero() {
             {/* Button: Stacks below on mobile, attaches to the end on desktop */}
             <button className="bg-amber-500 text-white p-3 rounded-lg hover:bg-amber-600 transition flex items-center justify-center gap-2 font-semibold w-full md:w-auto md:ml-2 mt-2 md:mt-0 shadow-lg">
               <Search size={20} />
+              {/* START: Corrected responsive text */}
               <span className="md:hidden">Search</span>
+              <span className="hidden md:inline">Find & book activities</span>
+              {/* END: Corrected responsive text */}
             </button>
           </div>
         </div>
