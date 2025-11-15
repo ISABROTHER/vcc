@@ -1,7 +1,7 @@
 import Hero from '../components/Hero';
 import WhyVisit from '../components/WhyVisit';
 import Experiences from '../components/Experiences';
-import Hotels from '../components/Hotels';
+import Heritage from '../components/Heritage';
 import Events from '../components/Events';
 import CallToAction from '../components/CallToAction';
 
@@ -11,9 +11,9 @@ export default function HomePage() {
       <Hero />
       <WhyVisit />
       <Experiences />
-      <Hotels />
+      <Heritage />
       <Events />
       <CallToAction />
     </>
   );
-} 
+}
