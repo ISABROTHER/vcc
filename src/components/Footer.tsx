@@ -26,52 +26,20 @@ export default function Footer() {
           <div>
             <h4 className="text-lg font-bold mb-4">Explore</h4>
             <ul className="space-y-2 text-blue-200">
-              <li>
-                <a href="#experiences" className="hover:text-white transition">
-                  Experiences
-                </a>
-              </li>
-              <li>
-                <a href="#heritage" className="hover:text-white transition">
-                  Heritage
-                </a>
-              </li>
-              <li>
-                <a href="#hotels" className="hover:text-white transition">
-                  Hotels
-                </a>
-              </li>
-              <li>
-                <a href="#events" className="hover:text-white transition">
-                  Events
-                </a>
-              </li>
+              <li><a href="#experiences" className="hover:text-white transition">Experiences</a></li>
+              <li><a href="#heritage" className="hover:text-white transition">Heritage</a></li>
+              <li><a href="#hotels" className="hover:text-white transition">Hotels</a></li>
+              <li><a href="#events" className="hover:text-white transition">Events</a></li>
             </ul>
           </div>
 
           <div>
             <h4 className="text-lg font-bold mb-4">For Businesses</h4>
             <ul className="space-y-2 text-blue-200">
-              <li>
-                <a href="#" className="hover:text-white transition">
-                  Membership Portal
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-white transition">
-                  List Your Business
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-white transition">
-                  Partnership
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-white transition">
-                  Investment
-                </a>
-              </li>
+              <li><a href="#" className="hover:text-white transition">Membership Portal</a></li>
+              <li><a href="#" className="hover:text-white transition">List Your Business</a></li>
+              <li><a href="#" className="hover:text-white transition">Partnership</a></li>
+              <li><a href="#" className="hover:text-white transition">Investment</a></li>
             </ul>
           </div>
 
