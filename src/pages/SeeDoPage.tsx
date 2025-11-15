@@ -110,19 +110,26 @@ const filterOptions = [
 
 // Reusable Category Card Component
 const CategoryCard: React.FC<{ category: ICategory }> = ({ category }) => (
-  <div className="bg-white border border-gray-200 rounded-2xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl">
-    <div className="p-6">
-      <div className="flex items-center gap-4 mb-5">
-        <category.icon className="w-8 h-8 text-yellow-600" />
-        <h2 className="text-2xl font-semibold text-gray-900">
+  <div className="group bg-white/90 border border-slate-100 rounded-2xl shadow-sm overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 hover:border-amber-500/60">
+    <div className="p-6 sm:p-7">
+      <div className="flex items-center gap-4 mb-6">
+        <div className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-amber-50 border border-amber-100 transition-transform duration-300 group-hover:scale-110 group-hover:bg-amber-100">
+          <category.icon className="w-6 h-6 text-amber-500" />
+        </div>
+        <h2 className="text-xl sm:text-2xl font-semibold tracking-tight text-slate-900">
           {category.title}
         </h2>
       </div>
-      <ul className="space-y-3">
+      <ul className="space-y-2.5">
         {category.items.map((item) => (
-          <li key={item.name} className="flex items-center gap-3">
-            <item.icon className="w-5 h-5 text-gray-500 flex-shrink-0" />
-            <span className="text-base text-gray-700">{item.name}</span>
+          <li
+            key={item.name}
+            className="flex items-center gap-3 rounded-xl px-3 py-2 transition-colors duration-200 hover:bg-slate-50"
+          >
+            <item.icon className="w-5 h-5 text-slate-400 flex-shrink-0" />
+            <span className="text-sm sm:text-base text-slate-700">
+              {item.name}
+            </span>
           </li>
         ))}
       </ul>
@@ -135,25 +142,28 @@ const FilterBar: React.FC<{
   selected: string;
   onSelect: (category: string) => void;
 }> = ({ selected, onSelect }) => (
-  <div className="mb-12">
+  <div className="mb-10 sm:mb-12">
     <div className="overflow-x-auto pb-2">
-      <div className="flex space-x-2 sm:space-x-3">
-        {filterOptions.map((filter) => (
-          <button
-            key={filter}
-            onClick={() => onSelect(filter)}
-            className={`
-              flex-shrink-0 px-5 py-2.5 rounded-full text-sm sm:text-base font-semibold transition-all duration-200
-              ${
-                selected === filter
-                  ? 'bg-gray-900 text-white shadow-md'
-                  : 'bg-white text-gray-700 border border-gray-200 hover:bg-gray-100'
-              }
-            `}
-          >
-            {filter}
-          </button>
-        ))}
+      <div className="inline-flex min-w-full justify-center sm:justify-start">
+        <div className="flex w-full max-w-full gap-2 sm:gap-3">
+          {filterOptions.map((filter) => (
+            <button
+              key={filter}
+              onClick={() => onSelect(filter)}
+              className={`
+                flex-1 sm:flex-none flex-shrink-0 px-4 sm:px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold
+                transition-all duration-200 whitespace-nowrap
+                ${
+                  selected === filter
+                    ? 'bg-slate-900 text-white shadow-md shadow-slate-300/50'
+                    : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-50 hover:border-slate-300 hover:shadow-sm'
+                }
+              `}
+            >
+              {filter}
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   </div>
@@ -161,13 +171,16 @@ const FilterBar: React.FC<{
 
 // No Results Component
 const NoResults = () => (
-  <div className="text-center py-16 px-6 bg-white rounded-2xl border border-gray-200">
-    <SearchX className="mx-auto h-16 w-16 text-gray-400" />
-    <h3 className="mt-4 text-2xl font-semibold text-gray-900">
+  <div className="text-center py-16 px-6 bg-white/90 rounded-2xl border border-slate-100 shadow-sm">
+    <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-slate-50 border border-slate-100">
+      <SearchX className="h-8 w-8 text-slate-400" />
+    </div>
+    <h3 className="mt-5 text-2xl font-semibold text-slate-900">
       No Activities Found
     </h3>
-    <p className="mt-2 text-base text-gray-500">
-      Try selecting a different category, or check back later!
+    <p className="mt-2 text-base text-slate-500 max-w-md mx-auto">
+      Try selecting a different category, or check back later for more ways to
+      explore Cape Coast.
     </p>
   </div>
 );
@@ -185,16 +198,19 @@ export default function SeeDoPage() {
   }, [selectedFilter]);
 
   return (
-    <div className="bg-gray-50 min-h-screen">
-      <div className="mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-slate-50">
+      <div className="mx-auto max-w-7xl px-6 py-14 sm:py-20 lg:px-8">
         {/* Page Header */}
-        <div className="mx-auto max-w-2xl text-center mb-16">
-          <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-            See & Do
+        <div className="mx-auto max-w-2xl text-center mb-12 sm:mb-16">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-500 mb-3">
+            Discover Cape Coast
+          </p>
+          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl bg-gradient-to-r from-slate-900 via-amber-600 to-slate-900 bg-clip-text text-transparent">
+            See &amp; Do
           </h1>
-          <p className="mt-6 text-lg leading-8 text-gray-600">
-            Discover the vibrant culture, thrilling adventures, and unique
-            activities that await you in Cape Coast.
+          <p className="mt-5 text-base sm:text-lg leading-7 sm:leading-8 text-slate-600 max-w-xl mx-auto">
+            Explore vibrant culture, powerful history, and unforgettable
+            experiences — all within Cape Coast and its surroundings.
           </p>
         </div>
 
@@ -203,7 +219,7 @@ export default function SeeDoPage() {
 
         {/* Grid Layout or No Results */}
         {filteredCategories.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3">
             {filteredCategories.map((category) => (
               <CategoryCard key={category.title} category={category} />
             ))}
