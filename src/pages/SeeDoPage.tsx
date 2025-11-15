@@ -14,8 +14,9 @@ import {
   Ticket,
   Smile,
   BookOpen,
+  SearchX,
 } from 'lucide-react';
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 
 // Define types for clarity
 interface IListItem {
@@ -27,10 +28,11 @@ interface ICategory {
   title: string;
   icon: React.ElementType;
   items: IListItem[];
+  tags: string[]; // Tags for filtering
 }
 
 // Data for the page
-const categories: ICategory[] = [
+const allCategories: ICategory[] = [
   {
     title: 'Top Attractions',
     icon: Star,
@@ -42,6 +44,7 @@ const categories: ICategory[] = [
       { name: 'Assin Manso Ancestral Slave River', icon: MapPin },
       { name: 'Beaches & coastlines', icon: Sun },
     ],
+    tags: ['Castles', 'Adventure'],
   },
   {
     title: 'Tours & Experiences',
@@ -55,6 +58,7 @@ const categories: ICategory[] = [
       { name: 'Storytelling & Night Tours', icon: BookOpen },
       { name: 'Diaspora Return/Naming Ceremonies', icon: Users },
     ],
+    tags: ['Tours', 'Cultural', 'Adventure'],
   },
   {
     title: 'Outdoor & Nature',
@@ -66,6 +70,7 @@ const categories: ICategory[] = [
       { name: 'Eco trails', icon: TreePine },
       { name: 'Picnics & adventure experiences', icon: Sun },
     ],
+    tags: ['Adventure'],
   },
   {
     title: 'Arts & Culture',
@@ -77,6 +82,7 @@ const categories: ICategory[] = [
       { name: 'Local craft shops', icon: ShoppingBag },
       { name: 'Live performances', icon: Drum },
     ],
+    tags: ['Cultural', 'Creative'],
   },
   {
     title: 'Family Activities',
@@ -87,7 +93,19 @@ const categories: ICategory[] = [
       { name: 'Museums', icon: BookOpen },
       { name: 'Kids’ history tours', icon: BookOpen },
     ],
+    tags: ['Adventure'],
   },
+];
+
+// Filter categories
+const filterOptions = [
+  'All',
+  'Tours',
+  'Cultural',
+  'Castles',
+  'Adventure',
+  'Food',
+  'Creative',
 ];
 
 // Reusable Category Card Component
@@ -112,7 +130,60 @@ const CategoryCard: React.FC<{ category: ICategory }> = ({ category }) => (
   </div>
 );
 
+// Horizontal Filter Bar Component
+const FilterBar: React.FC<{
+  selected: string;
+  onSelect: (category: string) => void;
+}> = ({ selected, onSelect }) => (
+  <div className="mb-12">
+    <div className="overflow-x-auto pb-2">
+      <div className="flex space-x-2 sm:space-x-3">
+        {filterOptions.map((filter) => (
+          <button
+            key={filter}
+            onClick={() => onSelect(filter)}
+            className={`
+              flex-shrink-0 px-5 py-2.5 rounded-full text-sm sm:text-base font-semibold transition-all duration-200
+              ${
+                selected === filter
+                  ? 'bg-gray-900 text-white shadow-md'
+                  : 'bg-white text-gray-700 border border-gray-200 hover:bg-gray-100'
+              }
+            `}
+          >
+            {filter}
+          </button>
+        ))}
+      </div>
+    </div>
+  </div>
+);
+
+// No Results Component
+const NoResults = () => (
+  <div className="text-center py-16 px-6 bg-white rounded-2xl border border-gray-200">
+    <SearchX className="mx-auto h-16 w-16 text-gray-400" />
+    <h3 className="mt-4 text-2xl font-semibold text-gray-900">
+      No Activities Found
+    </h3>
+    <p className="mt-2 text-base text-gray-500">
+      Try selecting a different category, or check back later!
+    </p>
+  </div>
+);
+
 export default function SeeDoPage() {
+  const [selectedFilter, setSelectedFilter] = useState('All');
+
+  const filteredCategories = useMemo(() => {
+    if (selectedFilter === 'All') {
+      return allCategories;
+    }
+    return allCategories.filter((category) =>
+      category.tags.includes(selectedFilter),
+    );
+  }, [selectedFilter]);
+
   return (
     <div className="bg-gray-50 min-h-screen">
       <div className="mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:px-8">
@@ -127,13 +198,20 @@ export default function SeeDoPage() {
           </p>
         </div>
 
-        {/* Grid Layout for Categories */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {categories.map((category) => (
-            <CategoryCard key={category.title} category={category} />
-          ))}
-        </div>
+        {/* Filter Bar */}
+        <FilterBar selected={selectedFilter} onSelect={setSelectedFilter} />
+
+        {/* Grid Layout or No Results */}
+        {filteredCategories.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredCategories.map((category) => (
+              <CategoryCard key={category.title} category={category} />
+            ))}
+          </div>
+        ) : (
+          <NoResults />
+        )}
       </div>
     </div>
   );
-} 
+}
