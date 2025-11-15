@@ -1,52 +1,35 @@
 import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
-import { Link, NavLink } from 'react-router-dom';
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const closeMenu = () => setMenuOpen(false);
-
-  const navLinkClasses = ({ isActive }: { isActive: boolean }) =>
-    `pb-1 border-b-2 ${
-      isActive
-        ? 'text-yellow-600 border-yellow-600'
-        : 'text-black border-transparent hover:text-yellow-600'
-    } transition-colors duration-200`;
-
   return (
-    <header className="sticky top-0 left-0 w-full z-50 bg-white border-b border-gray-200 shadow-sm">
+    <header className="fixed top-0 left-0 w-full z-50 bg-white border-b border-gray-200 shadow-sm">
       {/* Top Bar */}
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
         {/* Logo */}
-        <Link
-          to="/"
-          onClick={closeMenu}
-          className="text-2xl font-semibold tracking-wide text-black"
-        >
+        <div className="text-2xl font-semibold tracking-wide text-black">
           Visit <span className="text-yellow-600">Cape</span> Coast
-        </Link>
+        </div>
 
         {/* Desktop Menu */}
         <nav className="hidden lg:flex items-center gap-10 text-sm font-medium">
-          <NavLink to="/see-do" className={navLinkClasses}>
-            See & Do
-          </NavLink>
-          <NavLink to="/accommodation" className={navLinkClasses}>
-            Accommodation
-          </NavLink>
-          <NavLink to="/eat-drink" className={navLinkClasses}>
-            Eat & Drink
-          </NavLink>
-          <NavLink to="/plan-trip" className={navLinkClasses}>
-            Plan your trip
-          </NavLink>
-          <NavLink to="/tourist-info" className={navLinkClasses}>
-            Tourist Info
-          </NavLink>
-          <NavLink to="/partners" className={navLinkClasses}>
-            Our Partners
-          </NavLink>
+          <a href="#experiences" className="text-black hover:text-yellow-600">
+            Experiences
+          </a>
+          <a href="#heritage" className="text-black hover:text-yellow-600">
+            Heritage
+          </a>
+          <a href="#hotels" className="text-black hover:text-yellow-600">
+            Hotels
+          </a>
+          <a href="#events" className="text-black hover:text-yellow-600">
+            Events
+          </a>
+          <a href="#plan" className="text-black hover:text-yellow-600">
+            Plan Your Trip
+          </a>
 
           {/* Desktop Book Button */}
           <button className="px-7 py-2.5 rounded-full font-semibold bg-yellow-600 text-white hover:bg-yellow-700 shadow-md">
@@ -63,12 +46,12 @@ export default function Header() {
         </button>
       </div>
 
-      {/* MOBILE DROPDOWN */}
+      {/* MOBILE DROPDOWN — TOP 1% SLOW MOTION */}
       <div
         className={`
           mx-auto w-full max-w-7xl px-6 lg:hidden overflow-hidden
-          transition-all duration-700 
-          ease-[cubic-bezier(0.25,1,0.5,1)]
+          transition-all duration-500 
+          ease-[cubic-bezier(0.22,1,0.36,1)]
           ${menuOpen ? 'max-h-[700px]' : 'max-h-0'}
         `}
       >
@@ -78,8 +61,8 @@ export default function Header() {
             bg-yellow-300/20 backdrop-blur-md
             shadow-xl p-6 flex flex-col gap-4
 
-            transform transition-all duration-700 
-            ease-[cubic-bezier(0.25,1,0.5,1)]
+            transform transition-all duration-500 
+            ease-[cubic-bezier(0.22,1,0.36,1)]
 
             ${
               menuOpen
@@ -88,53 +71,45 @@ export default function Header() {
             }
           `}
         >
-          <Link
-            to="/see-do"
-            onClick={closeMenu}
+          <a
+            href="#experiences"
+            onClick={() => setMenuOpen(false)}
             className="w-full rounded-xl px-4 py-3 text-left text-base font-medium text-black"
           >
-            See & Do
-          </Link>
+            Experiences
+          </a>
 
-          <Link
-            to="/accommodation"
-            onClick={closeMenu}
+          <a
+            href="#heritage"
+            onClick={() => setMenuOpen(false)}
             className="w-full rounded-xl px-4 py-3 text-left text-base font-medium text-black"
           >
-            Accommodation
-          </Link>
+            Heritage
+          </a>
 
-          <Link
-            to="/eat-drink"
-            onClick={closeMenu}
+          <a
+            href="#hotels"
+            onClick={() => setMenuOpen(false)}
             className="w-full rounded-xl px-4 py-3 text-left text-base font-medium text-black"
           >
-            Eat & Drink
-          </Link>
+            Hotels
+          </a>
 
-          <Link
-            to="/plan-trip"
-            onClick={closeMenu}
+          <a
+            href="#events"
+            onClick={() => setMenuOpen(false)}
             className="w-full rounded-xl px-4 py-3 text-left text-base font-medium text-black"
           >
-            Plan your trip
-          </Link>
+            Events
+          </a>
 
-          <Link
-            to="/tourist-info"
-            onClick={closeMenu}
+          <a
+            href="#plan"
+            onClick={() => setMenuOpen(false)}
             className="w-full rounded-xl px-4 py-3 text-left text-base font-medium text-black"
           >
-            Tourist Info
-          </Link>
-
-          <Link
-            to="/partners"
-            onClick={closeMenu}
-            className="w-full rounded-xl px-4 py-3 text-left text-base font-medium text-black"
-          >
-            Our Partners
-          </Link>
+            Plan Your Trip
+          </a>
 
           {/* Mobile Book Button */}
           <button className="w-full bg-black text-yellow-400 px-4 py-3 rounded-xl font-semibold shadow-md">
