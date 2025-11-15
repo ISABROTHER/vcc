@@ -113,14 +113,14 @@ export default function AccommodationPage() {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-slate-50">
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-slate-50 font-sans">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
         {/* Header */}
         <div className="mx-auto max-w-3xl text-center mb-10 sm:mb-12">
           <p className="text-xs font-semibold uppercase tracking-[0.25em] text-amber-500 mb-3">
             Stay in Cape Coast
           </p>
-          <h1 className="text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl md:text-6xl">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-slate-900">
             Places to stay
           </h1>
           <p className="mt-5 text-base sm:text-lg leading-7 sm:leading-8 text-slate-600">
@@ -144,20 +144,20 @@ export default function AccommodationPage() {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 placeholder="Search by name, area or facilities..."
-                className="w-full rounded-full border border-slate-200 bg-white/90 pl-12 pr-4 py-2.5 text-sm sm:text-[15px] text-slate-800 shadow-sm outline-none transition-all duration-200 placeholder:text-slate-400 focus:border-amber-500 focus:ring-2 focus:ring-amber-100"
+                className="w-full rounded-full border border-slate-200 bg-white/90 pl-12 pr-4 py-2.5 text-sm text-slate-800 shadow-sm outline-none transition-all duration-200 placeholder:text-slate-400 focus:border-amber-500 focus:ring-2 focus:ring-amber-100"
               />
             </div>
           </div>
         </div>
 
         {/* Category filter */}
-        <div className="mb-6 sm:mb-8">
+        <div className="mb-8">
           <div className="flex flex-wrap justify-center gap-2 sm:gap-3">
             {categories.map((category) => (
               <button
                 key={category.id}
                 onClick={() => setSelectedCategory(category.id)}
-                className={`px-4 sm:px-5 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 ${
+                className={`px-4 sm:px-5 py-2 rounded-full text-sm font-semibold transition-all duration-200 ${
                   selectedCategory === category.id
                     ? 'bg-slate-900 text-white shadow-md shadow-slate-300/40'
                     : 'bg-white text-slate-700 border border-slate-200 hover:border-amber-500 hover:text-amber-700 hover:shadow-sm'
@@ -170,13 +170,13 @@ export default function AccommodationPage() {
         </div>
 
         {/* Amenity chips */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between mb-2">
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
+        <div className="mb-10">
+          <div className="flex items-center justify-between mb-3">
+            <p className="text-sm font-semibold text-slate-700">
               Amenities
             </p>
           </div>
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-3">
             {amenityChips.map((amenity) => {
               const active = amenityFilters.includes(amenity);
               return (
@@ -184,7 +184,7 @@ export default function AccommodationPage() {
                   key={amenity}
                   type="button"
                   onClick={() => toggleAmenityFilter(amenity)}
-                  className={`inline-flex items-center gap-1 rounded-full border px-3 py-1.5 text-xs font-medium transition-all ${
+                  className={`inline-flex items-center gap-1 rounded-full border px-4 py-1.5 text-sm font-medium transition-all ${
                     active
                       ? 'border-amber-500 bg-amber-50 text-amber-700 shadow-sm'
                       : 'border-slate-200 bg-white text-slate-700 hover:border-amber-400 hover:bg-amber-50/60 hover:text-amber-700'
@@ -203,10 +203,10 @@ export default function AccommodationPage() {
         </div>
 
         {/* Main layout: list + sidebar */}
-        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.7fr)_minmax(0,0.9fr)] gap-8 lg:items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.7fr)_minmax(0,0.9fr)] gap-10 lg:items-start">
           {/* List view */}
           <div>
-            <div className="grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-2">
+            <div className="grid grid-cols-1 gap-8 sm:gap-10 md:grid-cols-2">
               {filteredAccommodations.map((hotel) => {
                 const isSaved = savedIds.includes(hotel.id);
                 const inTrip = tripPlanIds.includes(hotel.id);
@@ -219,7 +219,7 @@ export default function AccommodationPage() {
                   >
                     {/* Image / gallery trigger */}
                     <div
-                      className="relative h-56 sm:h-64 cursor-pointer overflow-hidden"
+                      className="relative h-60 sm:h-72 cursor-pointer overflow-hidden"
                       onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
@@ -232,7 +232,7 @@ export default function AccommodationPage() {
                         className="h-full w-full transform object-cover transition duration-500 group-hover:scale-110"
                       />
                       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/45 via-black/10 to-transparent opacity-80 group-hover:opacity-90 transition-opacity" />
-                      <div className="absolute inset-x-4 bottom-4 flex items-center justify-between gap-3">
+                      <div className="absolute inset-x-5 bottom-5 flex items-center justify-between gap-3">
                         <div className="max-w-[70%]">
                           <p className="line-clamp-1 text-[11px] font-medium uppercase tracking-wide text-white/70">
                             Cape Coast • Curated stay
@@ -260,16 +260,16 @@ export default function AccommodationPage() {
                     </div>
 
                     {/* Card body – ONLY name, description, actions */}
-                    <div className="flex flex-1 flex-col p-5 sm:p-6">
+                    <div className="flex flex-1 flex-col p-6 sm:p-7">
                       <h3 className="text-lg sm:text-xl font-semibold text-slate-900 group-hover:text-amber-700 transition-colors">
                         {hotel.name}
                       </h3>
-                      <p className="mt-2 text-sm sm:text-[15px] text-slate-600 line-clamp-3">
+                      <p className="mt-3 text-sm sm:text-[15px] text-slate-600 leading-relaxed line-clamp-4">
                         {hotel.description}
                       </p>
 
                       {/* Actions: Add to trip plan + View details */}
-                      <div className="mt-5 flex items-center gap-3 border-t border-slate-100 pt-4">
+                      <div className="mt-6 flex items-center gap-3 border-t border-slate-100 pt-4">
                         <button
                           type="button"
                           onClick={(e) => {
@@ -277,7 +277,7 @@ export default function AccommodationPage() {
                             e.stopPropagation();
                             toggleTripPlan(hotel.id);
                           }}
-                          className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-semibold transition-all ${
+                          className={`inline-flex items-center gap-1.5 rounded-full border px-4 py-1.5 text-sm font-semibold transition-all ${
                             inTrip
                               ? 'border-emerald-500 bg-emerald-50 text-emerald-700'
                               : 'border-slate-200 bg-white text-slate-700 hover:border-emerald-500 hover:bg-emerald-50 hover:text-emerald-700'
@@ -287,7 +287,7 @@ export default function AccommodationPage() {
                           {inTrip ? 'In trip plan' : 'Add to trip plan'}
                         </button>
 
-                        <span className="ml-auto text-xs font-medium uppercase tracking-[0.18em] text-slate-400">
+                        <span className="ml-auto text-xs sm:text-sm font-medium uppercase tracking-[0.18em] text-slate-400">
                           View details
                         </span>
                       </div>
@@ -298,11 +298,11 @@ export default function AccommodationPage() {
             </div>
 
             {filteredAccommodations.length === 0 && (
-              <div className="mt-10 rounded-2xl border border-slate-100 bg-white/95 py-12 px-6 text-center shadow-sm">
+              <div className="mt-12 rounded-2xl border border-slate-100 bg-white/95 py-14 px-6 text-center shadow-sm">
                 <p className="text-sm font-semibold text-slate-900">
                   No accommodations found.
                 </p>
-                <p className="mt-2 text-sm text-slate-500">
+                <p className="mt-3 text-sm text-slate-500">
                   Try clearing some filters or adjusting your search to discover
                   more places to stay in Cape Coast.
                 </p>
@@ -311,25 +311,25 @@ export default function AccommodationPage() {
           </div>
 
           {/* Right sidebar: trip plan + summary */}
-          <div className="space-y-6 lg:sticky lg:top-24">
+          <div className="space-y-8 lg:sticky lg:top-24">
             {/* Trip plan card */}
-            <div className="rounded-2xl border border-slate-100 bg-white/95 p-5 shadow-sm">
-              <p className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
+            <div className="rounded-2xl border border-slate-100 bg-white/95 p-6 shadow-sm">
+              <p className="mb-4 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
                 Trip plan
               </p>
               {tripHotels.length === 0 ? (
-                <p className="text-sm text-slate-500">
+                <p className="text-sm text-slate-500 leading-relaxed">
                   Add stays to your trip plan to keep track of your favourite
                   options for Cape Coast.
                 </p>
               ) : (
-                <div className="space-y-3">
+                <div className="space-y-4">
                   {tripHotels.map((hotel) => (
                     <div
                       key={hotel.id}
-                      className="flex items-center gap-3 rounded-xl border border-slate-100 bg-slate-50/80 p-3"
+                      className="flex items-center gap-3 rounded-xl border border-slate-100 bg-slate-50/80 p-4"
                     >
-                      <div className="h-10 w-10 flex-shrink-0 overflow-hidden rounded-lg bg-slate-100">
+                      <div className="h-12 w-12 flex-shrink-0 overflow-hidden rounded-lg bg-slate-100">
                         <img
                           src={hotel.image_url}
                           alt={hotel.name}
@@ -353,7 +353,7 @@ export default function AccommodationPage() {
                       </button>
                     </div>
                   ))}
-                  <p className="pt-1 text-xs text-slate-500">
+                  <p className="pt-1 text-xs text-slate-500 leading-relaxed">
                     You can share this list with your travel companions or your
                     destination manager later.
                   </p>
@@ -362,11 +362,11 @@ export default function AccommodationPage() {
             </div>
 
             {/* Small summary card */}
-            <div className="rounded-2xl border border-slate-100 bg-white/95 p-5 shadow-sm">
-              <p className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
+            <div className="rounded-2xl border border-slate-100 bg-white/95 p-6 shadow-sm">
+              <p className="mb-4 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
                 Your selection
               </p>
-              <div className="space-y-2 text-sm text-slate-700">
+              <div className="space-y-3 text-sm text-slate-700">
                 <p>
                   <span className="font-semibold text-slate-900">
                     {filteredAccommodations.length}
@@ -391,16 +391,16 @@ export default function AccommodationPage() {
         </div>
 
         {/* FAQ / SEO section */}
-        <div className="mt-12 sm:mt-16">
-          <div className="mx-auto max-w-3xl rounded-2xl border border-slate-100 bg-white/95 p-5 sm:p-6 shadow-sm">
-            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
+        <div className="mt-14 sm:mt-18">
+          <div className="mx-auto max-w-3xl rounded-2xl border border-slate-100 bg-white/95 p-6 sm:p-7 shadow-sm">
+            <p className="mb-4 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
               Accommodation in Cape Coast — FAQ
             </p>
             <div className="divide-y divide-slate-100">
               {faqItems.map((item) => {
                 const open = openFaq === item.id;
                 return (
-                  <div key={item.id} className="py-3">
+                  <div key={item.id} className="py-4">
                     <button
                       type="button"
                       onClick={() =>
@@ -420,7 +420,7 @@ export default function AccommodationPage() {
                       />
                     </button>
                     {open && (
-                      <p className="mt-2 text-sm text-slate-600">
+                      <p className="mt-3 text-sm text-slate-600 leading-relaxed">
                         {item.answer}
                       </p>
                     )}
@@ -433,7 +433,7 @@ export default function AccommodationPage() {
       </div>
 
       {/* Mobile sticky summary bar */}
-      <div className="fixed inset-x-0 bottom-0 z-20 block border-t border-slate-200 bg-white/95 px-4 py-2.5 shadow-[0_-4px_18px_rgba(15,23,42,0.08)] sm:hidden">
+      <div className="fixed inset-x-0 bottom-0 z-20 block border-t border-slate-200 bg-white/95 px-4 py-3 shadow-[0_-4px_18px_rgba(15,23,42,0.08)] sm:hidden">
         <div className="mx-auto flex max-w-3xl items-center justify-between text-[11px] font-medium text-slate-700">
           <span>
             {filteredAccommodations.length} stays • {savedIds.length} saved
