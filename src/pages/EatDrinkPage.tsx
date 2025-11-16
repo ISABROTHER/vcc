@@ -376,57 +376,11 @@ export default function EatDrinkPage() {
           </p>
         </header>
 
-        {/* Highlight cards – clickable, warmer Cape Coast colours */}
+        {/* 3 highlight cards – Bar & pub / Café / Restaurant */}
         <section
-          aria-label="Featured food and drink experiences"
-          className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-3"
+          aria-label="Featured food and drink categories"
+          className="mt-12 grid gap-8 sm:grid-cols-3"
         >
-          {/* All categories */}
-          <button
-            type="button"
-            onClick={() => setActiveCategory("all")}
-            className="relative h-60 w-full overflow-hidden rounded-xl text-left shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
-          >
-            <img
-              src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1500"
-              className="h-full w-full object-cover"
-              alt="The taste of Cape Coast"
-            />
-            <div className="absolute bottom-0 left-0 w-[85%] rounded-tr-xl bg-amber-50/95 p-4 border-t border-r border-amber-100">
-              <h3 className="font-semibold text-gray-900">
-                The taste of Cape Coast
-              </h3>
-              <p className="text-sm text-gray-700">
-                Discover authentic traditions and local ingredients.
-              </p>
-              <p className="mt-1 text-xs font-medium text-amber-700">
-                View all categories →
-              </p>
-            </div>
-          </button>
-
-          {/* Restaurant / affordable */}
-          <button
-            type="button"
-            onClick={() => setActiveCategory("restaurant")}
-            className="relative h-60 w-full overflow-hidden rounded-xl text-left shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
-          >
-            <img
-              src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1500"
-              className="h-full w-full object-cover"
-              alt="Easy & affordable"
-            />
-            <div className="absolute bottom-0 left-0 w-[85%] rounded-tr-xl bg-amber-50/95 p-4 border-t border-r border-amber-100">
-              <h3 className="font-semibold text-gray-900">Easy &amp; affordable</h3>
-              <p className="text-sm text-gray-700">
-                Recommendations for low-cost, simple, friendly spots.
-              </p>
-              <p className="mt-1 text-xs font-medium text-amber-700">
-                Show restaurants →
-              </p>
-            </div>
-          </button>
-
           {/* Bar & pub */}
           <button
             type="button"
@@ -436,14 +390,12 @@ export default function EatDrinkPage() {
             <img
               src="https://images.unsplash.com/photo-1552566626-52f8b828add9?q=80&w=1500"
               className="h-full w-full object-cover"
-              alt="Bars, pubs and nightlife"
+              alt="Bars and pubs in Cape Coast"
             />
             <div className="absolute bottom-0 left-0 w-[85%] rounded-tr-xl bg-amber-50/95 p-4 border-t border-r border-amber-100">
-              <h3 className="font-semibold text-gray-900">
-                Bars, pubs &amp; nightlife
-              </h3>
+              <h3 className="font-semibold text-gray-900">Bars &amp; pubs</h3>
               <p className="text-sm text-gray-700">
-                Social spots for drinks, dancing and good company.
+                Beach bars, rooftop spots and lively pubs for evenings out.
               </p>
               <p className="mt-1 text-xs font-medium text-amber-700">
                 Show bars &amp; pubs →
@@ -460,12 +412,12 @@ export default function EatDrinkPage() {
             <img
               src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=1500"
               className="h-full w-full object-cover"
-              alt="Coffee & cake"
+              alt="Cafés in Cape Coast"
             />
             <div className="absolute bottom-0 left-0 w-[85%] rounded-tr-xl bg-amber-50/95 p-4 border-t border-r border-amber-100">
-              <h3 className="font-semibold text-gray-900">Coffee &amp; cake</h3>
+              <h3 className="font-semibold text-gray-900">Cafés</h3>
               <p className="text-sm text-gray-700">
-                Perfect for brunch, pastries or chilled café moments.
+                Coffee, pastries and light bites in cosy, relaxed spaces.
               </p>
               <p className="mt-1 text-xs font-medium text-amber-700">
                 Show cafés →
@@ -473,31 +425,7 @@ export default function EatDrinkPage() {
             </div>
           </button>
 
-          {/* Restaurant – vegan/veg */}
-          <button
-            type="button"
-            onClick={() => setActiveCategory("restaurant")}
-            className="relative h-60 w-full overflow-hidden rounded-xl text-left shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
-          >
-            <img
-              src="https://images.unsplash.com/photo-1604908177225-df3b3f0c39eb?q=80&w=1500"
-              className="h-full w-full object-cover"
-              alt="Vegan & vegetarian dishes"
-            />
-            <div className="absolute bottom-0 left-0 w-[85%] rounded-tr-xl bg-amber-50/95 p-4 border-t border-r border-amber-100">
-              <h3 className="font-semibold text-gray-900">
-                Vegan &amp; vegetarian
-              </h3>
-              <p className="text-sm text-gray-700">
-                Healthy and creative plant-based options around town.
-              </p>
-              <p className="mt-1 text-xs font-medium text-amber-700">
-                Show restaurants →
-              </p>
-            </div>
-          </button>
-
-          {/* Restaurant – all restaurants */}
+          {/* Restaurant */}
           <button
             type="button"
             onClick={() => setActiveCategory("restaurant")}
@@ -506,12 +434,12 @@ export default function EatDrinkPage() {
             <img
               src="https://images.unsplash.com/photo-1553621042-f6e147245754?q=80&w=1500"
               className="h-full w-full object-cover"
-              alt="All restaurants overview"
+              alt="Restaurants in Cape Coast"
             />
             <div className="absolute bottom-0 left-0 w-[85%] rounded-tr-xl bg-amber-50/95 p-4 border-t border-r border-amber-100">
-              <h3 className="font-semibold text-gray-900">All restaurants</h3>
+              <h3 className="font-semibold text-gray-900">Restaurants</h3>
               <p className="text-sm text-gray-700">
-                Full overview of every place to eat in Cape Coast.
+                From local chop bars to elegant dining with ocean views.
               </p>
               <p className="mt-1 text-xs font-medium text-amber-700">
                 Show restaurants →
