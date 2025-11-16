@@ -14,7 +14,7 @@ import {
   Ticket,
   Smile,
   BookOpen,
-  SearchX,
+  Search, // Changed from SearchX
 } from 'lucide-react';
 import React, { useState, useMemo } from 'react';
 
@@ -413,7 +413,7 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({
 }) => {
   return (
     <article className="group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:shadow-lg hover:border-amber-200">
-      <div className="relative aspect-[4/3] w-full overflow-hidden">
+      <div className="relative aspect-[3/4] w-full overflow-hidden">
         <img
           src={experience.imageUrl}
           alt={experience.name}
@@ -443,7 +443,11 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({
             <div className="mt-2 flex items-center gap-2">
               <button
                 type="button"
-                onClick={onToggleTrip}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  onToggleTrip();
+                }}
                 className={`inline-flex items-center justify-center rounded-full px-3 py-1 text-[10px] sm:text-xs font-semibold border transition ${
                   inTripPlan
                     ? 'border-emerald-500 bg-emerald-50/90 text-emerald-900'
@@ -503,7 +507,7 @@ const FilterBar: React.FC<{
 const NoResults = () => (
   <div className="text-center py-16 px-6 bg-white/90 rounded-2xl border border-slate-100 shadow-sm">
     <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-slate-50 border border-slate-100">
-      <SearchX className="h-8 w-8 text-slate-400" />
+      <Search className="h-8 w-8 text-slate-400" />
     </div>
     <h3 className="mt-5 text-2xl font-semibold text-slate-900">
       No Activities Found
@@ -575,7 +579,7 @@ export default function SeeDoPage() {
               </label>
               <div className="relative">
                 <div className="pointer-events-none absolute inset-y-0 left-3 flex items-center">
-                  <SearchX className="h-4 w-4 text-slate-400" />
+                  <Search className="h-4 w-4 text-slate-400" />
                 </div>
                 <input
                   type="text"
@@ -661,7 +665,7 @@ export default function SeeDoPage() {
               )}
             </div>
           </aside>
-        </div> 
+        </div>
       </div>
     </div>
   );
