@@ -14,7 +14,7 @@ import {
   Ticket,
   Smile,
   BookOpen,
-  Search, // Changed from SearchX
+  Search, // Import Search icon
 } from 'lucide-react';
 import React, { useState, useMemo } from 'react';
 
@@ -413,7 +413,7 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({
 }) => {
   return (
     <article className="group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:shadow-lg hover:border-amber-200">
-      <div className="relative aspect-[3/4] w-full overflow-hidden">
+      <div className="relative aspect-[4/3] w-full overflow-hidden">
         <img
           src={experience.imageUrl}
           alt={experience.name}
@@ -662,7 +662,7 @@ export default function SeeDoPage() {
                     </div>
                   ))}
                 </div>
-              )} 
+              )}
             </div>
           </aside>
         </div>
