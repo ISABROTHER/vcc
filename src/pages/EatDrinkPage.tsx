@@ -756,7 +756,7 @@ export default function EatDrinkPage() {
                         >
                           View details
                         </button>
-                      </div> 
+                      </div>
                     </article>
                   );
                 })}
@@ -768,4 +768,3 @@ export default function EatDrinkPage() {
     </div>
   );
 }
- 
