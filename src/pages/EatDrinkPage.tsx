@@ -372,7 +372,98 @@ export default function EatDrinkPage() {
                 </div>
               )}
             </div>
+{/* Highlighted category cards (Oslo-style) */}
+<div className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
+  {/* Card 1 */}
+  <div className="relative h-60 w-full overflow-hidden rounded-lg">
+    <img
+      src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1500"
+      className="h-full w-full object-cover"
+      alt="The taste of Cape Coast"
+    />
+    <div className="absolute bottom-0 left-0 w-[85%] bg-[#D9F3F0] p-4">
+      <h3 className="font-semibold text-gray-900">The taste of Cape Coast</h3>
+      <p className="text-sm text-gray-700">
+        Discover authentic traditions and local ingredients.
+      </p>
+    </div>
+  </div>
 
+  {/* Card 2 */}
+  <div className="relative h-60 w-full overflow-hidden rounded-lg">
+    <img
+      src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1500"
+      className="h-full w-full object-cover"
+      alt="Easy & affordable"
+    />
+    <div className="absolute bottom-0 left-0 w-[85%] bg-[#D9F3F0] p-4">
+      <h3 className="font-semibold text-gray-900">Easy & affordable</h3>
+      <p className="text-sm text-gray-700">
+        Recommendations for low-cost, simple, friendly spots.
+      </p>
+    </div>
+  </div>
+
+  {/* Card 3 */}
+  <div className="relative h-60 w-full overflow-hidden rounded-lg">
+    <img
+      src="https://images.unsplash.com/photo-1552566626-52f8b828add9?q=80&w=1500"
+      className="h-full w-full object-cover"
+      alt="Bars, pubs and nightlife"
+    />
+    <div className="absolute bottom-0 left-0 w-[85%] bg-[#D9F3F0] p-4">
+      <h3 className="font-semibold text-gray-900">Bars, pubs & nightlife</h3>
+      <p className="text-sm text-gray-700">
+        Social spots for drinks, dancing and good company.
+      </p>
+    </div>
+  </div>
+
+  {/* Card 4 */}
+  <div className="relative h-60 w-full overflow-hidden rounded-lg">
+    <img
+      src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=1500"
+      className="h-full w-full object-cover"
+      alt="Coffee & Cake"
+    />
+    <div className="absolute bottom-0 left-0 w-[85%] bg-[#D9F3F0] p-4">
+      <h3 className="font-semibold text-gray-900">Coffee & Cake</h3>
+      <p className="text-sm text-gray-700">
+        Perfect for brunch, pastries or chilled café moments.
+      </p>
+    </div>
+  </div>
+
+  {/* Card 5 */}
+  <div className="relative h-60 w-full overflow-hidden rounded-lg">
+    <img
+      src="https://images.unsplash.com/photo-1604908177225-df3b3f0c39eb?q=80&w=1500"
+      className="h-full w-full object-cover"
+      alt="Vegan & Vegetarian"
+    />
+    <div className="absolute bottom-0 left-0 w-[85%] bg-[#D9F3F0] p-4">
+      <h3 className="font-semibold text-gray-900">Vegan & Vegetarian</h3>
+      <p className="text-sm text-gray-700">
+        Healthy and creative plant-based options around town.
+      </p>
+    </div>
+  </div>
+
+  {/* Card 6 */}
+  <div className="relative h-60 w-full overflow-hidden rounded-lg">
+    <img
+      src="https://images.unsplash.com/photo-1553621042-f6e147245754?q=80&w=1500"
+      className="h-full w-full object-cover"
+      alt="All restaurants"
+    />
+    <div className="absolute bottom-0 left-0 w-[85%] bg-[#D9F3F0] p-4">
+      <h3 className="font-semibold text-gray-900">All restaurants</h3>
+      <p className="text-sm text-gray-700">
+        Full overview of every place to eat in Cape Coast.
+      </p>
+    </div>
+  </div>
+</div>
             {/* View mode toggle */}
             <div className="flex items-center justify-start gap-6 text-sm text-gray-600 md:justify-end">
               <button
