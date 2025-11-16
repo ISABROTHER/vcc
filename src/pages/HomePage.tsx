@@ -32,8 +32,8 @@ const gridItems = [
     color: 'bg-teal-100',
   },
   {
-    title: 'Restaurants',
-    description: 'Local favourites, seafood spots and cafés.',
+    title: 'Food & Drinks',
+    description: 'Local favourites, seafood spots, cafés and bars.',
     icon: ChefHat,
     href: '/eat-drink',
     color: 'bg-sky-100',
@@ -80,15 +80,15 @@ const EssentialExplorerGrid = () => {
               key={item.title}
               to={item.href}
               aria-label={item.title}
-              className={`group flex flex-col items-center justify-center rounded-2xl px-4 py-6 sm:px-6 sm:py-8 ${item.color} transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(15,23,42,0.12)]`}
+              className={`group relative flex flex-col items-center justify-center rounded-2xl px-4 py-6 sm:px-6 sm:py-8 ${item.color} transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-[1.02] hover:shadow-[0_18px_40px_rgba(15,23,42,0.12)]`}
             >
-              <div className="flex h-16 w-16 sm:h-20 sm:w-20 items-center justify-center rounded-full border-2 border-slate-900 bg-white/80 transition-transform duration-300 group-hover:scale-110">
+              <div className="flex h-16 w-16 sm:h-20 sm:w-20 items-center justify-center rounded-full border-2 border-slate-900 bg-white/80 transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-3 animate-pulse sm:animate-none">
                 <item.icon className="h-8 w-8 sm:h-9 sm:w-9 text-slate-900" strokeWidth={1.7} />
               </div>
-              <p className="mt-4 text-center text-sm sm:text-lg font-semibold tracking-tight text-slate-900">
+              <p className="mt-4 text-center text-sm sm:text-lg font-semibold tracking-tight text-slate-900 transition-colors duration-300 group-hover:text-slate-950">
                 {item.title}
               </p>
-              <p className="mt-1.5 text-center text-[11px] sm:text-sm leading-snug text-slate-700/90 max-w-xs">
+              <p className="mt-1.5 text-center text-[11px] sm:text-sm leading-snug text-slate-700/90 max-w-xs transition-opacity duration-300 group-hover:opacity-100">
                 {item.description}
               </p>
             </Link>
