@@ -405,7 +405,7 @@ interface ExperienceCardProps {
   onToggleTrip: () => void;
 }
 
-// Experience Card Component — portrait image, all info on picture
+// Experience Card Component — portrait image, bold name + all info on overlay
 const ExperienceCard: React.FC<ExperienceCardProps> = ({
   experience,
   inTripPlan,
@@ -420,7 +420,7 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({
           className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
         />
         {/* Dark gradient */}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/85 via-black/45 to-transparent" />
 
         {/* Top category chip */}
         <div className="absolute left-3 right-3 top-3 flex items-center justify-between gap-2">
@@ -429,15 +429,31 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({
           </span>
         </div>
 
-        {/* Bottom overlay: name, description, buttons */}
+        {/* Bottom overlay: name, description, meta, buttons */}
         <div className="absolute left-3 right-3 bottom-3">
           <div className="rounded-xl bg-black/82 px-3 py-2.5 backdrop-blur-sm">
-            <h2 className="text-sm sm:text-base font-semibold text-white leading-snug line-clamp-2">
+            <h2 className="text-sm sm:text-base font-bold text-white leading-snug line-clamp-2">
               {experience.name}
             </h2>
-            <p className="mt-1 text-[11px] sm:text-xs text-slate-100/90 line-clamp-3">
+            <p className="mt-1 text-[11px] sm:text-xs text-slate-100/90 line-clamp-2">
               {experience.description}
             </p>
+
+            {/* Meta on overlay */}
+            <div className="mt-1.5 flex flex-wrap gap-1 text-[10px] sm:text-[11px] text-slate-100/85">
+              <span className="inline-flex items-center gap-1 rounded-full bg-black/45 px-2 py-0.5">
+                <MapPin className="h-3 w-3" />
+                {experience.location}
+              </span>
+              <span className="inline-flex items-center gap-1 rounded-full bg-black/45 px-2 py-0.5">
+                <Camera className="h-3 w-3" />
+                {experience.duration}
+              </span>
+              <span className="inline-flex items-center gap-1 rounded-full bg-black/45 px-2 py-0.5">
+                <Users className="h-3 w-3" />
+                {experience.bestFor}
+              </span>
+            </div>
 
             {/* Buttons row */}
             <div className="mt-2 flex items-center gap-2">
@@ -446,7 +462,7 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({
                 onClick={onToggleTrip}
                 className={`inline-flex items-center justify-center rounded-full px-3 py-1 text-[10px] sm:text-xs font-semibold border transition ${
                   inTripPlan
-                    ? 'border-emerald-500 bg-emerald-50/95 text-emerald-900'
+                    ? 'border-emerald-400 bg-emerald-50/95 text-emerald-900'
                     : 'border-slate-200 bg-white/95 text-slate-800 hover:border-emerald-500 hover:text-emerald-800'
                 }`}
               >
