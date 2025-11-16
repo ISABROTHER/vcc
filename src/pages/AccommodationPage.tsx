@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Heart, Filter, X, ChevronDown } from 'lucide-react';
-import { allAccommodations, FacilityIcon } from '../data/hotelData.tsx';
+import { Filter, X, ChevronDown, ChevronRight } from 'lucide-react';
+import { allAccommodations } from '../data/hotelData.tsx';
 
 type Accommodation = (typeof allAccommodations)[number];
 type AccommodationId = Accommodation['id'];
@@ -10,10 +10,10 @@ export default function AccommodationPage() {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
   const [amenityFilters, setAmenityFilters] = useState<string[]>([]);
-  const [savedIds, setSavedIds] = useState<AccommodationId[]>([]);
   const [tripPlanIds, setTripPlanIds] = useState<AccommodationId[]>([]);
   const [galleryHotel, setGalleryHotel] = useState<Accommodation | null>(null);
   const [openFaq, setOpenFaq] = useState<string | null>(null);
+  const [visibleCount, setVisibleCount] = useState(12); // how many stays to show at once
 
   const categories = [
     { id: 'all', label: 'All accommodation' },
@@ -61,14 +61,6 @@ export default function AccommodationPage() {
     );
   };
 
-  const toggleSaved = (id: AccommodationId) => {
-    setSavedIds((current) =>
-      current.includes(id)
-        ? current.filter((savedId) => savedId !== id)
-        : [...current, id],
-    );
-  };
-
   const toggleTripPlan = (id: AccommodationId) => {
     setTripPlanIds((current) =>
       current.includes(id)
@@ -104,6 +96,11 @@ export default function AccommodationPage() {
     });
   }, [selectedCategory, searchTerm, amenityFilters]);
 
+  const visibleAccommodations = useMemo(
+    () => filteredAccommodations.slice(0, visibleCount),
+    [filteredAccommodations, visibleCount],
+  );
+
   const tripHotels = useMemo(
     () =>
       allAccommodations.filter((hotel) =>
@@ -111,22 +108,6 @@ export default function AccommodationPage() {
       ),
     [tripPlanIds],
   );
-
-  const getEmotionalLine = (hotel: Accommodation): string => {
-    if (hotel.category === 'beachfront') {
-      return 'Wake up close to the ocean with easy access to Cape Coast’s beaches.';
-    }
-    if (hotel.category === 'cultural') {
-      return 'Stay close to local history, culture and everyday Cape Coast life.';
-    }
-    if (hotel.category === 'airbnb') {
-      return 'A flexible base for longer stays and independent travellers.';
-    }
-    if (hotel.category === 'hotel_and_guest_house') {
-      return 'Comfortable rooms with easy access to key attractions and services.';
-    }
-    return 'A convenient base for exploring Cape Coast and the surrounding area.';
-  };
 
   return (
     <div className="min-h-screen bg-slate-50 font-sans">
@@ -168,7 +149,7 @@ export default function AccommodationPage() {
               </div>
             </div>
 
-            {/* Category filter */}
+            {/* Stay type */}
             <div className="mb-6">
               <p className="mb-2 text-sm font-medium text-slate-800">
                 Stay type
@@ -177,7 +158,10 @@ export default function AccommodationPage() {
                 {categories.map((category) => (
                   <button
                     key={category.id}
-                    onClick={() => setSelectedCategory(category.id)}
+                    onClick={() => {
+                      setSelectedCategory(category.id);
+                      setVisibleCount(12);
+                    }}
                     className={`rounded-full px-4 sm:px-5 py-1.5 text-sm font-medium transition border ${
                       selectedCategory === category.id
                         ? 'bg-slate-900 text-white border-slate-900'
@@ -190,7 +174,7 @@ export default function AccommodationPage() {
               </div>
             </div>
 
-            {/* Amenity chips */}
+            {/* Amenities */}
             <div>
               <p className="mb-2 text-sm font-medium text-slate-800">
                 Amenities
@@ -202,7 +186,10 @@ export default function AccommodationPage() {
                     <button
                       key={amenity}
                       type="button"
-                      onClick={() => toggleAmenityFilter(amenity)}
+                      onClick={() => {
+                        toggleAmenityFilter(amenity);
+                        setVisibleCount(12);
+                      }}
                       className={`inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-medium border transition ${
                         active
                           ? 'border-amber-500 bg-amber-50 text-amber-700'
@@ -228,8 +215,7 @@ export default function AccommodationPage() {
           {/* List view */}
           <section>
             <div className="grid grid-cols-1 gap-8 sm:gap-10 md:grid-cols-2">
-              {filteredAccommodations.map((hotel) => {
-                const isSaved = savedIds.includes(hotel.id);
+              {visibleAccommodations.map((hotel) => {
                 const inTrip = tripPlanIds.includes(hotel.id);
 
                 return (
@@ -252,49 +238,27 @@ export default function AccommodationPage() {
                         alt={hotel.name}
                         className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                       />
-                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/45 via-black/10 to-transparent" />
-                      <div className="absolute inset-x-4 bottom-4 flex items-center justify-between gap-3">
-                        <div className="max-w-[70%]">
-                          <p className="text-[11px] font-medium text-slate-100/90">
-                            Verified by Visit Cape Coast
-                          </p>
-                          <p className="mt-1 text-sm sm:text-base font-semibold text-white leading-tight">
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/20 to-transparent" />
+                      <div className="absolute left-4 right-4 bottom-4 flex justify-between gap-3">
+                        <div className="max-w-[80%] rounded-lg bg-black/75 px-3 py-2">
+                          <p className="text-sm sm:text-base font-semibold text-white leading-tight">
                             {hotel.name}
                           </p>
+                          <p className="mt-1 text-[11px] font-medium text-amber-300 tracking-wide flex items-center gap-1">
+                            <span className="inline-block h-1.5 w-1.5 rounded-full bg-amber-300" />
+                            Verified by Visit Cape Coast
+                          </p>
                         </div>
-                        <button
-                          type="button"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            toggleSaved(hotel.id);
-                          }}
-                          className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/95 text-amber-500 shadow-sm transition hover:bg-white"
-                        >
-                          <Heart
-                            className={`h-4 w-4 ${
-                              isSaved ? 'fill-amber-500' : ''
-                            }`}
-                          />
-                        </button>
                       </div>
                     </div>
 
                     {/* Card body */}
                     <div className="flex flex-1 flex-col p-5 sm:p-6">
-                      <p className="text-xs sm:text-[13px] font-medium text-slate-700 mb-2">
-                        {getEmotionalLine(hotel)}
-                      </p>
-
-                      {Array.isArray(hotel.facilities) &&
-                        hotel.facilities.length > 0 && (
-                          <div className="mt-1 flex items-center gap-2 text-xs text-slate-500">
-                            <FacilityIcon facility={hotel.facilities[0]} />
-                            <span className="truncate">
-                              {hotel.facilities[0]}
-                            </span>
-                          </div>
-                        )}
+                      {hotel.description && (
+                        <p className="text-xs sm:text-sm font-medium text-slate-700 mb-3 leading-relaxed uppercase line-clamp-3">
+                          {hotel.description}
+                        </p>
+                      )}
 
                       {/* Actions */}
                       <div className="mt-4 flex items-center gap-3 border-t border-slate-200 pt-4">
@@ -314,8 +278,9 @@ export default function AccommodationPage() {
                           {inTrip ? 'In trip plan' : 'Add to trip plan'}
                         </button>
 
-                        <span className="ml-auto inline-flex items-center rounded-full border border-slate-300 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-600 transition group-hover:border-amber-500 group-hover:text-amber-700">
+                        <span className="ml-auto inline-flex items-center gap-1 rounded-full border border-slate-300 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-600 transition group-hover:border-amber-500 group-hover:text-amber-700">
                           View details
+                          <ChevronRight className="h-3 w-3" />
                         </span>
                       </div>
                     </div>
@@ -323,6 +288,21 @@ export default function AccommodationPage() {
                 );
               })}
             </div>
+
+            {/* Load more button */}
+            {visibleCount < filteredAccommodations.length && (
+              <div className="mt-10 flex justify-center">
+                <button
+                  type="button"
+                  onClick={() =>
+                    setVisibleCount((prev) => prev + 12)
+                  }
+                  className="rounded-full border border-slate-300 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 shadow-sm hover:border-amber-500 hover:text-amber-700"
+                >
+                  Show more stays
+                </button>
+              </div>
+            )}
 
             {filteredAccommodations.length === 0 && (
               <div className="mt-12 rounded-2xl border border-slate-200 bg-white py-10 px-6 text-center shadow-sm">
