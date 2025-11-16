@@ -405,7 +405,7 @@ interface ExperienceCardProps {
   onToggleTrip: () => void;
 }
 
-// Experience Card Component — everything on the picture, portrait long image
+// Experience Card Component — portrait long image
 const ExperienceCard: React.FC<ExperienceCardProps> = ({
   experience,
   inTripPlan,
@@ -431,7 +431,7 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({
 
         {/* Bottom overlay: name, description, buttons */}
         <div className="absolute left-4 right-4 bottom-3">
-          <div className="rounded-lg bg.black/80 bg-black/80 px-3 py-2.5 backdrop-blur-sm">
+          <div className="rounded-lg bg-black/80 px-3 py-2.5 backdrop-blur-sm">
             <h2 className="text-sm sm:text-base font-semibold text-white leading-tight line-clamp-2">
               {experience.name}
             </h2>
@@ -600,7 +600,7 @@ export default function SeeDoPage() {
           {/* Experiences grid */}
           <section>
             {filteredExperiences.length > 0 ? (
-              <div className="grid grid-cols-1 gap-6 sm:gap-8 sm:grid-cols-2 xl:grid-cols-3">
+              <div className="grid grid-cols-1 gap-6 sm:gap-8 sm:grid-cols-2 lg:grid-cols-3">
                 {filteredExperiences.map((exp) => (
                   <ExperienceCard
                     key={exp.id}
