@@ -405,7 +405,7 @@ interface ExperienceCardProps {
   onToggleTrip: () => void;
 }
 
-// Experience Card Component — everything on the picture, only buttons on top of image
+// Experience Card Component — portrait image, all info on picture
 const ExperienceCard: React.FC<ExperienceCardProps> = ({
   experience,
   inTripPlan,
@@ -413,29 +413,29 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({
 }) => {
   return (
     <article className="group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:shadow-lg hover:border-amber-200">
-      <div className="relative aspect-[4/3] w-full overflow-hidden">
+      <div className="relative aspect-[3/4] w-full overflow-hidden">
         <img
           src={experience.imageUrl}
           alt={experience.name}
           className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
         />
         {/* Dark gradient */}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/75 via-black/35 to-transparent" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
 
         {/* Top category chip */}
-        <div className="absolute left-4 right-4 top-3 flex items-center justify-between gap-2">
+        <div className="absolute left-3 right-3 top-3 flex items-center justify-between gap-2">
           <span className="inline-flex items-center rounded-full bg-white/90 px-3 py-1 text-xs font-medium text-slate-800 shadow-sm">
             {experience.categoryTitle}
           </span>
         </div>
 
         {/* Bottom overlay: name, description, buttons */}
-        <div className="absolute left-4 right-4 bottom-3">
-          <div className="rounded-lg bg-black/80 px-3 py-2.5 backdrop-blur-sm">
-            <h2 className="text-sm sm:text-base font-semibold text-white leading-tight line-clamp-2">
+        <div className="absolute left-3 right-3 bottom-3">
+          <div className="rounded-xl bg-black/82 px-3 py-2.5 backdrop-blur-sm">
+            <h2 className="text-sm sm:text-base font-semibold text-white leading-snug line-clamp-2">
               {experience.name}
             </h2>
-            <p className="mt-1 text-[11px] sm:text-xs text-slate-100/90 line-clamp-2">
+            <p className="mt-1 text-[11px] sm:text-xs text-slate-100/90 line-clamp-3">
               {experience.description}
             </p>
 
@@ -446,7 +446,7 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({
                 onClick={onToggleTrip}
                 className={`inline-flex items-center justify-center rounded-full px-3 py-1 text-[10px] sm:text-xs font-semibold border transition ${
                   inTripPlan
-                    ? 'border-emerald-500 bg-emerald-50/90 text-emerald-900'
+                    ? 'border-emerald-500 bg-emerald-50/95 text-emerald-900'
                     : 'border-slate-200 bg-white/95 text-slate-800 hover:border-emerald-500 hover:text-emerald-800'
                 }`}
               >
