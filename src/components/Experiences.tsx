@@ -9,7 +9,7 @@ interface Experience {
   category: string;
   price: number;
   duration: string;
-  image_url: string;
+  image_url: string; 
   featured: boolean;
 }
 
