@@ -77,43 +77,61 @@ const BottomNav: React.FC = () => {
   return (
     <>
       {/* Sticky bottom bar – mobile only */}
-      <nav className="fixed inset-x-0 bottom-0 z-40 border-t border-slate-200 bg-white/95 backdrop-blur md:hidden">
-        <div className="mx-auto flex max-w-5xl items-stretch justify-between px-1.5 py-1.5">
-          {quickItems.map((item) => (
-            <Link
-              key={item.label}
-              to={item.to}
-              className="flex flex-1 flex-col items-center justify-center text-[10px] font-medium text-slate-900"
-            >
-              <div
-                className={`mb-1 flex h-12 w-12 items-center justify-center ${item.color} rounded-sm`}
-              >
-                <item.icon
-                  className="h-5 w-5 text-slate-900"
-                  strokeWidth={1.6}
-                />
-              </div>
-              <span
-                className={
-                  isActive(item.to) ? 'font-semibold text-slate-950' : ''
-                }
-              >
-                {item.label}
-              </span>
-            </Link>
-          ))}
+      <nav className="fixed inset-x-0 bottom-0 z-40 md:hidden">
+        <div
+          className="mx-auto max-w-5xl border-t border-slate-200/80 bg-white/98 backdrop-blur-lg shadow-[0_-10px_35px_rgba(15,23,42,0.22)]"
+          style={{
+            paddingBottom: 'calc(env(safe-area-inset-bottom, 0px) + 4px)',
+          }}
+        >
+          <div className="flex items-stretch justify-between px-1.5 pt-1 pb-1">
+            {quickItems.map((item) => {
+              const active = isActive(item.to);
+              return (
+                <Link
+                  key={item.label}
+                  to={item.to}
+                  className="flex flex-1 flex-col items-center justify-center text-[11px] font-medium text-slate-900"
+                >
+                  <div
+                    className={[
+                      'mb-1 flex h-14 w-14 items-center justify-center rounded-md transition-all duration-200',
+                      item.color,
+                      active
+                        ? 'ring-2 ring-slate-900/70 scale-105'
+                        : 'hover:scale-105 hover:-translate-y-0.5',
+                    ].join(' ')}
+                  >
+                    <item.icon
+                      className="h-5 w-5 text-slate-900"
+                      strokeWidth={1.7}
+                    />
+                  </div>
+                  <span
+                    className={
+                      active
+                        ? 'font-semibold text-slate-950'
+                        : 'text-slate-900'
+                    }
+                  >
+                    {item.label}
+                  </span>
+                </Link>
+              );
+            })}
 
-          {/* Menu / Close button */}
-          <button
-            type="button"
-            onClick={() => setIsMenuOpen(true)}
-            className="flex flex-1 flex-col items-center justify-center text-[10px] font-medium text-slate-900"
-          >
-            <div className="mb-1 flex h-12 w-12 items-center justify-center bg-slate-100 rounded-sm">
-              <Menu className="h-5 w-5 text-slate-900" strokeWidth={1.6} />
-            </div>
-            <span>Menu</span>
-          </button>
+            {/* Menu button */}
+            <button
+              type="button"
+              onClick={() => setIsMenuOpen(true)}
+              className="flex flex-1 flex-col items-center justify-center text-[11px] font-medium text-slate-900"
+            >
+              <div className="mb-1 flex h-14 w-14 items-center justify-center rounded-md bg-slate-100 transition-all duration-200 hover:scale-105 hover:-translate-y-0.5">
+                <Menu className="h-5 w-5 text-slate-900" strokeWidth={1.7} />
+              </div>
+              <span>Menu</span>
+            </button>
+          </div>
         </div>
       </nav>
 
@@ -121,14 +139,14 @@ const BottomNav: React.FC = () => {
       {isMenuOpen && (
         <div className="fixed inset-0 z-50 bg-white md:hidden">
           {/* Top bar */}
-          <div className="flex items-center justify-between px-4 py-3 border-b border-slate-200">
-            <div className="text-sm font-semibold tracking-[0.22em] uppercase text-slate-500">
+          <div className="flex items-center justify-between px-4 py-3 border-b border-slate-200/80 shadow-sm">
+            <div className="text-xs font-semibold tracking-[0.22em] uppercase text-slate-500">
               Cape Coast
             </div>
             <button
               type="button"
               onClick={() => setIsMenuOpen(false)}
-              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-slate-300 text-slate-900"
+              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-slate-300 text-slate-900 hover:bg-slate-50 transition"
             >
               <X className="h-5 w-5" />
             </button>
@@ -141,7 +159,7 @@ const BottomNav: React.FC = () => {
                 key={item.label}
                 to={item.to}
                 onClick={() => setIsMenuOpen(false)}
-                className="flex items-center justify-between rounded-xl px-3 py-3.5 hover:bg-slate-50"
+                className="flex items-center justify-between rounded-xl px-3 py-3.5 hover:bg-slate-50 transition"
               >
                 <div className="flex items-center gap-3">
                   <div className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-300">
