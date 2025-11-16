@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Heart,
   Martini,
@@ -10,9 +11,28 @@ import {
   List as ListIcon,
   LayoutGrid,
   ChevronDown,
+  Check,
 } from "lucide-react";
 
 export default function EatDrinkPage() {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [activeCategory, setActiveCategory] = useState<string>("all");
+  const [activeView, setActiveView] = useState<"map" | "list" | "split">("list");
+  const [isMonthOpen, setIsMonthOpen] = useState(false);
+  const [isLocationOpen, setIsLocationOpen] = useState(false);
+  const [selectedMonth, setSelectedMonth] = useState<string>("Months");
+  const [selectedLocation, setSelectedLocation] = useState<string>("Location");
+
+  const categories = [
+    { id: "all", label: "All categories", icon: Heart },
+    { id: "bar", label: "Bar & pub", icon: Martini },
+    { id: "cafe", label: "Café", icon: Coffee },
+    { id: "restaurant", label: "Restaurant", icon: ChefHat },
+  ];
+
+  const months = ["Any time", "Jan – Mar", "Apr – Jun", "Jul – Sep", "Oct – Dec"];
+  const locations = ["Any location", "Cape Coast", "Elmina", "Abura", "Others"];
+
   return (
     <div className="mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8">
       <div className="mx-auto max-w-2xl text-center">
@@ -29,22 +49,25 @@ export default function EatDrinkPage() {
       <div className="mx-auto mt-12 max-w-5xl border-t border-gray-200 pt-8">
         {/* Category tabs */}
         <div className="flex items-end gap-8 overflow-x-auto pb-3 text-sm">
-          <button className="flex flex-col items-center gap-1 whitespace-nowrap border-b-2 border-gray-900 pb-2 font-semibold text-gray-900">
-            <Heart className="h-6 w-6" />
-            <span>All categories</span>
-          </button>
-          <button className="flex flex-col items-center gap-1 whitespace-nowrap pb-2 text-gray-700 hover:text-gray-900">
-            <Martini className="h-6 w-6" />
-            <span>Bar &amp; pub</span>
-          </button>
-          <button className="flex flex-col items-center gap-1 whitespace-nowrap pb-2 text-gray-700 hover:text-gray-900">
-            <Coffee className="h-6 w-6" />
-            <span>Café</span>
-          </button>
-          <button className="flex flex-col items-center gap-1 whitespace-nowrap pb-2 text-gray-700 hover:text-gray-900">
-            <ChefHat className="h-6 w-6" />
-            <span>Restaurant</span>
-          </button>
+          {categories.map((cat) => {
+            const Icon = cat.icon;
+            const isActive = activeCategory === cat.id;
+            return (
+              <button
+                key={cat.id}
+                type="button"
+                onClick={() => setActiveCategory(cat.id)}
+                className={`flex flex-col items-center gap-1 whitespace-nowrap pb-2 transition ${
+                  isActive
+                    ? "border-b-2 border-gray-900 font-semibold text-gray-900"
+                    : "text-gray-700 hover:text-gray-900"
+                }`}
+              >
+                <Icon className="h-6 w-6" />
+                <span>{cat.label}</span>
+              </button>
+            );
+          })}
         </div>
 
         {/* Divider */}
@@ -58,6 +81,8 @@ export default function EatDrinkPage() {
               <input
                 type="text"
                 placeholder="Search activities..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
                 className="flex-1 px-4 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 outline-none"
               />
               <button
@@ -70,27 +95,91 @@ export default function EatDrinkPage() {
 
             {/* Filters */}
             <div className="space-y-3 md:flex md:flex-wrap md:gap-3 md:space-y-0">
-              <button
-                type="button"
-                className="flex w-full items-center justify-between rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-700 shadow-sm transition hover:bg-gray-50 md:w-auto md:min-w-[200px]"
-              >
-                <span className="flex items-center gap-2">
-                  <Calendar className="h-4 w-4" />
-                  <span>Months</span>
-                </span>
-                <ChevronDown className="h-4 w-4" />
-              </button>
+              {/* Months dropdown */}
+              <div className="relative w-full md:w-auto md:min-w-[200px]">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsMonthOpen((prev) => !prev);
+                    setIsLocationOpen(false);
+                  }}
+                  className="flex w-full items-center justify-between rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-700 shadow-sm transition hover:bg-gray-50"
+                >
+                  <span className="flex items-center gap-2">
+                    <Calendar className="h-4 w-4" />
+                    <span>{selectedMonth}</span>
+                  </span>
+                  <ChevronDown
+                    className={`h-4 w-4 transition ${
+                      isMonthOpen ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
+                {isMonthOpen && (
+                  <div className="absolute z-10 mt-1 w-full rounded-lg border border-gray-200 bg-white py-1 text-sm shadow-lg">
+                    {months.map((m) => (
+                      <button
+                        key={m}
+                        type="button"
+                        onClick={() => {
+                          setSelectedMonth(m === "Any time" ? "Months" : m);
+                          setIsMonthOpen(false);
+                        }}
+                        className="flex w-full items-center justify-between px-3 py-2 text-left hover:bg-gray-50"
+                      >
+                        <span>{m}</span>
+                        {selectedMonth === m && (
+                          <Check className="h-4 w-4 text-gray-900" />
+                        )}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
 
-              <button
-                type="button"
-                className="flex w-full items-center justify-between rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-700 shadow-sm transition hover:bg-gray-50 md:w-auto md:min-w-[200px]"
-              >
-                <span className="flex items-center gap-2">
-                  <MapPin className="h-4 w-4" />
-                  <span>Location</span>
-                </span>
-                <ChevronDown className="h-4 w-4" />
-              </button>
+              {/* Location dropdown */}
+              <div className="relative w-full md:w-auto md:min-w-[200px]">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsLocationOpen((prev) => !prev);
+                    setIsMonthOpen(false);
+                  }}
+                  className="flex w-full items-center justify-between rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-700 shadow-sm transition hover:bg-gray-50"
+                >
+                  <span className="flex items-center gap-2">
+                    <MapPin className="h-4 w-4" />
+                    <span>{selectedLocation}</span>
+                  </span>
+                  <ChevronDown
+                    className={`h-4 w-4 transition ${
+                      isLocationOpen ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
+                {isLocationOpen && (
+                  <div className="absolute z-10 mt-1 w-full rounded-lg border border-gray-200 bg-white py-1 text-sm shadow-lg">
+                    {locations.map((loc) => (
+                      <button
+                        key={loc}
+                        type="button"
+                        onClick={() => {
+                          setSelectedLocation(
+                            loc === "Any location" ? "Location" : loc
+                          );
+                          setIsLocationOpen(false);
+                        }}
+                        className="flex w-full items-center justify-between px-3 py-2 text-left hover:bg-gray-50"
+                      >
+                        <span>{loc}</span>
+                        {selectedLocation === loc && (
+                          <Check className="h-4 w-4 text-gray-900" />
+                        )}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
           </div>
 
@@ -98,21 +187,32 @@ export default function EatDrinkPage() {
           <div className="flex items-center justify-start gap-6 text-sm text-gray-600 md:justify-end">
             <button
               type="button"
-              className="inline-flex items-center gap-2 hover:text-gray-900"
+              onClick={() => setActiveView("map")}
+              className={`inline-flex items-center gap-2 transition hover:text-gray-900 ${
+                activeView === "map" ? "font-medium text-gray-900" : ""
+              }`}
             >
               <MapIcon className="h-4 w-4" />
               <span>Map</span>
             </button>
             <button
               type="button"
-              className="inline-flex items-center gap-2 border-b-2 border-gray-900 pb-1 font-medium text-gray-900"
+              onClick={() => setActiveView("list")}
+              className={`inline-flex items-center gap-2 border-b-2 pb-1 transition ${
+                activeView === "list"
+                  ? "border-gray-900 font-medium text-gray-900"
+                  : "border-transparent hover:text-gray-900"
+              }`}
             >
               <ListIcon className="h-4 w-4" />
               <span>List</span>
             </button>
             <button
               type="button"
-              className="inline-flex items-center gap-2 hover:text-gray-900"
+              onClick={() => setActiveView("split")}
+              className={`inline-flex items-center gap-2 transition hover:text-gray-900 ${
+                activeView === "split" ? "font-medium text-gray-900" : ""
+              }`}
             >
               <LayoutGrid className="h-4 w-4" />
               <span>Split</span>
@@ -120,7 +220,7 @@ export default function EatDrinkPage() {
           </div>
         </div>
 
-        {/* Result count */}
+        {/* Result count – still static until you connect real data */}
         <p className="mt-6 text-sm text-gray-600">68 products loaded</p>
       </div>
     </div>
