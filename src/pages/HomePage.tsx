@@ -29,7 +29,7 @@ const gridItems = [
     description: 'Hotels, guesthouses and unique local stays.',
     icon: Bed,
     href: '/accommodation',
-    color: 'bg-teal-100',
+    color: 'bg-teal-199',
   },
   {
     title: 'Food & Drinks',
