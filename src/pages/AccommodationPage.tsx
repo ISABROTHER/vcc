@@ -267,7 +267,7 @@ export default function AccommodationPage() {
                           <p className="line-clamp-1 text-[11px] font-medium uppercase tracking-wide text-white/80">
                             Verified by Visit Cape Coast
                           </p>
-                          <p className="mt-0.5 line-clamp-1 text-sm font-semibold text-white">
+                          <p className="mt-0.5 line-clamp-1 text-lg font-semibold tracking-tight text-white transition-all duration-300 group-hover:translate-y-0.5 group-hover:drop-shadow-md">
                             {hotel.name}
                           </p>
                         </div>
@@ -289,23 +289,13 @@ export default function AccommodationPage() {
                       </div>
                     </div>
 
-                    {/* Card body – name, emotional line, description, trust line, actions */}
+                    {/* Card body – name, emotional line, actions */}
                     <div className="flex flex-1 flex-col p-6 sm:p-7">
-                      <h3 className="text-lg sm:text-xl font-semibold text-slate-900 group-hover:text-amber-700 transition-colors">
-                        {hotel.name}
-                      </h3>
-
-                      <p className="mt-2 text-xs sm:text-sm font-medium text-slate-700">
+                      <p className="mt-1 text-[11px] sm:text-xs font-medium tracking-[0.25em] text-slate-600/90 uppercase">
                         {getEmotionalLine(hotel)}
                       </p>
 
-                      <p className="mt-3 text-sm sm:text-[15px] text-slate-600 leading-relaxed line-clamp-4">
-                        {hotel.description}
-                      </p>
-
-                      <p className="mt-3 text-xs sm:text-sm font-medium text-emerald-700">
-                        Verified by Visit Cape Coast • Visited by our team in 2025
-                      </p>
+                      {/* (Description removed from card to keep it clean and focused) */}
 
                       {/* Actions: Add to trip plan + View details */}
                       <div className="mt-6 flex items-center gap-3 border-t border-slate-100 pt-4">
@@ -316,17 +306,19 @@ export default function AccommodationPage() {
                             e.stopPropagation();
                             toggleTripPlan(hotel.id);
                           }}
-                          className={`inline-flex items-center gap-1.5 rounded-full border px-4 py-1.5 text-sm font-semibold transition-all ${
+                          className={`inline-flex items-center gap-1.5 rounded-full border px-4 py-2 text-xs sm:text-sm font-semibold shadow-sm transition-all ${
                             inTrip
-                              ? 'border-emerald-500 bg-emerald-50 text-emerald-700'
-                              : 'border-slate-200 bg-white text-slate-700 hover:border-emerald-500 hover:bg-emerald-50 hover:text-emerald-700'
+                              ? 'border-emerald-500 bg-emerald-50 text-emerald-700 hover:shadow-md hover:-translate-y-0.5'
+                              : 'border-slate-200 bg-white text-slate-700 hover:border-emerald-500 hover:bg-emerald-50 hover:text-emerald-700 hover:shadow-md hover:-translate-y-0.5'
                           }`}
                         >
                           <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
                           {inTrip ? 'In trip plan' : 'Add to trip plan'}
                         </button>
 
-                        <span className="ml-auto text-xs sm:text-sm font-medium uppercase tracking-[0.18em] text-slate-400">
+                        <span
+                          className="ml-auto inline-flex items-center rounded-full border border-slate-200 px-3 py-1 text-[10px] sm:text-[11px] font-semibold tracking-[0.18em] uppercase text-slate-500 transition-all group-hover:border-amber-500 group-hover:text-amber-700 group-hover:bg-amber-50/60"
+                        >
                           View details
                         </span>
                       </div>
@@ -349,7 +341,7 @@ export default function AccommodationPage() {
             )}
           </div>
 
-          {/* Right sidebar: trip plan + summary */}
+          {/* Right sidebar: trip plan only */}
           <div className="space-y-8 lg:sticky lg:top-24">
             {/* Trip plan card */}
             <div className="rounded-2xl border border-slate-100 bg-white/95 p-6 shadow-sm">
@@ -398,33 +390,6 @@ export default function AccommodationPage() {
                   </p>
                 </div>
               )}
-            </div>
-
-            {/* Small summary card */}
-            <div className="rounded-2xl border border-slate-100 bg-white/95 p-6 shadow-sm">
-              <p className="mb-4 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
-                Your selection
-              </p>
-              <div className="space-y-3 text-sm text-slate-700">
-                <p>
-                  <span className="font-semibold text-slate-900">
-                    {filteredAccommodations.length}
-                  </span>{' '}
-                  stays match your filters.
-                </p>
-                <p>
-                  <span className="font-semibold text-slate-900">
-                    {savedIds.length}
-                  </span>{' '}
-                  saved to favourites.
-                </p>
-                <p>
-                  <span className="font-semibold text-slate-900">
-                    {tripPlanIds.length}
-                  </span>{' '}
-                  added to your trip plan.
-                </p>
-              </div>
             </div>
           </div>
         </div>
