@@ -36,7 +36,7 @@ const gridItems = [
     description: 'Local favourites, seafood spots, cafés and bars.',
     icon: ChefHat,
     href: '/eat-drink',
-    color: 'bg-sky-100',
+    color: 'bg-sky-10',
   },
   {
     title: 'Tours & Experiences',
