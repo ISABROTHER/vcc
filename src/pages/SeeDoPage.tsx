@@ -113,7 +113,12 @@ const allCategories: ICategory[] = [
 // Extra meta for nicer cards (images + descriptions)
 const experienceMeta: Record<
   string,
-  Partial<Pick<IExperience, 'imageUrl' | 'description' | 'location' | 'duration' | 'bestFor'>>
+  Partial<
+    Pick<
+      IExperience,
+      'imageUrl' | 'description' | 'location' | 'duration' | 'bestFor'
+    >
+  >
 > = {
   'Cape Coast Castle (UNESCO Site)': {
     imageUrl:
@@ -351,7 +356,9 @@ const experienceMeta: Record<
   },
 };
 
-const getExperienceMeta = (itemName: string): Omit<IExperience, 'id' | 'name' | 'icon' | 'categoryTitle' | 'tags'> => {
+const getExperienceMeta = (
+  itemName: string,
+): Omit<IExperience, 'id' | 'name' | 'icon' | 'categoryTitle' | 'tags'> => {
   const meta = experienceMeta[itemName] ?? {};
   return {
     imageUrl:
@@ -398,7 +405,7 @@ interface ExperienceCardProps {
   onToggleTrip: () => void;
 }
 
-// Experience Card Component (Airbnb-style)
+// Experience Card Component (Airbnb-style with overlay text on image)
 const ExperienceCard: React.FC<ExperienceCardProps> = ({
   experience,
   inTripPlan,
@@ -408,51 +415,56 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({
 
   return (
     <article className="group flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:shadow-lg hover:border-amber-200">
-      {/* Image */}
+      {/* Image with overlay name + description */}
       <div className="relative aspect-[4/3] w-full overflow-hidden">
         <img
           src={experience.imageUrl}
           alt={experience.name}
           className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
         />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+        {/* Top category chip */}
         <div className="absolute left-4 right-4 top-3 flex items-center justify-between gap-2">
           <span className="inline-flex items-center rounded-full bg-white/90 px-3 py-1 text-xs font-medium text-slate-800 shadow-sm">
             {experience.categoryTitle}
           </span>
         </div>
-      </div>
-
-      {/* Content */}
-      <div className="flex flex-1 flex-col px-4 pb-4 pt-4 sm:px-5 sm:pt-5">
-        <div className="flex items-start gap-2">
-          <div className="mt-1 hidden rounded-lg bg-amber-50 p-1.5 sm:inline-flex">
-            <Icon className="h-4 w-4 text-amber-600" />
-          </div>
-          <div className="flex-1">
-            <h2 className="text-base sm:text-lg font-semibold text-slate-900 group-hover:text-amber-700">
+        {/* Bottom name + description overlay */}
+        <div className="absolute left-4 right-4 bottom-3">
+          <div className="rounded-lg bg-black/75 px-3 py-2.5 backdrop-blur-sm">
+            <h2 className="text-sm sm:text-base font-semibold text-white leading-tight line-clamp-2">
               {experience.name}
             </h2>
-            <p className="mt-1 text-xs sm:text-sm text-slate-600 line-clamp-3">
+            <p className="mt-1 text-[11px] sm:text-xs text-slate-100/90 line-clamp-2">
               {experience.description}
             </p>
           </div>
         </div>
+      </div>
 
-        {/* Meta */}
-        <div className="mt-3 flex flex-wrap items-center gap-2 text-[11px] sm:text-xs text-slate-500">
-          <span className="inline-flex items-center gap-1 rounded-full bg-slate-50 px-2.5 py-1">
-            <MapPin className="h-3 w-3" />
-            {experience.location}
-          </span>
-          <span className="inline-flex items-center gap-1 rounded-full bg-slate-50 px-2.5 py-1">
-            <Camera className="h-3 w-3" />
-            {experience.duration}
-          </span>
-          <span className="inline-flex items-center gap-1 rounded-full bg-slate-50 px-2.5 py-1">
-            <Users className="h-3 w-3" />
-            {experience.bestFor}
-          </span>
+      {/* Content: meta + actions */}
+      <div className="flex flex-1 flex-col px-4 pb-4 pt-3 sm:px-5 sm:pt-4 bg-gradient-to-b from-white to-slate-50">
+        {/* Icon + meta chips */}
+        <div className="flex items-start gap-2">
+          <div className="mt-1 rounded-lg bg-amber-50 p-1.5">
+            <Icon className="h-4 w-4 text-amber-600" />
+          </div>
+          <div className="flex-1">
+            <div className="flex flex-wrap items-center gap-2 text-[11px] sm:text-xs text-slate-500">
+              <span className="inline-flex items-center gap-1 rounded-full bg-slate-50 px-2.5 py-1">
+                <MapPin className="h-3 w-3" />
+                {experience.location}
+              </span>
+              <span className="inline-flex items-center gap-1 rounded-full bg-slate-50 px-2.5 py-1">
+                <Camera className="h-3 w-3" />
+                {experience.duration}
+              </span>
+              <span className="inline-flex items-center gap-1 rounded-full bg-slate-50 px-2.5 py-1">
+                <Users className="h-3 w-3" />
+                {experience.bestFor}
+              </span>
+            </div>
+          </div>
         </div>
 
         {/* Actions */}
