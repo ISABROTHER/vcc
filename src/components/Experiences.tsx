@@ -71,13 +71,14 @@ export default function Experiences() {
               key={experience.id}
               className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition group"
             >
-              <<div className="relative h-64 overflow-hidden">
+              <<div className="relative aspect-[3/4] w-full overflow-hidden">
   <img
     src={hotel.image_url}
     alt={hotel.name}
     className="w-full h-full object-cover group-hover:scale-110 transition duration-500"
   />
 </div>
+
                 {experience.featured && (
                   <span className="absolute top-4 left-4 bg-amber-500 text-white px-4 py-1 rounded-full text-sm font-semibold">
                     Featured
