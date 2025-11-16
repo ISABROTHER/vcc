@@ -209,6 +209,82 @@ const CATEGORY_CONFIG: { id: CategoryId; label: string; icon: any }[] = [
   { id: "restaurant", label: "Restaurant", icon: ChefHat },
 ];
 
+type CategoryDetailId = Exclude<CategoryId, "all">;
+
+const CATEGORY_PAGE_CONTENT: Record<
+  CategoryDetailId,
+  {
+    title: string;
+    description: string;
+    heroImage: string;
+    sections: { title: string; body: string }[];
+  }
+> = {
+  bar: {
+    title: "Bars & pubs in Cape Coast",
+    description:
+      "Sip cocktails by the ocean, watch football with friends, or discover local nightspots from the student pubs to beachfront lounges.",
+    heroImage:
+      "https://images.unsplash.com/photo-1514933651103-005eec06c04b?q=80&w=1600",
+    sections: [
+      {
+        title: "Beach bars & sunset spots",
+        body: "Relax at seaside venues like Da Breeze Bar & Restaurant and Castle Beach Restaurant – perfect for sundowners, live music and sea breeze.",
+      },
+      {
+        title: "Lively pubs & game nights",
+        body: "Find cold drinks, grills and football on TV at places such as Coast to Coast Pub n Grill, Sahara Pub & Restaurant and Community Gardens.",
+      },
+      {
+        title: "Lounges & chill nights",
+        body: "From Shipyard Café & Bar to Lush on the Coast, enjoy cocktails, small bites and a more laid-back lounge atmosphere.",
+      },
+    ],
+  },
+  cafe: {
+    title: "Cafés & coffee in Cape Coast",
+    description:
+      "Start your day with a good cup of coffee, meet friends over pastries, or find a quiet corner to read and work.",
+    heroImage:
+      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=1600",
+    sections: [
+      {
+        title: "Coffee & breakfast",
+        body: "Grab your morning brew and breakfast plates at spots like Cape Coast Coffee House, Cape Cafe & Restaurant and New Life Café.",
+      },
+      {
+        title: "Study-friendly corners",
+        body: "Many cafés in Cape Coast offer Wi-Fi, plugs and a calm vibe – ideal for students, freelancers and remote workers.",
+      },
+      {
+        title: "Sweet treats & light bites",
+        body: "Pair your drinks with cakes, pastries and small snacks for an easy hangout or afternoon break.",
+      },
+    ],
+  },
+  restaurant: {
+    title: "Restaurants & local food in Cape Coast",
+    description:
+      "Taste fresh seafood, traditional Ghanaian dishes and modern plates – from simple chop bars to restaurants with ocean views.",
+    heroImage:
+      "https://images.unsplash.com/photo-1504753793650-d4a2b783c15e?q=80&w=1600",
+    sections: [
+      {
+        title: "Typical Cape Coast flavours",
+        body: "Enjoy Banku with grilled fish, Fufu with soup, Red-Red and more at places like Oguaa Basiaba Tasty Cuisine and Emperor Ital Joint.",
+      },
+      {
+        title: "Eat like the locals",
+        body: "Neighbourhood favourites and student spots serve generous portions, simple menus and a relaxed Ghanaian atmosphere.",
+      },
+      {
+        title: "Seaside & date-night restaurants",
+        body: "Plan special evenings at Castle Beach Restaurant, Becky Kay Restaurant & Bar or Lemon Lounge, with views, ambience and good service.",
+      },
+    ],
+  },
+};
+
 const MONTH_OPTIONS: { id: MonthFilterId; label: string }[] = [
   { id: "any", label: "Any time" },
   { id: "jan-mar", label: "Jan – Mar" },
@@ -353,9 +429,14 @@ export default function EatDrinkPage() {
     setLocationFilter("any");
   };
 
+  const categoryDetail =
+    activeCategory === "all"
+      ? null
+      : CATEGORY_PAGE_CONTENT[activeCategory as CategoryDetailId];
+
   return (
     <div className="w-full bg-white">
-      {/* Hero image */}
+      {/* Top hero image */}
       <div className="h-[260px] w-full overflow-hidden sm:h-[360px] lg:h-[420px]">
         <img
           src="https://images.unsplash.com/photo-1529042410759-befb1204b468?q=80&w=1500"
@@ -364,89 +445,139 @@ export default function EatDrinkPage() {
         />
       </div>
 
-      {/* Intro heading + description + highlight cards */}
+      {/* Intro / category hero */}
       <main className="mx-auto max-w-7xl px-6 py-12 sm:py-16">
-        <header>
-          <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-            Restaurants, cafés &amp; nightlife
-          </h1>
-          <p className="mt-6 max-w-2xl text-lg leading-8 text-gray-600">
-            Discover Cape Coast’s vibrant food and drink scene – from local chop
-            bars and cosy cafés to beachfront bars and late-night spots.
-          </p>
-        </header>
+        {activeCategory === "all" ? (
+          <>
+            <header>
+              <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
+                Restaurants, cafés &amp; nightlife
+              </h1>
+              <p className="mt-6 max-w-2xl text-lg leading-8 text-gray-600">
+                Discover Cape Coast’s vibrant food and drink scene – from local chop
+                bars and cosy cafés to beachfront bars and late-night spots.
+              </p>
+            </header>
 
-        {/* 3 highlight cards – Bar & pub / Café / Restaurant */}
-        <section
-          aria-label="Featured food and drink categories"
-          className="mt-12 grid gap-8 sm:grid-cols-3"
-        >
-          {/* Bar & pub */}
-          <button
-            type="button"
-            onClick={() => setActiveCategory("bar")}
-            className="relative h-60 w-full overflow-hidden rounded-xl text-left shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
-          >
-            <img
-              src="https://images.unsplash.com/photo-1552566626-52f8b828add9?q=80&w=1500"
-              className="h-full w-full object-cover"
-              alt="Bars and pubs in Cape Coast"
-            />
-            <div className="absolute bottom-0 left-0 w-[85%] rounded-tr-xl bg-amber-50/95 p-4 border-t border-r border-amber-100">
-              <h3 className="font-semibold text-gray-900">Bars &amp; pubs</h3>
-              <p className="text-sm text-gray-700">
-                Beach bars, rooftop spots and lively pubs for evenings out.
-              </p>
-              <p className="mt-1 text-xs font-medium text-amber-700">
-                Show bars &amp; pubs →
-              </p>
-            </div>
-          </button>
+            {/* 3 highlight cards – Bar & pub / Café / Restaurant */}
+            <section
+              aria-label="Featured food and drink categories"
+              className="mt-12 grid gap-8 sm:grid-cols-3"
+            >
+              {/* Bar & pub */}
+              <button
+                type="button"
+                onClick={() => setActiveCategory("bar")}
+                className="relative h-60 w-full overflow-hidden rounded-xl text-left shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1552566626-52f8b828add9?q=80&w=1500"
+                  className="h-full w-full object-cover"
+                  alt="Bars and pubs in Cape Coast"
+                />
+                <div className="absolute bottom-0 left-0 w-[85%] rounded-tr-xl bg-amber-50/95 p-4 border-t border-r border-amber-100">
+                  <h3 className="font-semibold text-gray-900">Bars &amp; pubs</h3>
+                  <p className="text-sm text-gray-700">
+                    Beach bars, rooftop spots and lively pubs for evenings out.
+                  </p>
+                  <p className="mt-1 text-xs font-medium text-amber-700">
+                    Show bars &amp; pubs →
+                  </p>
+                </div>
+              </button>
 
-          {/* Café */}
-          <button
-            type="button"
-            onClick={() => setActiveCategory("cafe")}
-            className="relative h-60 w-full overflow-hidden rounded-xl text-left shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
-          >
-            <img
-              src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=1500"
-              className="h-full w-full object-cover"
-              alt="Cafés in Cape Coast"
-            />
-            <div className="absolute bottom-0 left-0 w-[85%] rounded-tr-xl bg-amber-50/95 p-4 border-t border-r border-amber-100">
-              <h3 className="font-semibold text-gray-900">Cafés</h3>
-              <p className="text-sm text-gray-700">
-                Coffee, pastries and light bites in cosy, relaxed spaces.
-              </p>
-              <p className="mt-1 text-xs font-medium text-amber-700">
-                Show cafés →
-              </p>
-            </div>
-          </button>
+              {/* Café */}
+              <button
+                type="button"
+                onClick={() => setActiveCategory("cafe")}
+                className="relative h-60 w-full overflow-hidden rounded-xl text-left shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=1500"
+                  className="h-full w-full object-cover"
+                  alt="Cafés in Cape Coast"
+                />
+                <div className="absolute bottom-0 left-0 w-[85%] rounded-tr-xl bg-amber-50/95 p-4 border-t border-r border-amber-100">
+                  <h3 className="font-semibold text-gray-900">Cafés</h3>
+                  <p className="text-sm text-gray-700">
+                    Coffee, pastries and light bites in cosy, relaxed spaces.
+                  </p>
+                  <p className="mt-1 text-xs font-medium text-amber-700">
+                    Show cafés →
+                  </p>
+                </div>
+              </button>
 
-          {/* Restaurant */}
-          <button
-            type="button"
-            onClick={() => setActiveCategory("restaurant")}
-            className="relative h-60 w-full overflow-hidden rounded-xl text-left shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
-          >
-            <img
-              src="https://images.unsplash.com/photo-1553621042-f6e147245754?q=80&w=1500"
-              className="h-full w-full object-cover"
-              alt="Restaurants in Cape Coast"
-            />
-            <div className="absolute bottom-0 left-0 w-[85%] rounded-tr-xl bg-amber-50/95 p-4 border-t border-r border-amber-100">
-              <h3 className="font-semibold text-gray-900">Restaurants</h3>
-              <p className="text-sm text-gray-700">
-                From local chop bars to elegant dining with ocean views.
-              </p>
-              <p className="mt-1 text-xs font-medium text-amber-700">
-                Show restaurants →
-              </p>
-            </div>
-          </button>
-        </section>
+              {/* Restaurant */}
+              <button
+                type="button"
+                onClick={() => setActiveCategory("restaurant")}
+                className="relative h-60 w-full overflow-hidden rounded-xl text-left shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1553621042-f6e147245754?q=80&w=1500"
+                  className="h-full w-full object-cover"
+                  alt="Restaurants in Cape Coast"
+                />
+                <div className="absolute bottom-0 left-0 w-[85%] rounded-tr-xl bg-amber-50/95 p-4 border-t border-r border-amber-100">
+                  <h3 className="font-semibold text-gray-900">Restaurants</h3>
+                  <p className="text-sm text-gray-700">
+                    From local chop bars to elegant dining with ocean views.
+                  </p>
+                  <p className="mt-1 text-xs font-medium text-amber-700">
+                    Show restaurants →
+                  </p>
+                </div>
+              </button>
+            </section>
+          </>
+        ) : (
+          categoryDetail && (
+            <>
+              {/* Category-specific hero like the Oslo example */}
+              <header>
+                <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
+                  {categoryDetail.title}
+                </h1>
+                <p className="mt-6 max-w-3xl text-lg leading-8 text-gray-600">
+                  {categoryDetail.description}
+                </p>
+              </header>
+
+              <section className="mt-10 grid gap-8 lg:grid-cols-2 lg:items-start">
+                {/* Big hero image */}
+                <div className="relative h-72 w-full overflow-hidden rounded-2xl shadow-sm lg:h-80">
+                  <img
+                    src={categoryDetail.heroImage}
+                    alt={categoryDetail.title}
+                    className="h-full w-full object-cover"
+                  />
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />
+                  <div className="absolute bottom-4 left-4 max-w-sm rounded-full bg-black/60 px-4 py-2 text-xs text-white backdrop-blur">
+                    Curated places in Cape Coast — scroll down to explore the list.
+                  </div>
+                </div>
+
+                {/* Sections (like “Typical Norwegian food”, etc.) */}
+                <div className="space-y-4">
+                  {categoryDetail.sections.map((section) => (
+                    <article
+                      key={section.title}
+                      className="rounded-xl border border-amber-100 bg-amber-50/60 px-4 py-3 shadow-sm"
+                    >
+                      <h2 className="text-sm font-semibold text-gray-900">
+                        {section.title}
+                      </h2>
+                      <p className="mt-1 text-sm text-gray-700">
+                        {section.body}
+                      </p>
+                    </article>
+                  ))}
+                </div>
+              </section>
+            </>
+          )
+        )}
       </main>
 
       {/* Main content: search, filters, results */}
