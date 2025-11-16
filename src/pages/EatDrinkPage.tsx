@@ -22,183 +22,48 @@ type LocationFilterId = "any" | "cape-coast" | "elmina" | "abura" | "other";
 const PLACES = [
   {
     id: 1,
-    name: "Becky Kay Restaurant & Bar",
+    name: "Castle View Restaurant",
     type: "restaurant" as const,
     locationId: "cape-coast" as const,
     locationLabel: "Cape Coast",
     monthTags: ["any"],
-    imageUrl:
-      "https://images.unsplash.com/photo-1521017432531-fbd92d768814?q=80&w=1200",
-    description:
-      "Modern restaurant and bar in Cape Coast serving local and continental dishes in a cosy setting.",
+    description: "Seafood and local dishes with views towards Cape Coast Castle.",
   },
   {
     id: 2,
-    name: "Da Breeze Bar & Restaurant",
+    name: "Oasis Beach Bar",
     type: "bar" as const,
     locationId: "cape-coast" as const,
     locationLabel: "Cape Coast",
     monthTags: ["any", "jul-sep"],
-    imageUrl:
-      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=1200",
-    description:
-      "Beachfront bar and restaurant with sea views, chilled music and fresh grilled favourites.",
+    description: "Beachfront bar with live music, cocktails and a relaxed vibe.",
   },
   {
     id: 3,
-    name: "Castle Beach Restaurant",
-    type: "restaurant" as const,
-    locationId: "cape-coast" as const,
-    locationLabel: "Cape Coast",
-    monthTags: ["any"],
-    imageUrl:
-      "https://images.unsplash.com/photo-1514933651103-005eec06c04b?q=80&w=1200",
-    description:
-      "Seafood and Ghanaian meals right by the ocean, a short walk from Cape Coast Castle.",
+    name: "Elmina Harbour Café",
+    type: "cafe" as const,
+    locationId: "elmina" as const,
+    locationLabel: "Elmina",
+    monthTags: ["any", "jan-mar"],
+    description: "Casual café near the harbour, perfect for coffee and light bites.",
   },
   {
     id: 4,
-    name: "Lemon Lounge",
+    name: "Abura Garden Spot",
     type: "restaurant" as const,
-    locationId: "cape-coast" as const,
-    locationLabel: "Cape Coast",
-    monthTags: ["any", "oct-dec"],
-    imageUrl:
-      "https://images.unsplash.com/photo-1514933651103-005eec06c04b?q=80&w=1200",
-    description:
-      "Stylish lounge with cocktails, sharing plates and a relaxed evening atmosphere.",
+    locationId: "abura" as const,
+    locationLabel: "Abura",
+    monthTags: ["any", "apr-jun"],
+    description: "Garden-style dining with local favourites and grilled options.",
   },
   {
     id: 5,
-    name: "Emperor Ital Joint",
-    type: "restaurant" as const,
-    locationId: "cape-coast" as const,
-    locationLabel: "Cape Coast",
-    monthTags: ["any"],
-    imageUrl:
-      "https://images.unsplash.com/photo-1546793665-c74683f339c1?q=80&w=1200",
-    description:
-      "Plant-based and ital-inspired meals, fresh juices and relaxed vibes in Cape Coast.",
-  },
-  {
-    id: 6,
-    name: "Sasakawa Restaurant",
-    type: "restaurant" as const,
-    locationId: "cape-coast" as const,
-    locationLabel: "Cape Coast",
-    monthTags: ["any", "jan-mar"],
-    imageUrl:
-      "https://images.unsplash.com/photo-1421622548261-c45bfe178854?q=80&w=1200",
-    description:
-      "Classic spot combining local Ghanaian dishes with simple continental favourites.",
-  },
-  {
-    id: 7,
-    name: "Oguaa Basiaba Tasty Cuisine",
-    type: "restaurant" as const,
-    locationId: "cape-coast" as const,
-    locationLabel: "Cape Coast",
-    monthTags: ["any", "apr-jun"],
-    imageUrl:
-      "https://images.unsplash.com/photo-1504753793650-d4a2b783c15e?q=80&w=1200",
-    description:
-      "Budget-friendly local eatery serving Fufu, Banku, Red-Red and other Ghanaian favourites.",
-  },
-  {
-    id: 8,
-    name: "New Life Café",
-    type: "cafe" as const,
-    locationId: "cape-coast" as const,
-    locationLabel: "Cape Coast",
-    monthTags: ["any"],
-    imageUrl:
-      "https://images.unsplash.com/photo-1485808191679-5f86510681a2?q=80&w=1200",
-    description:
-      "Casual café with light meals, snacks and drinks, ideal for small meetups and study sessions.",
-  },
-  {
-    id: 9,
-    name: "Cape Cafe & Restaurant",
-    type: "cafe" as const,
-    locationId: "cape-coast" as const,
-    locationLabel: "Cape Coast",
-    monthTags: ["any", "jul-sep"],
-    imageUrl:
-      "https://images.unsplash.com/photo-1514933651103-005eec06c04b?q=80&w=1200",
-    description:
-      "A mix of café and restaurant, offering breakfast plates, coffees and hearty main dishes.",
-  },
-  {
-    id: 10,
-    name: "Coast to Coast Pub n Grill",
+    name: "Lagoon Night Lounge",
     type: "bar" as const,
-    locationId: "cape-coast" as const,
-    locationLabel: "Cape Coast",
+    locationId: "other" as const,
+    locationLabel: "Around Cape Coast",
     monthTags: ["any", "oct-dec"],
-    imageUrl:
-      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200",
-    description:
-      "Lively pub and grill with cold drinks, grilled meat and football on TV.",
-  },
-  {
-    id: 11,
-    name: "Cape Coast Coffee House",
-    type: "cafe" as const,
-    locationId: "cape-coast" as const,
-    locationLabel: "Cape Coast",
-    monthTags: ["any"],
-    imageUrl:
-      "https://images.unsplash.com/photo-1514933651103-005eec06c04b?q=80&w=1200",
-    description:
-      "Specialty coffee, pastries and light bites in a cosy, modern café interior.",
-  },
-  {
-    id: 12,
-    name: "Community Gardens Bar & Restaurant",
-    type: "bar" as const,
-    locationId: "cape-coast" as const,
-    locationLabel: "Cape Coast",
-    monthTags: ["any", "jan-mar"],
-    imageUrl:
-      "https://images.unsplash.com/photo-1544123944-22f26348c1e5?q=80&w=1200",
-    description:
-      "Garden-style venue with outdoor seating, music and a mix of drinks and grilled food.",
-  },
-  {
-    id: 13,
-    name: "Sahara Pub & Restaurant",
-    type: "bar" as const,
-    locationId: "cape-coast" as const,
-    locationLabel: "Cape Coast",
-    monthTags: ["any"],
-    imageUrl:
-      "https://images.unsplash.com/photo-1551024601-bec78aea704b?q=80&w=1200",
-    description:
-      "Popular pub and restaurant for nightlife, drinks and late-evening meals.",
-  },
-  {
-    id: 14,
-    name: "Shipyard Café & Bar",
-    type: "bar" as const,
-    locationId: "cape-coast" as const,
-    locationLabel: "Cape Coast",
-    monthTags: ["any", "apr-jun"],
-    imageUrl:
-      "https://images.unsplash.com/photo-1521017432531-fbd92d768814?q=80&w=1200",
-    description:
-      "Trendy spot with cocktails, quick bites and a modern indoor–outdoor feel.",
-  },
-  {
-    id: 15,
-    name: "Lush on the Coast Restaurant & Bar",
-    type: "bar" as const,
-    locationId: "cape-coast" as const,
-    locationLabel: "Cape Coast",
-    monthTags: ["any"],
-    imageUrl:
-      "https://images.unsplash.com/photo-1521017432540-1f1a6c5e52a0?q=80&w=1200",
-    description:
-      "Chic restaurant and bar for date nights, celebrations and group hangouts by the coast.",
+    description: "Late-night lounge with DJ sets and small plates.",
   },
 ];
 
@@ -208,82 +73,6 @@ const CATEGORY_CONFIG: { id: CategoryId; label: string; icon: any }[] = [
   { id: "cafe", label: "Café", icon: Coffee },
   { id: "restaurant", label: "Restaurant", icon: ChefHat },
 ];
-
-type CategoryDetailId = Exclude<CategoryId, "all">;
-
-const CATEGORY_PAGE_CONTENT: Record<
-  CategoryDetailId,
-  {
-    title: string;
-    description: string;
-    heroImage: string;
-    sections: { title: string; body: string }[];
-  }
-> = {
-  bar: {
-    title: "Bars & pubs in Cape Coast",
-    description:
-      "Sip cocktails by the ocean, watch football with friends, or discover local nightspots from the student pubs to beachfront lounges.",
-    heroImage:
-      "https://images.unsplash.com/photo-1514933651103-005eec06c04b?q=80&w=1600",
-    sections: [
-      {
-        title: "Beach bars & sunset spots",
-        body: "Relax at seaside venues like Da Breeze Bar & Restaurant and Castle Beach Restaurant – perfect for sundowners, live music and sea breeze.",
-      },
-      {
-        title: "Lively pubs & game nights",
-        body: "Find cold drinks, grills and football on TV at places such as Coast to Coast Pub n Grill, Sahara Pub & Restaurant and Community Gardens.",
-      },
-      {
-        title: "Lounges & chill nights",
-        body: "From Shipyard Café & Bar to Lush on the Coast, enjoy cocktails, small bites and a more laid-back lounge atmosphere.",
-      },
-    ],
-  },
-  cafe: {
-    title: "Cafés & coffee in Cape Coast",
-    description:
-      "Start your day with a good cup of coffee, meet friends over pastries, or find a quiet corner to read and work.",
-    heroImage:
-      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=1600",
-    sections: [
-      {
-        title: "Coffee & breakfast",
-        body: "Grab your morning brew and breakfast plates at spots like Cape Coast Coffee House, Cape Cafe & Restaurant and New Life Café.",
-      },
-      {
-        title: "Study-friendly corners",
-        body: "Many cafés in Cape Coast offer Wi-Fi, plugs and a calm vibe – ideal for students, freelancers and remote workers.",
-      },
-      {
-        title: "Sweet treats & light bites",
-        body: "Pair your drinks with cakes, pastries and small snacks for an easy hangout or afternoon break.",
-      },
-    ],
-  },
-  restaurant: {
-    title: "Restaurants & local food in Cape Coast",
-    description:
-      "Taste fresh seafood, traditional Ghanaian dishes and modern plates – from simple chop bars to restaurants with ocean views.",
-    heroImage:
-      "https://images.unsplash.com/photo-1504753793650-d4a2b783c15e?q=80&w=1600",
-    sections: [
-      {
-        title: "Typical Cape Coast flavours",
-        body: "Enjoy Banku with grilled fish, Fufu with soup, Red-Red and more at places like Oguaa Basiaba Tasty Cuisine and Emperor Ital Joint.",
-      },
-      {
-        title: "Eat like the locals",
-        body: "Neighbourhood favourites and student spots serve generous portions, simple menus and a relaxed Ghanaian atmosphere.",
-      },
-      {
-        title: "Seaside & date-night restaurants",
-        body: "Plan special evenings at Castle Beach Restaurant, Becky Kay Restaurant & Bar or Lemon Lounge, with views, ambience and good service.",
-      },
-    ],
-  },
-};
 
 const MONTH_OPTIONS: { id: MonthFilterId; label: string }[] = [
   { id: "any", label: "Any time" },
@@ -335,6 +124,7 @@ export default function EatDrinkPage() {
     monthFilter !== "any" ||
     locationFilter !== "any";
 
+  // Initialise filters from URL (shareable state)
   useEffect(() => {
     if (typeof window === "undefined") return;
     const params = new URLSearchParams(window.location.search);
@@ -352,6 +142,7 @@ export default function EatDrinkPage() {
     if (isViewMode(view)) setActiveView(view);
   }, []);
 
+  // Keep URL in sync with filters
   useEffect(() => {
     if (typeof window === "undefined") return;
     const params = new URLSearchParams(window.location.search);
@@ -379,6 +170,7 @@ export default function EatDrinkPage() {
     window.history.replaceState(null, "", newUrl);
   }, [searchQuery, activeCategory, monthFilter, locationFilter, activeView]);
 
+  // Small loading state whenever filters/search change (UX only)
   useEffect(() => {
     setIsLoading(true);
     const id = window.setTimeout(() => {
@@ -429,14 +221,9 @@ export default function EatDrinkPage() {
     setLocationFilter("any");
   };
 
-  const categoryDetail =
-    activeCategory === "all"
-      ? null
-      : CATEGORY_PAGE_CONTENT[activeCategory as CategoryDetailId];
-
   return (
     <div className="w-full bg-white">
-      {/* Top hero image */}
+      {/* Hero image */}
       <div className="h-[260px] w-full overflow-hidden sm:h-[360px] lg:h-[420px]">
         <img
           src="https://images.unsplash.com/photo-1529042410759-befb1204b468?q=80&w=1500"
@@ -445,139 +232,113 @@ export default function EatDrinkPage() {
         />
       </div>
 
-      {/* Intro / category hero */}
+      {/* Intro heading + description + highlight cards */}
       <main className="mx-auto max-w-7xl px-6 py-12 sm:py-16">
-        {activeCategory === "all" ? (
-          <>
-            <header>
-              <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-                Restaurants, cafés &amp; nightlife
-              </h1>
-              <p className="mt-6 max-w-2xl text-lg leading-8 text-gray-600">
-                Discover Cape Coast’s vibrant food and drink scene – from local chop
-                bars and cosy cafés to beachfront bars and late-night spots.
+        <header>
+          <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
+            Restaurants, cafés &amp; nightlife
+          </h1>
+          <p className="mt-6 max-w-2xl text-lg leading-8 text-gray-600">
+            Discover Cape Coast’s vibrant food and drink scene – from local chop
+            bars and cosy cafés to beachfront bars and late-night spots.
+          </p>
+        </header>
+
+        {/* Oslo-style highlight cards */}
+        <section
+          aria-label="Featured food and drink experiences"
+          className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-3"
+        >
+          <article className="relative h-60 w-full overflow-hidden rounded-lg">
+            <img
+              src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1500"
+              className="h-full w-full object-cover"
+              alt="The taste of Cape Coast"
+            />
+            <div className="absolute bottom-0 left-0 w-[85%] bg-[#D9F3F0] p-4">
+              <h3 className="font-semibold text-gray-900">
+                The taste of Cape Coast
+              </h3>
+              <p className="text-sm text-gray-700">
+                Discover authentic traditions and local ingredients.
               </p>
-            </header>
+            </div>
+          </article>
 
-            {/* 3 highlight cards – Bar & pub / Café / Restaurant */}
-            <section
-              aria-label="Featured food and drink categories"
-              className="mt-12 grid gap-8 sm:grid-cols-3"
-            >
-              {/* Bar & pub */}
-              <button
-                type="button"
-                onClick={() => setActiveCategory("bar")}
-                className="relative h-60 w-full overflow-hidden rounded-xl text-left shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
-              >
-                <img
-                  src="https://images.unsplash.com/photo-1552566626-52f8b828add9?q=80&w=1500"
-                  className="h-full w-full object-cover"
-                  alt="Bars and pubs in Cape Coast"
-                />
-                <div className="absolute bottom-0 left-0 w-[85%] rounded-tr-xl bg-amber-50/95 p-4 border-t border-r border-amber-100">
-                  <h3 className="font-semibold text-gray-900">Bars &amp; pubs</h3>
-                  <p className="text-sm text-gray-700">
-                    Beach bars, rooftop spots and lively pubs for evenings out.
-                  </p>
-                  <p className="mt-1 text-xs font-medium text-amber-700">
-                    Show bars &amp; pubs →
-                  </p>
-                </div>
-              </button>
+          <article className="relative h-60 w-full overflow-hidden rounded-lg">
+            <img
+              src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1500"
+              className="h-full w-full object-cover"
+              alt="Easy & affordable places"
+            />
+            <div className="absolute bottom-0 left-0 w-[85%] bg-[#D9F3F0] p-4">
+              <h3 className="font-semibold text-gray-900">Easy &amp; affordable</h3>
+              <p className="text-sm text-gray-700">
+                Recommendations for low-cost, simple, friendly spots.
+              </p>
+            </div>
+          </article>
 
-              {/* Café */}
-              <button
-                type="button"
-                onClick={() => setActiveCategory("cafe")}
-                className="relative h-60 w-full overflow-hidden rounded-xl text-left shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
-              >
-                <img
-                  src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=1500"
-                  className="h-full w-full object-cover"
-                  alt="Cafés in Cape Coast"
-                />
-                <div className="absolute bottom-0 left-0 w-[85%] rounded-tr-xl bg-amber-50/95 p-4 border-t border-r border-amber-100">
-                  <h3 className="font-semibold text-gray-900">Cafés</h3>
-                  <p className="text-sm text-gray-700">
-                    Coffee, pastries and light bites in cosy, relaxed spaces.
-                  </p>
-                  <p className="mt-1 text-xs font-medium text-amber-700">
-                    Show cafés →
-                  </p>
-                </div>
-              </button>
+          <article className="relative h-60 w-full overflow-hidden rounded-lg">
+            <img
+              src="https://images.unsplash.com/photo-1552566626-52f8b828add9?q=80&w=1500"
+              className="h-full w-full object-cover"
+              alt="Bars, pubs and nightlife"
+            />
+            <div className="absolute bottom-0 left-0 w-[85%] bg-[#D9F3F0] p-4">
+              <h3 className="font-semibold text-gray-900">
+                Bars, pubs &amp; nightlife
+              </h3>
+              <p className="text-sm text-gray-700">
+                Social spots for drinks, dancing and good company.
+              </p>
+            </div>
+          </article>
 
-              {/* Restaurant */}
-              <button
-                type="button"
-                onClick={() => setActiveCategory("restaurant")}
-                className="relative h-60 w-full overflow-hidden rounded-xl text-left shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
-              >
-                <img
-                  src="https://images.unsplash.com/photo-1553621042-f6e147245754?q=80&w=1500"
-                  className="h-full w-full object-cover"
-                  alt="Restaurants in Cape Coast"
-                />
-                <div className="absolute bottom-0 left-0 w-[85%] rounded-tr-xl bg-amber-50/95 p-4 border-t border-r border-amber-100">
-                  <h3 className="font-semibold text-gray-900">Restaurants</h3>
-                  <p className="text-sm text-gray-700">
-                    From local chop bars to elegant dining with ocean views.
-                  </p>
-                  <p className="mt-1 text-xs font-medium text-amber-700">
-                    Show restaurants →
-                  </p>
-                </div>
-              </button>
-            </section>
-          </>
-        ) : (
-          categoryDetail && (
-            <>
-              {/* Category-specific hero like the Oslo example */}
-              <header>
-                <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
-                  {categoryDetail.title}
-                </h1>
-                <p className="mt-6 max-w-3xl text-lg leading-8 text-gray-600">
-                  {categoryDetail.description}
-                </p>
-              </header>
+          <article className="relative h-60 w-full overflow-hidden rounded-lg">
+            <img
+              src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=1500"
+              className="h-full w-full object-cover"
+              alt="Coffee & cake"
+            />
+            <div className="absolute bottom-0 left-0 w-[85%] bg-[#D9F3F0] p-4">
+              <h3 className="font-semibold text-gray-900">Coffee &amp; cake</h3>
+              <p className="text-sm text-gray-700">
+                Perfect for brunch, pastries or chilled café moments.
+              </p>
+            </div>
+          </article>
 
-              <section className="mt-10 grid gap-8 lg:grid-cols-2 lg:items-start">
-                {/* Big hero image */}
-                <div className="relative h-72 w-full overflow-hidden rounded-2xl shadow-sm lg:h-80">
-                  <img
-                    src={categoryDetail.heroImage}
-                    alt={categoryDetail.title}
-                    className="h-full w-full object-cover"
-                  />
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />
-                  <div className="absolute bottom-4 left-4 max-w-sm rounded-full bg-black/60 px-4 py-2 text-xs text-white backdrop-blur">
-                    Curated places in Cape Coast — scroll down to explore the list.
-                  </div>
-                </div>
+          <article className="relative h-60 w-full overflow-hidden rounded-lg">
+            <img
+              src="https://images.unsplash.com/photo-1604908177225-df3b3f0c39eb?q=80&w=1500"
+              className="h-full w-full object-cover"
+              alt="Vegan & vegetarian dishes"
+            />
+            <div className="absolute bottom-0 left-0 w-[85%] bg-[#D9F3F0] p-4">
+              <h3 className="font-semibold text-gray-900">
+                Vegan &amp; vegetarian
+              </h3>
+              <p className="text-sm text-gray-700">
+                Healthy and creative plant-based options around town.
+              </p>
+            </div>
+          </article>
 
-                {/* Sections (like “Typical Norwegian food”, etc.) */}
-                <div className="space-y-4">
-                  {categoryDetail.sections.map((section) => (
-                    <article
-                      key={section.title}
-                      className="rounded-xl border border-amber-100 bg-amber-50/60 px-4 py-3 shadow-sm"
-                    >
-                      <h2 className="text-sm font-semibold text-gray-900">
-                        {section.title}
-                      </h2>
-                      <p className="mt-1 text-sm text-gray-700">
-                        {section.body}
-                      </p>
-                    </article>
-                  ))}
-                </div>
-              </section>
-            </>
-          )
-        )}
+          <article className="relative h-60 w-full overflow-hidden rounded-lg">
+            <img
+              src="https://images.unsplash.com/photo-1553621042-f6e147245754?q=80&w=1500"
+              className="h-full w-full object-cover"
+              alt="All restaurants overview"
+            />
+            <div className="absolute bottom-0 left-0 w-[85%] bg-[#D9F3F0] p-4">
+              <h3 className="font-semibold text-gray-900">All restaurants</h3>
+              <p className="text-sm text-gray-700">
+                Full overview of every place to eat in Cape Coast.
+              </p>
+            </div>
+          </article>
+        </section>
       </main>
 
       {/* Main content: search, filters, results */}
@@ -611,7 +372,7 @@ export default function EatDrinkPage() {
                   <Icon className="h-6 w-6" aria-hidden="true" />
                   <span className="text-xs sm:text-sm">{cat.label}</span>
                   {isActive && (
-                    <span className="mt-1 h-0.5 w-8 rounded-full bg-amber-600" />
+                    <span className="mt-1 h-0.5 w-8 rounded-full bg-gray-900" />
                   )}
                 </button>
               );
@@ -626,28 +387,28 @@ export default function EatDrinkPage() {
             <div className="flex-1 space-y-3">
               {/* Search bar with suggestions */}
               <div className="relative">
-                <div className="flex w-full overflow-hidden rounded-full border border-gray-300 bg-white shadow-sm transition hover:shadow-md focus-within:ring-2 focus-within:ring-amber-500/50">
+                <div className="flex w-full overflow-hidden rounded-md border border-gray-300 bg-white shadow-sm transition hover:shadow-md focus-within:ring-2 focus-within:ring-gray-900/10">
                   <input
                     type="text"
-                    placeholder="Search restaurants, cafés and bars..."
+                    placeholder="Search activities..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="flex-1 px-5 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 outline-none"
+                    className="flex-1 px-4 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 outline-none"
                     aria-label="Search restaurants, cafés and bars"
                   />
                   <button
                     type="button"
-                    className="mr-1 my-1 flex items-center justify-center rounded-full bg-amber-600 px-4 text-white transition hover:bg-amber-700"
+                    className="flex items-center justify-center border-l border-gray-300 bg-gray-50 px-4 transition hover:bg-gray-100"
                     aria-label="Search"
                   >
-                    <Search className="h-4 w-4" aria-hidden="true" />
+                    <Search className="h-4 w-4 text-gray-700" aria-hidden="true" />
                   </button>
                 </div>
 
                 {/* Autocomplete suggestions */}
                 {searchQuery.trim().length > 1 && searchSuggestions.length > 0 && (
                   <ul
-                    className="absolute z-20 mt-1 w-full overflow-hidden rounded-xl border border-gray-200 bg-white text-sm shadow-lg"
+                    className="absolute z-20 mt-1 w-full overflow-hidden rounded-md border border-gray-200 bg-white text-sm shadow-lg"
                     role="listbox"
                     aria-label="Search suggestions"
                   >
@@ -655,7 +416,7 @@ export default function EatDrinkPage() {
                       <li key={place.id}>
                         <button
                           type="button"
-                          className="flex w-full items-start justify-between px-4 py-2 text-left text-gray-800 hover:bg-gray-50"
+                          className="flex w-full items-start justify-between px-3 py-2 text-left text-gray-800 hover:bg-gray-50"
                           onMouseDown={() => setSearchQuery(place.name)}
                         >
                           <span>{place.name}</span>
@@ -679,12 +440,12 @@ export default function EatDrinkPage() {
                       setIsMonthOpen((prev) => !prev);
                       setIsLocationOpen(false);
                     }}
-                    className="flex w-full items-center justify-between rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-700 shadow-sm transition hover:bg-gray-50"
+                    className="flex w-full items-center justify-between rounded-md border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-700 shadow-sm transition hover:bg-gray-50"
                     aria-haspopup="listbox"
                     aria-expanded={isMonthOpen}
                   >
                     <span className="flex items-center gap-2">
-                      <Calendar className="h-4 w-4 text-amber-600" aria-hidden="true" />
+                      <Calendar className="h-4 w-4" aria-hidden="true" />
                       <span>
                         {monthFilter === "any" ? "Months" : selectedMonthLabel}
                       </span>
@@ -697,7 +458,7 @@ export default function EatDrinkPage() {
                     />
                   </button>
                   {isMonthOpen && (
-                    <div className="absolute z-10 mt-1 w-full rounded-xl border border-gray-200 bg-white py-1 text-sm shadow-lg">
+                    <div className="absolute z-10 mt-1 w-full rounded-md border border-gray-200 bg-white py-1 text-sm shadow-lg">
                       {MONTH_OPTIONS.map((m) => (
                         <button
                           key={m.id}
@@ -706,14 +467,14 @@ export default function EatDrinkPage() {
                             setMonthFilter(m.id);
                             setIsMonthOpen(false);
                           }}
-                          className="flex w-full items-center justify-between px-3 py-2 text-left text-gray-700 transition hover:bg-amber-50"
+                          className="flex w-full items-center justify-between px-3 py-2 text-left text-gray-700 transition hover:bg-gray-50"
                           role="option"
                           aria-selected={monthFilter === m.id}
                         >
                           <span>{m.label}</span>
                           {monthFilter === m.id && (
                             <Check
-                              className="h-4 w-4 text-amber-600"
+                              className="h-4 w-4 text-gray-900"
                               aria-hidden="true"
                             />
                           )}
@@ -731,12 +492,12 @@ export default function EatDrinkPage() {
                       setIsLocationOpen((prev) => !prev);
                       setIsMonthOpen(false);
                     }}
-                    className="flex w-full items-center justify-between rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-700 shadow-sm transition hover:bg-gray-50"
+                    className="flex w-full items-center justify-between rounded-md border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-700 shadow-sm transition hover:bg-gray-50"
                     aria-haspopup="listbox"
                     aria-expanded={isLocationOpen}
                   >
                     <span className="flex items-center gap-2">
-                      <MapPin className="h-4 w-4 text-amber-600" aria-hidden="true" />
+                      <MapPin className="h-4 w-4" aria-hidden="true" />
                       <span>
                         {locationFilter === "any"
                           ? "Location"
@@ -751,7 +512,7 @@ export default function EatDrinkPage() {
                     />
                   </button>
                   {isLocationOpen && (
-                    <div className="absolute z-10 mt-1 w-full rounded-xl border border-gray-200 bg-white py-1 text-sm shadow-lg">
+                    <div className="absolute z-10 mt-1 w-full rounded-md border border-gray-200 bg-white py-1 text-sm shadow-lg">
                       {LOCATION_OPTIONS.map((loc) => (
                         <button
                           key={loc.id}
@@ -760,14 +521,14 @@ export default function EatDrinkPage() {
                             setLocationFilter(loc.id);
                             setIsLocationOpen(false);
                           }}
-                          className="flex w-full items-center justify-between px-3 py-2 text-left text-gray-700 transition hover:bg-amber-50"
+                          className="flex w-full items-center justify-between px-3 py-2 text-left text-gray-700 transition hover:bg-gray-50"
                           role="option"
                           aria-selected={locationFilter === loc.id}
                         >
                           <span>{loc.label}</span>
                           {locationFilter === loc.id && (
                             <Check
-                              className="h-4 w-4 text-amber-600"
+                              className="h-4 w-4 text-gray-900"
                               aria-hidden="true"
                             />
                           )}
@@ -786,10 +547,10 @@ export default function EatDrinkPage() {
                     <button
                       type="button"
                       onClick={() => setSearchQuery("")}
-                      className="inline-flex items-center gap-1 rounded-full bg-amber-50 px-3 py-1 text-amber-800 hover:bg-amber-100"
+                      className="inline-flex items-center gap-1 rounded-full bg-gray-100 px-3 py-1 text-gray-700 hover:bg-gray-200"
                     >
                       <span>Search: {searchQuery}</span>
-                      <span className="text-amber-500" aria-hidden="true">
+                      <span className="text-gray-500" aria-hidden="true">
                         ×
                       </span>
                     </button>
@@ -798,7 +559,7 @@ export default function EatDrinkPage() {
                     <button
                       type="button"
                       onClick={() => setActiveCategory("all")}
-                      className="inline-flex items-center gap-1 rounded-full bg-amber-50 px-3 py-1 text-amber-800 hover:bg-amber-100"
+                      className="inline-flex items-center gap-1 rounded-full bg-gray-100 px-3 py-1 text-gray-700 hover:bg-gray-200"
                     >
                       <span>
                         Category:{" "}
@@ -807,7 +568,7 @@ export default function EatDrinkPage() {
                             ?.label
                         }
                       </span>
-                      <span className="text-amber-500" aria-hidden="true">
+                      <span className="text-gray-500" aria-hidden="true">
                         ×
                       </span>
                     </button>
@@ -816,10 +577,10 @@ export default function EatDrinkPage() {
                     <button
                       type="button"
                       onClick={() => setMonthFilter("any")}
-                      className="inline-flex items-center gap-1 rounded-full bg-amber-50 px-3 py-1 text-amber-800 hover:bg-amber-100"
+                      className="inline-flex items-center gap-1 rounded-full bg-gray-100 px-3 py-1 text-gray-700 hover:bg-gray-200"
                     >
                       <span>Month: {selectedMonthLabel}</span>
-                      <span className="text-amber-500" aria-hidden="true">
+                      <span className="text-gray-500" aria-hidden="true">
                         ×
                       </span>
                     </button>
@@ -828,10 +589,10 @@ export default function EatDrinkPage() {
                     <button
                       type="button"
                       onClick={() => setLocationFilter("any")}
-                      className="inline-flex items-center gap-1 rounded-full bg-amber-50 px-3 py-1 text-amber-800 hover:bg-amber-100"
+                      className="inline-flex items-center gap-1 rounded-full bg-gray-100 px-3 py-1 text-gray-700 hover:bg-gray-200"
                     >
                       <span>Location: {selectedLocationLabel}</span>
-                      <span className="text-amber-500" aria-hidden="true">
+                      <span className="text-gray-500" aria-hidden="true">
                         ×
                       </span>
                     </button>
@@ -855,10 +616,8 @@ export default function EatDrinkPage() {
               <button
                 type="button"
                 onClick={() => setActiveView("map")}
-                className={`inline-flex items-center gap-2 rounded-full px-3 py-1.5 transition-colors hover:bg-amber-50 hover:text-gray-900 ${
-                  activeView === "map"
-                    ? "bg-amber-100 text-gray-900"
-                    : "text-gray-700"
+                className={`inline-flex items-center gap-2 transition-colors hover:text-gray-900 ${
+                  activeView === "map" ? "font-medium text-gray-900" : ""
                 }`}
               >
                 <MapIcon className="h-4 w-4" aria-hidden="true" />
@@ -867,10 +626,10 @@ export default function EatDrinkPage() {
               <button
                 type="button"
                 onClick={() => setActiveView("list")}
-                className={`inline-flex items-center gap-2 rounded-full px-3 py-1.5 transition-colors hover:bg-amber-50 hover:text-gray-900 ${
+                className={`inline-flex items-center gap-2 pb-1 transition-colors hover:text-gray-900 ${
                   activeView === "list"
-                    ? "bg-amber-600 text-white"
-                    : "text-gray-700"
+                    ? "border-b-2 border-gray-900 font-medium text-gray-900"
+                    : "border-b-2 border-transparent"
                 }`}
               >
                 <ListIcon className="h-4 w-4" aria-hidden="true" />
@@ -879,10 +638,8 @@ export default function EatDrinkPage() {
               <button
                 type="button"
                 onClick={() => setActiveView("split")}
-                className={`inline-flex items-center gap-2 rounded-full px-3 py-1.5 transition-colors hover:bg-amber-50 hover:text-gray-900 ${
-                  activeView === "split"
-                    ? "bg-amber-100 text-gray-900"
-                    : "text-gray-700"
+                className={`inline-flex items-center gap-2 transition-colors hover:text-gray-900 ${
+                  activeView === "split" ? "font-medium text-gray-900" : ""
                 }`}
               >
                 <LayoutGrid className="h-4 w-4" aria-hidden="true" />
@@ -910,31 +667,37 @@ export default function EatDrinkPage() {
                 {Array.from({ length: 6 }).map((_, index) => (
                   <div
                     key={index}
-                    className="flex h-full flex-col overflow-hidden rounded-xl border border-gray-200 bg-gray-50 animate-pulse"
+                    className="flex h-full flex-col rounded-lg border border-gray-200 bg-gray-50 p-4 animate-pulse"
                   >
-                    <div className="h-40 w-full bg-gray-200" />
-                    <div className="p-4 space-y-3">
-                      <div className="h-3 w-3/4 rounded bg-gray-200" />
-                      <div className="h-3 w-1/2 rounded bg-gray-200" />
+                    <div className="flex items-start gap-3">
+                      <div className="h-9 w-9 rounded-full bg-gray-200" />
+                      <div className="flex-1 space-y-2">
+                        <div className="h-3 w-3/4 rounded bg-gray-200" />
+                        <div className="h-3 w-1/2 rounded bg-gray-200" />
+                      </div>
+                    </div>
+                    <div className="mt-4 space-y-2">
                       <div className="h-3 w-full rounded bg-gray-200" />
                       <div className="h-3 w-5/6 rounded bg-gray-200" />
+                      <div className="h-3 w-4/6 rounded bg-gray-200" />
                     </div>
+                    <div className="mt-4 h-3 w-1/3 rounded bg-gray-200" />
                   </div>
                 ))}
               </div>
             ) : filteredPlaces.length === 0 ? (
-              <div className="rounded-xl border border-dashed border-amber-200 bg-amber-50 px-6 py-10 text-center">
+              <div className="rounded-lg border border-dashed border-gray-300 bg-gray-50 px-6 py-10 text-center">
                 <p className="text-sm font-medium text-gray-800">
                   No places match your search.
                 </p>
-                <p className="mt-2 text-sm text-gray-600">
+                <p className="mt-2 text-sm text-gray-500">
                   Try removing a filter or searching for something different.
                 </p>
                 {hasActiveFilters && (
                   <button
                     type="button"
                     onClick={handleClearAll}
-                    className="mt-4 inline-flex items-center rounded-full bg-amber-600 px-4 py-2 text-sm font-medium text-white hover:bg-amber-700"
+                    className="mt-4 inline-flex items-center rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-white hover:bg-black"
                   >
                     Clear all filters
                   </button>
@@ -943,52 +706,56 @@ export default function EatDrinkPage() {
             ) : (
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {filteredPlaces.map((place) => {
-                  const typeLabel =
-                    place.type === "bar"
-                      ? "Bar & pub"
-                      : place.type === "cafe"
-                      ? "Café"
-                      : "Restaurant";
-
+                  const CategoryIcon =
+                    CATEGORY_CONFIG.find((c) => c.id === place.type)?.icon ??
+                    Heart;
                   return (
                     <article
                       key={place.id}
-                      className="flex h-full flex-col overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg"
+                      className="flex h-full flex-col rounded-lg border border-gray-200 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
                     >
-                      {/* Image holder */}
-                      <div className="relative h-40 w-full overflow-hidden">
-                        <img
-                          src={place.imageUrl}
-                          alt={place.name}
-                          className="h-full w-full object-cover"
-                        />
-                        <div className="absolute left-3 top-3 rounded-full bg-gray-900/80 px-3 py-1 text-xs text-white shadow-sm">
-                          {typeLabel} • {place.locationLabel}
+                      <div className="flex items-start gap-3">
+                        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gray-100">
+                          <CategoryIcon
+                            className="h-4 w-4 text-gray-700"
+                            aria-hidden="true"
+                          />
+                        </div>
+                        <div className="space-y-1">
+                          <h2 className="text-sm font-semibold text-gray-900">
+                            {place.name}
+                          </h2>
+                          <div className="flex flex-wrap items-center gap-2 text-xs text-gray-500">
+                            <span className="capitalize">
+                              {place.type === "bar"
+                                ? "Bar & pub"
+                                : place.type === "cafe"
+                                ? "Café"
+                                : "Restaurant"}
+                            </span>
+                            <span aria-hidden="true">•</span>
+                            <span className="inline-flex items-center gap-1">
+                              <MapPin className="h-3 w-3" aria-hidden="true" />
+                              {place.locationLabel}
+                            </span>
+                          </div>
                         </div>
                       </div>
-
-                      {/* Text content */}
-                      <div className="flex flex-1 flex-col p-4">
-                        <h2 className="text-sm font-semibold text-gray-900">
-                          {place.name}
-                        </h2>
-                        <p className="mt-2 line-clamp-3 text-sm text-gray-600">
-                          {place.description}
-                        </p>
-
-                        <div className="mt-4 flex items-center justify-between text-xs text-gray-500">
-                          <span>
-                            {place.monthTags.includes("any")
-                              ? "Open all year"
-                              : "Seasonal availability"}
-                          </span>
-                          <button
-                            type="button"
-                            className="rounded-full px-3 py-1 text-xs font-medium text-amber-700 ring-1 ring-amber-200 hover:bg-amber-50"
-                          >
-                            View details
-                          </button>
-                        </div>
+                      <p className="mt-3 line-clamp-3 text-sm text-gray-600">
+                        {place.description}
+                      </p>
+                      <div className="mt-4 flex items-center justify-between text-xs text-gray-500">
+                        <span>
+                          {place.monthTags.includes("any")
+                            ? "Open all year"
+                            : "Seasonal availability"}
+                        </span>
+                        <button
+                          type="button"
+                          className="text-xs font-medium text-gray-900 underline-offset-2 hover:underline"
+                        >
+                          View details
+                        </button>
                       </div>
                     </article>
                   );
