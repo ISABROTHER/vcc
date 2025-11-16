@@ -269,7 +269,7 @@ export default function AccommodationPage() {
                   >
                     {/* Image + overlay */}
                     <div
-                      className="relative h-56 sm:h-64 cursor-pointer overflow-hidden"
+                      className="relative h-72 sm:h-80 cursor-pointer overflow-hidden"
                       onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
@@ -284,7 +284,7 @@ export default function AccommodationPage() {
                       <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/30 to-transparent" />
                       <div className="absolute left-4 right-4 bottom-4 flex justify-between gap-3">
                         <div className="max-w-[80%] rounded-lg bg-black/80 px-3 py-2.5">
-                          <p className="text-xl font-extrabold text-white leading-tight tracking-tight uppercase">
+                          <p className="truncate text-xl font-extrabold text-white leading-tight tracking-tight uppercase">
                             {hotel.name}
                           </p>
                           <p className="mt-1 text-[10px] sm:text-[11px] font-medium text-amber-300 tracking-[0.18em] flex items-center gap-1 uppercase">
