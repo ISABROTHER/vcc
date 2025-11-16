@@ -44,31 +44,11 @@ const BottomNav: React.FC = () => {
   ];
 
   const menuItems = [
-    {
-      label: 'See & do',
-      to: '/see-do',
-      icon: Landmark,
-    },
-    {
-      label: 'Eat & drink',
-      to: '/eat-drink',
-      icon: UtensilsCrossed,
-    },
-    {
-      label: 'Accommodation',
-      to: '/accommodation',
-      icon: Bed,
-    },
-    {
-      label: 'Tourist information',
-      to: '/tourist-info',
-      icon: Info,
-    },
-    {
-      label: 'Booking',
-      to: '/booking',
-      icon: Ticket,
-    },
+    { label: 'See & do', to: '/see-do', icon: Landmark },
+    { label: 'Eat & drink', to: '/eat-drink', icon: UtensilsCrossed },
+    { label: 'Accommodation', to: '/accommodation', icon: Bed },
+    { label: 'Tourist information', to: '/tourist-info', icon: Info },
+    { label: 'Booking', to: '/booking', icon: Ticket },
   ];
 
   const isActive = (path: string) =>
@@ -76,15 +56,15 @@ const BottomNav: React.FC = () => {
 
   return (
     <>
-      {/* Sticky bottom bar – mobile only */}
-      <nav className="fixed inset-x-0 bottom-0 z-40 md:hidden">
+      {/* Sticky Bottom Nav – PURE WHITE – HIGH VISIBILITY */}
+      <nav className="fixed inset-x-0 bottom-0 z-40 md:hidden bg-white border-t border-slate-300 shadow-[0_-6px_20px_rgba(0,0,0,0.15)]">
         <div
-          className="mx-auto max-w-5xl border-t border-slate-200/80 bg-white/98 backdrop-blur-lg shadow-[0_-10px_35px_rgba(15,23,42,0.22)]"
+          className="mx-auto max-w-5xl px-2 py-2"
           style={{
-            paddingBottom: 'calc(env(safe-area-inset-bottom, 0px) + 4px)',
+            paddingBottom: 'env(safe-area-inset-bottom, 6px)',
           }}
         >
-          <div className="flex items-stretch justify-between px-1.5 pt-1 pb-1">
+          <div className="flex items-stretch justify-between gap-1">
             {quickItems.map((item) => {
               const active = isActive(item.to);
               return (
@@ -97,36 +77,24 @@ const BottomNav: React.FC = () => {
                     className={[
                       'mb-1 flex h-14 w-14 items-center justify-center rounded-md transition-all duration-200',
                       item.color,
-                      active
-                        ? 'ring-2 ring-slate-900/70 scale-105'
-                        : 'hover:scale-105 hover:-translate-y-0.5',
+                      active ? 'ring-2 ring-slate-900/80 scale-105' : 'hover:scale-105',
                     ].join(' ')}
                   >
-                    <item.icon
-                      className="h-5 w-5 text-slate-900"
-                      strokeWidth={1.7}
-                    />
+                    <item.icon className="h-5 w-5 text-slate-900" strokeWidth={1.7} />
                   </div>
-                  <span
-                    className={
-                      active
-                        ? 'font-semibold text-slate-950'
-                        : 'text-slate-900'
-                    }
-                  >
+                  <span className={active ? 'font-semibold text-slate-950' : ''}>
                     {item.label}
                   </span>
                 </Link>
               );
             })}
 
-            {/* Menu button */}
+            {/* Menu Button */}
             <button
-              type="button"
               onClick={() => setIsMenuOpen(true)}
               className="flex flex-1 flex-col items-center justify-center text-[11px] font-medium text-slate-900"
             >
-              <div className="mb-1 flex h-14 w-14 items-center justify-center rounded-md bg-slate-100 transition-all duration-200 hover:scale-105 hover:-translate-y-0.5">
+              <div className="mb-1 flex h-14 w-14 items-center justify-center bg-slate-100 rounded-md hover:scale-105 transition">
                 <Menu className="h-5 w-5 text-slate-900" strokeWidth={1.7} />
               </div>
               <span>Menu</span>
@@ -135,24 +103,21 @@ const BottomNav: React.FC = () => {
         </div>
       </nav>
 
-      {/* Full-screen mobile menu */}
+      {/* Full-screen Mobile Menu (unchanged) */}
       {isMenuOpen && (
         <div className="fixed inset-0 z-50 bg-white md:hidden">
-          {/* Top bar */}
-          <div className="flex items-center justify-between px-4 py-3 border-b border-slate-200/80 shadow-sm">
-            <div className="text-xs font-semibold tracking-[0.22em] uppercase text-slate-500">
+          <div className="flex items-center justify-between px-4 py-3 border-b border-slate-200">
+            <span className="text-xs font-semibold tracking-[0.22em] uppercase text-slate-500">
               Cape Coast
-            </div>
+            </span>
             <button
-              type="button"
               onClick={() => setIsMenuOpen(false)}
-              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-slate-300 text-slate-900 hover:bg-slate-50 transition"
+              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-slate-300 hover:bg-slate-50 transition"
             >
-              <X className="h-5 w-5" />
+              <X className="h-5 w-5 text-slate-900" />
             </button>
           </div>
 
-          {/* Menu list */}
           <div className="px-4 pt-4 pb-24 space-y-2">
             {menuItems.map((item) => (
               <Link
@@ -163,14 +128,9 @@ const BottomNav: React.FC = () => {
               >
                 <div className="flex items-center gap-3">
                   <div className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-300">
-                    <item.icon
-                      className="h-4 w-4 text-slate-900"
-                      strokeWidth={1.7}
-                    />
+                    <item.icon className="h-4 w-4 text-slate-900" strokeWidth={1.7} />
                   </div>
-                  <span className="text-base font-medium text-slate-900">
-                    {item.label}
-                  </span>
+                  <span className="text-base font-medium">{item.label}</span>
                 </div>
                 <ChevronRight className="h-4 w-4 text-slate-400" />
               </Link>
