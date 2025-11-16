@@ -405,7 +405,7 @@ interface ExperienceCardProps {
   onToggleTrip: () => void;
 }
 
-// Experience Card Component — everything on the picture, only buttons on top of image
+// Experience Card Component — everything on the picture
 const ExperienceCard: React.FC<ExperienceCardProps> = ({
   experience,
   inTripPlan,
@@ -413,7 +413,8 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({
 }) => {
   return (
     <article className="group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:shadow-lg hover:border-amber-200">
-      <div className="relative aspect-[4/3] w-full overflow-hidden">
+      {/* PORTRAIT: height longer than width */}
+      <div className="relative aspect-[2/3] w-full overflow-hidden">
         <img
           src={experience.imageUrl}
           alt={experience.name}
@@ -432,7 +433,8 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({
         {/* Bottom overlay: name, description, buttons */}
         <div className="absolute left-4 right-4 bottom-3">
           <div className="rounded-lg bg-black/80 px-3 py-2.5 backdrop-blur-sm">
-            <h2 className="text-base font-bold text-white leading-tight line-clamp-2">
+            {/* NAME FONT SIZE bumped to be like hotel cards */}
+            <h2 className="text-lg sm:text-xl font-bold text-white leading-tight line-clamp-2">
               {experience.name}
             </h2>
             <p className="mt-1 text-[11px] sm:text-xs text-slate-100/90 line-clamp-2">
