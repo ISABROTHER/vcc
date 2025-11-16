@@ -1,6 +1,6 @@
-import { StrictMode, useLayoutEffect } from 'react';
+import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import App from './App.tsx';
 import './index.css';
 import HomePage from './pages/HomePage.tsx';
@@ -12,18 +12,9 @@ import PlanTripPage from './pages/PlanTripPage.tsx';
 import HotelDetailPage from './pages/HotelDetailPage.tsx';
 import TouristInfoPage from './pages/TouristInfoPage.tsx';
 
-const ScrollToTop = () => {
-  const { pathname } = useLocation();
-  useLayoutEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
-  return null;
-};
-
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
-      <ScrollToTop />
       <Routes>
         <Route path="/" element={<App />}>
           <Route index element={<HomePage />} />
