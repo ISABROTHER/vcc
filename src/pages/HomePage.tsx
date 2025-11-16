@@ -65,12 +65,11 @@ const EssentialExplorerGrid = () => {
   return (
     <section className="bg-white">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
-        
         <div className="mb-8 sm:mb-10 text-center">
           <p className="text-xs font-semibold tracking-[0.22em] text-slate-500 uppercase">
             Plan your Cape Coast trip
           </p>
-          <h2 className="main-heading">
+          <h2 className="mt-2 text-2xl sm:text-3xl font-semibold text-slate-900">
             Start with the essentials.
           </h2>
         </div>
@@ -86,11 +85,10 @@ const EssentialExplorerGrid = () => {
               <div className="flex h-16 w-16 sm:h-20 sm:w-20 items-center justify-center rounded-full border-2 border-slate-900 bg-white/80 transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-3 animate-pulse sm:animate-none">
                 <item.icon className="h-8 w-8 sm:h-9 sm:w-9 text-slate-900" strokeWidth={1.7} />
               </div>
-
-              <p className="mt-4 text-center text-sm sm:text-lg font-semibold tracking-tight text-slate-900">
+              <p className="mt-4 text-center text-sm sm:text-lg font-semibold tracking-tight text-slate-900 transition-colors duration-300 group-hover:text-slate-950">
                 {item.title}
               </p>
-              <p className="mt-1.5 text-center text-[11px] sm:text-sm leading-snug text-slate-700/90 max-w-xs">
+              <p className="mt-1.5 text-center text-[11px] sm:text-sm leading-snug text-slate-700/90 max-w-xs transition-opacity duration-300 group-hover:opacity-100">
                 {item.description}
               </p>
             </Link>
@@ -105,15 +103,12 @@ export default function HomePage() {
   return (
     <div className="bg-white">
       <Hero />
-
-      {/* Now uses your universal heading system */}
       <EssentialExplorerGrid />
-
       <WhyVisit />
       <Heritage />
       <Experiences />
       <Events />
       <CallToAction />
     </div>
-  );
+  ); 
 }
