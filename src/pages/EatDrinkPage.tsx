@@ -244,100 +244,62 @@ export default function EatDrinkPage() {
           </p>
         </header>
 
-        {/* Oslo-style highlight cards */}
+        {/* Highlight cards with entrance animations */}
         <section
           aria-label="Featured food and drink experiences"
           className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-3"
         >
-          <article className="relative h-60 w-full overflow-hidden rounded-lg">
-            <img
-              src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1500"
-              className="h-full w-full object-cover"
-              alt="The taste of Cape Coast"
-            />
-            <div className="absolute bottom-0 left-0 w-[85%] bg-[#D9F3F0] p-4">
-              <h3 className="font-semibold text-gray-900">
-                The taste of Cape Coast
-              </h3>
-              <p className="text-sm text-gray-700">
-                Discover authentic traditions and local ingredients.
-              </p>
-            </div>
-          </article>
-
-          <article className="relative h-60 w-full overflow-hidden rounded-lg">
-            <img
-              src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1500"
-              className="h-full w-full object-cover"
-              alt="Easy & affordable places"
-            />
-            <div className="absolute bottom-0 left-0 w-[85%] bg-[#D9F3F0] p-4">
-              <h3 className="font-semibold text-gray-900">Easy &amp; affordable</h3>
-              <p className="text-sm text-gray-700">
-                Recommendations for low-cost, simple, friendly spots.
-              </p>
-            </div>
-          </article>
-
-          <article className="relative h-60 w-full overflow-hidden rounded-lg">
-            <img
-              src="https://images.unsplash.com/photo-1552566626-52f8b828add9?q=80&w=1500"
-              className="h-full w-full object-cover"
-              alt="Bars, pubs and nightlife"
-            />
-            <div className="absolute bottom-0 left-0 w-[85%] bg-[#D9F3F0] p-4">
-              <h3 className="font-semibold text-gray-900">
-                Bars, pubs &amp; nightlife
-              </h3>
-              <p className="text-sm text-gray-700">
-                Social spots for drinks, dancing and good company.
-              </p>
-            </div>
-          </article>
-
-          <article className="relative h-60 w-full overflow-hidden rounded-lg">
-            <img
-              src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=1500"
-              className="h-full w-full object-cover"
-              alt="Coffee & cake"
-            />
-            <div className="absolute bottom-0 left-0 w-[85%] bg-[#D9F3F0] p-4">
-              <h3 className="font-semibold text-gray-900">Coffee &amp; cake</h3>
-              <p className="text-sm text-gray-700">
-                Perfect for brunch, pastries or chilled café moments.
-              </p>
-            </div>
-          </article>
-
-          <article className="relative h-60 w-full overflow-hidden rounded-lg">
-            <img
-              src="https://images.unsplash.com/photo-1604908177225-df3b3f0c39eb?q=80&w=1500"
-              className="h-full w-full object-cover"
-              alt="Vegan & vegetarian dishes"
-            />
-            <div className="absolute bottom-0 left-0 w-[85%] bg-[#D9F3F0] p-4">
-              <h3 className="font-semibold text-gray-900">
-                Vegan &amp; vegetarian
-              </h3>
-              <p className="text-sm text-gray-700">
-                Healthy and creative plant-based options around town.
-              </p>
-            </div>
-          </article>
-
-          <article className="relative h-60 w-full overflow-hidden rounded-lg">
-            <img
-              src="https://images.unsplash.com/photo-1553621042-f6e147245754?q=80&w=1500"
-              className="h-full w-full object-cover"
-              alt="All restaurants overview"
-            />
-            <div className="absolute bottom-0 left-0 w-[85%] bg-[#D9F3F0] p-4">
-              <h3 className="font-semibold text-gray-900">All restaurants</h3>
-              <p className="text-sm text-gray-700">
-                Full overview of every place to eat in Cape Coast.
-              </p>
-            </div>
-          </article>
+          {[ 
+            {
+              img: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1500",
+              title: "The taste of Cape Coast",
+              caption: "Discover authentic traditions and local ingredients."
+            },
+            {
+              img: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1500",
+              title: "Easy & affordable",
+              caption: "Recommendations for low-cost, simple, friendly spots."
+            },
+            {
+              img: "https://images.unsplash.com/photo-1552566626-52f8b828add9?q=80&w=1500",
+              title: "Bars, pubs & nightlife",
+              caption: "Social spots for drinks, dancing and good company."
+            },
+            {
+              img: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=1500",
+              title: "Coffee & cake",
+              caption: "Perfect for brunch, pastries or chilled café moments."
+            },
+            {
+              img: "https://images.unsplash.com/photo-1604908177225-df3b3f0c39eb?q=80&w=1500",
+              title: "Vegan & vegetarian",
+              caption: "Healthy and creative plant-based options around town."
+            },
+            {
+              img: "https://images.unsplash.com/photo-1553621042-f6e147245754?q=80&w=1500",
+              title: "All restaurants",
+              caption: "Full overview of every place to eat in Cape Coast."
+            }
+          ].map((card, idx) => (
+            <article
+              key={idx}
+              className="relative h-60 w-full overflow-hidden rounded-lg 
+                scale-95 opacity-0 motion-safe:animate-[fadeIn_0.6s_ease-out_forwards] 
+                delay-[calc(100ms*var(--idx))] hover:scale-100 hover:-translate-y-1 
+                hover:shadow-lg transition-transform duration-300 ease-in-out"
+              style={{ "--idx": idx } as any}
+            >
+              <img
+                src={card.img}
+                className="h-full w-full object-cover"
+                alt={card.title}
+              />
+              <div className="absolute bottom-0 left-0 w-[85%] bg-[#D9F3F0] p-4">
+                <h3 className="font-semibold text-gray-900">{card.title}</h3>
+                <p className="text-sm text-gray-700">{card.caption}</p>
+              </div>
+            </article>
+          ))}
         </section>
       </main>
 
@@ -408,7 +370,7 @@ export default function EatDrinkPage() {
                 {/* Autocomplete suggestions */}
                 {searchQuery.trim().length > 1 && searchSuggestions.length > 0 && (
                   <ul
-                    className="absolute z-20 mt-1 w-full overflow-hidden rounded-md border border-gray-200 bg-white text-sm shadow-lg"
+                    className="absolute z-20 mt-1 w-full overflow-hidden rounded-md border border-gray-200 bg-white text-sm shadow-lg motion-safe:animate-[fadeIn_0.3s_ease-out] translate-y-1"
                     role="listbox"
                     aria-label="Search suggestions"
                   >
@@ -458,7 +420,7 @@ export default function EatDrinkPage() {
                     />
                   </button>
                   {isMonthOpen && (
-                    <div className="absolute z-10 mt-1 w-full rounded-md border border-gray-200 bg-white py-1 text-sm shadow-lg">
+                    <div className="absolute z-10 mt-1 w-full rounded-md border border-gray-200 bg-white py-1 text-sm shadow-lg motion-safe:animate-[fadeIn_0.3s_ease-out]">
                       {MONTH_OPTIONS.map((m) => (
                         <button
                           key={m.id}
@@ -473,10 +435,7 @@ export default function EatDrinkPage() {
                         >
                           <span>{m.label}</span>
                           {monthFilter === m.id && (
-                            <Check
-                              className="h-4 w-4 text-gray-900"
-                              aria-hidden="true"
-                            />
+                            <Check className="h-4 w-4 text-gray-900" aria-hidden="true" />
                           )}
                         </button>
                       ))}
@@ -512,7 +471,7 @@ export default function EatDrinkPage() {
                     />
                   </button>
                   {isLocationOpen && (
-                    <div className="absolute z-10 mt-1 w-full rounded-md border border-gray-200 bg-white py-1 text-sm shadow-lg">
+                    <div className="absolute z-10 mt-1 w-full rounded-md border border-gray-200 bg-white py-1 text-sm shadow-lg motion-safe:animate-[fadeIn_0.3s_ease-out]">
                       {LOCATION_OPTIONS.map((loc) => (
                         <button
                           key={loc.id}
@@ -527,10 +486,7 @@ export default function EatDrinkPage() {
                         >
                           <span>{loc.label}</span>
                           {locationFilter === loc.id && (
-                            <Check
-                              className="h-4 w-4 text-gray-900"
-                              aria-hidden="true"
-                            />
+                            <Check className="h-4 w-4 text-gray-900" aria-hidden="true" />
                           )}
                         </button>
                       ))}
@@ -550,9 +506,7 @@ export default function EatDrinkPage() {
                       className="inline-flex items-center gap-1 rounded-full bg-gray-100 px-3 py-1 text-gray-700 hover:bg-gray-200"
                     >
                       <span>Search: {searchQuery}</span>
-                      <span className="text-gray-500" aria-hidden="true">
-                        ×
-                      </span>
+                      <span className="text-gray-500" aria-hidden="true">×</span>
                     </button>
                   )}
                   {activeCategory !== "all" && (
@@ -568,9 +522,7 @@ export default function EatDrinkPage() {
                             ?.label
                         }
                       </span>
-                      <span className="text-gray-500" aria-hidden="true">
-                        ×
-                      </span>
+                      <span className="text-gray-500" aria-hidden="true">×</span>
                     </button>
                   )}
                   {monthFilter !== "any" && (
@@ -580,9 +532,7 @@ export default function EatDrinkPage() {
                       className="inline-flex items-center gap-1 rounded-full bg-gray-100 px-3 py-1 text-gray-700 hover:bg-gray-200"
                     >
                       <span>Month: {selectedMonthLabel}</span>
-                      <span className="text-gray-500" aria-hidden="true">
-                        ×
-                      </span>
+                      <span className="text-gray-500" aria-hidden="true">×</span>
                     </button>
                   )}
                   {locationFilter !== "any" && (
@@ -592,9 +542,7 @@ export default function EatDrinkPage() {
                       className="inline-flex items-center gap-1 rounded-full bg-gray-100 px-3 py-1 text-gray-700 hover:bg-gray-200"
                     >
                       <span>Location: {selectedLocationLabel}</span>
-                      <span className="text-gray-500" aria-hidden="true">
-                        ×
-                      </span>
+                      <span className="text-gray-500" aria-hidden="true">×</span>
                     </button>
                   )}
                   <button
@@ -712,7 +660,7 @@ export default function EatDrinkPage() {
                   return (
                     <article
                       key={place.id}
-                      className="flex h-full flex-col rounded-lg border border-gray-200 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+                      className="flex h-full flex-col rounded-lg border border-gray-200 bg-white p-4 shadow-sm transition transform duration-300 ease-in-out hover:-translate-y-1 hover:shadow-md"
                     >
                       <div className="flex items-start gap-3">
                         <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gray-100">
@@ -768,4 +716,3 @@ export default function EatDrinkPage() {
     </div>
   );
 }
- 
