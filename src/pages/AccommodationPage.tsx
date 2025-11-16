@@ -129,66 +129,59 @@ export default function AccommodationPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-slate-50 font-sans">
+    <div className="min-h-screen bg-slate-50 font-sans">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
         {/* Header */}
-        <div className="mx-auto max-w-3xl text-center mb-10 sm:mb-12">
-          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-amber-500 mb-3">
+        <header className="mx-auto max-w-3xl text-center mb-10 sm:mb-12">
+          <p className="text-xs font-medium uppercase tracking-[0.2em] text-amber-600 mb-3">
             Stay in Cape Coast
           </p>
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-slate-900">
             Places to stay
           </h1>
-          <p className="mt-5 text-base sm:text-lg leading-7 sm:leading-8 text-slate-600">
+          <p className="mt-5 text-base sm:text-lg leading-relaxed text-slate-600">
             Cape Coast offers a diverse range of accommodation, from beachfront
             escapes to cozy guest houses and vacation rentals, making it easy to
-            combine unforgettable experiences with a good night&apos;s rest.
+            combine memorable days out with a good night&apos;s rest.
           </p>
-        </div>
+        </header>
 
-        {/* Unified filter panel: search + categories + amenities */}
+        {/* Filters block: search + categories + amenities */}
         <section className="mb-12">
-          <div className="rounded-2xl border border-slate-100 bg-white/95 p-5 sm:p-6 lg:p-7 shadow-sm">
+          <div className="rounded-2xl border border-slate-200 bg-white p-5 sm:p-6 lg:p-7 shadow-sm">
             {/* Search */}
-            <div className="mb-5 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-              <div className="w-full md:max-w-xl">
-                <div className="relative">
-                  <div className="pointer-events-none absolute inset-y-0 left-3 flex items-center">
-                    <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-amber-50 text-[11px] font-semibold uppercase tracking-wide text-amber-700">
-                      <Filter className="h-3.5 w-3.5" />
-                    </span>
-                  </div>
-                  <input
-                    type="text"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    placeholder="Search by name, area or facilities..."
-                    className="w-full rounded-full border border-slate-200 bg-white/90 pl-12 pr-4 py-2.5 text-sm text-slate-800 shadow-sm outline-none transition-all duration-200 placeholder:text-slate-400 focus:border-amber-500 focus:ring-2 focus:ring-amber-100"
-                  />
+            <div className="mb-6">
+              <label className="mb-2 block text-sm font-medium text-slate-800">
+                Search
+              </label>
+              <div className="relative">
+                <div className="pointer-events-none absolute inset-y-0 left-3 flex items-center">
+                  <Filter className="h-4 w-4 text-slate-400" />
                 </div>
-              </div>
-              <div className="text-xs text-slate-500 md:text-right">
-                <p className="font-medium">Refine your stay search</p>
-                <p>Use filters to match your interests and comfort level.</p>
+                <input
+                  type="text"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  placeholder="Search by name, area or facilities..."
+                  className="w-full rounded-lg border border-slate-300 bg-white pl-10 pr-4 py-2.5 text-sm text-slate-800 outline-none transition focus:border-amber-500 focus:ring-1 focus:ring-amber-300 placeholder:text-slate-400"
+                />
               </div>
             </div>
 
             {/* Category filter */}
             <div className="mb-6">
-              <div className="mb-2">
-                <p className="text-sm font-semibold text-slate-700">
-                  Stay type
-                </p>
-              </div>
-              <div className="flex flex-wrap justify-start gap-2 sm:gap-3">
+              <p className="mb-2 text-sm font-medium text-slate-800">
+                Stay type
+              </p>
+              <div className="flex flex-wrap gap-2 sm:gap-3">
                 {categories.map((category) => (
                   <button
                     key={category.id}
                     onClick={() => setSelectedCategory(category.id)}
-                    className={`px-4 sm:px-5 py-2 rounded-full text-sm font-semibold transition-all duration-200 ${
+                    className={`rounded-full px-4 sm:px-5 py-1.5 text-sm font-medium transition border ${
                       selectedCategory === category.id
-                        ? 'bg-slate-900 text-white shadow-md shadow-slate-300/40'
-                        : 'bg-white text-slate-700 border border-slate-200 hover:border-amber-500 hover:text-amber-700 hover:shadow-sm'
+                        ? 'bg-slate-900 text-white border-slate-900'
+                        : 'bg-white text-slate-700 border-slate-300 hover:border-amber-500 hover:text-amber-700'
                     }`}
                   >
                     {category.label}
@@ -199,12 +192,10 @@ export default function AccommodationPage() {
 
             {/* Amenity chips */}
             <div>
-              <div className="mb-3">
-                <p className="text-sm font-semibold text-slate-700">
-                  Amenities
-                </p>
-              </div>
-              <div className="flex flex-wrap gap-3">
+              <p className="mb-2 text-sm font-medium text-slate-800">
+                Amenities
+              </p>
+              <div className="flex flex-wrap gap-2 sm:gap-3">
                 {amenityChips.map((amenity) => {
                   const active = amenityFilters.includes(amenity);
                   return (
@@ -212,10 +203,10 @@ export default function AccommodationPage() {
                       key={amenity}
                       type="button"
                       onClick={() => toggleAmenityFilter(amenity)}
-                      className={`inline-flex items-center gap-1 rounded-full border px-4 py-1.5 text-sm font-medium transition-all ${
+                      className={`inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-medium border transition ${
                         active
-                          ? 'border-amber-500 bg-amber-50 text-amber-700 shadow-sm'
-                          : 'border-slate-200 bg-white text-slate-700 hover:border-amber-400 hover:bg-amber-50/60 hover:text-amber-700'
+                          ? 'border-amber-500 bg-amber-50 text-amber-700'
+                          : 'border-slate-300 bg-white text-slate-700 hover:border-amber-400 hover:text-amber-700'
                       }`}
                     >
                       <span
@@ -233,9 +224,9 @@ export default function AccommodationPage() {
         </section>
 
         {/* Main layout: list + sidebar */}
-        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.7fr)_minmax(0,0.9fr)] gap-10 lg:items-start">
+        <main className="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,1.7fr)_minmax(0,0.9fr)] lg:items-start">
           {/* List view */}
-          <div>
+          <section>
             <div className="grid grid-cols-1 gap-8 sm:gap-10 md:grid-cols-2">
               {filteredAccommodations.map((hotel) => {
                 const isSaved = savedIds.includes(hotel.id);
@@ -245,11 +236,11 @@ export default function AccommodationPage() {
                   <Link
                     key={hotel.id}
                     to={`/accommodation/${hotel.id}`}
-                    className="group relative flex flex-col overflow-hidden rounded-2xl border border-slate-100 bg-white/95 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-amber-500/60 hover:shadow-2xl"
+                    className="group flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:shadow-lg"
                   >
                     {/* Image / gallery trigger */}
                     <div
-                      className="relative h-60 sm:h-72 cursor-pointer overflow-hidden"
+                      className="relative h-56 sm:h-64 cursor-pointer overflow-hidden"
                       onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
@@ -259,15 +250,15 @@ export default function AccommodationPage() {
                       <img
                         src={hotel.image_url}
                         alt={hotel.name}
-                        className="h-full w-full transform object-cover transition duration-500 group-hover:scale-110"
+                        className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                       />
-                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/55 via-black/15 to-transparent opacity-90 group-hover:opacity-95 transition-opacity" />
-                      <div className="absolute inset-x-5 bottom-5 flex items-center justify-between gap-3">
-                        <div className="max-w-[72%]">
-                          <p className="line-clamp-1 text-[11px] font-medium uppercase tracking-wide text-white/80">
+                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/45 via-black/10 to-transparent" />
+                      <div className="absolute inset-x-4 bottom-4 flex items-center justify-between gap-3">
+                        <div className="max-w-[70%]">
+                          <p className="text-[11px] font-medium text-slate-100/90">
                             Verified by Visit Cape Coast
                           </p>
-                          <p className="mt-0.5 line-clamp-1 text-lg font-semibold tracking-tight text-white transition-all duration-300 group-hover:translate-y-0.5 group-hover:drop-shadow-md">
+                          <p className="mt-1 text-sm sm:text-base font-semibold text-white leading-tight">
                             {hotel.name}
                           </p>
                         </div>
@@ -278,7 +269,7 @@ export default function AccommodationPage() {
                             e.stopPropagation();
                             toggleSaved(hotel.id);
                           }}
-                          className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/95 text-amber-500 shadow-sm transition hover:scale-105 hover:bg-white"
+                          className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/95 text-amber-500 shadow-sm transition hover:bg-white"
                         >
                           <Heart
                             className={`h-4 w-4 ${
@@ -289,16 +280,24 @@ export default function AccommodationPage() {
                       </div>
                     </div>
 
-                    {/* Card body – name, emotional line, actions */}
-                    <div className="flex flex-1 flex-col p-6 sm:p-7">
-                      <p className="mt-1 text-[11px] sm:text-xs font-medium tracking-[0.25em] text-slate-600/90 uppercase">
+                    {/* Card body */}
+                    <div className="flex flex-1 flex-col p-5 sm:p-6">
+                      <p className="text-xs sm:text-[13px] font-medium text-slate-700 mb-2">
                         {getEmotionalLine(hotel)}
                       </p>
 
-                      {/* (Description removed from card to keep it clean and focused) */}
+                      {Array.isArray(hotel.facilities) &&
+                        hotel.facilities.length > 0 && (
+                          <div className="mt-1 flex items-center gap-2 text-xs text-slate-500">
+                            <FacilityIcon facility={hotel.facilities[0]} />
+                            <span className="truncate">
+                              {hotel.facilities[0]}
+                            </span>
+                          </div>
+                        )}
 
-                      {/* Actions: Add to trip plan + View details */}
-                      <div className="mt-6 flex items-center gap-3 border-t border-slate-100 pt-4">
+                      {/* Actions */}
+                      <div className="mt-4 flex items-center gap-3 border-t border-slate-200 pt-4">
                         <button
                           type="button"
                           onClick={(e) => {
@@ -306,19 +305,16 @@ export default function AccommodationPage() {
                             e.stopPropagation();
                             toggleTripPlan(hotel.id);
                           }}
-                          className={`inline-flex items-center gap-1.5 rounded-full border px-4 py-2 text-xs sm:text-sm font-semibold shadow-sm transition-all ${
+                          className={`inline-flex items-center rounded-full px-4 py-1.5 text-xs sm:text-sm font-semibold border transition ${
                             inTrip
-                              ? 'border-emerald-500 bg-emerald-50 text-emerald-700 hover:shadow-md hover:-translate-y-0.5'
-                              : 'border-slate-200 bg-white text-slate-700 hover:border-emerald-500 hover:bg-emerald-50 hover:text-emerald-700 hover:shadow-md hover:-translate-y-0.5'
+                              ? 'border-emerald-600 bg-emerald-50 text-emerald-700'
+                              : 'border-slate-300 bg-white text-slate-700 hover:border-emerald-600 hover:text-emerald-700'
                           }`}
                         >
-                          <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
                           {inTrip ? 'In trip plan' : 'Add to trip plan'}
                         </button>
 
-                        <span
-                          className="ml-auto inline-flex items-center rounded-full border border-slate-200 px-3 py-1 text-[10px] sm:text-[11px] font-semibold tracking-[0.18em] uppercase text-slate-500 transition-all group-hover:border-amber-500 group-hover:text-amber-700 group-hover:bg-amber-50/60"
-                        >
+                        <span className="ml-auto inline-flex items-center rounded-full border border-slate-300 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-600 transition group-hover:border-amber-500 group-hover:text-amber-700">
                           View details
                         </span>
                       </div>
@@ -329,38 +325,37 @@ export default function AccommodationPage() {
             </div>
 
             {filteredAccommodations.length === 0 && (
-              <div className="mt-12 rounded-2xl border border-slate-100 bg-white/95 py-14 px-6 text-center shadow-sm">
+              <div className="mt-12 rounded-2xl border border-slate-200 bg-white py-10 px-6 text-center shadow-sm">
                 <p className="text-sm font-semibold text-slate-900">
                   No accommodations found.
                 </p>
-                <p className="mt-3 text-sm text-slate-500">
-                  Try clearing some filters or adjusting your search to discover
-                  more places to stay in Cape Coast.
+                <p className="mt-2 text-sm text-slate-500">
+                  Try changing your filters or search to discover more places to
+                  stay in Cape Coast.
                 </p>
               </div>
             )}
-          </div>
+          </section>
 
-          {/* Right sidebar: trip plan only */}
-          <div className="space-y-8 lg:sticky lg:top-24">
-            {/* Trip plan card */}
-            <div className="rounded-2xl border border-slate-100 bg-white/95 p-6 shadow-sm">
-              <p className="mb-4 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
+          {/* Trip plan sidebar */}
+          <aside className="space-y-8 lg:sticky lg:top-24">
+            <div className="rounded-2xl border border-slate-200 bg-white p-5 sm:p-6 shadow-sm">
+              <p className="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-slate-600">
                 Trip plan
               </p>
               {tripHotels.length === 0 ? (
-                <p className="text-sm text-slate-500 leading-relaxed">
-                  Add stays to your trip plan to keep track of your favourite
-                  options for Cape Coast.
+                <p className="text-sm text-slate-600 leading-relaxed">
+                  Add stays to your trip plan to keep track of the places you&apos;d
+                  like to stay in Cape Coast.
                 </p>
               ) : (
-                <div className="space-y-4">
+                <div className="space-y-3">
                   {tripHotels.map((hotel) => (
                     <div
                       key={hotel.id}
-                      className="flex items-center gap-3 rounded-xl border border-slate-100 bg-slate-50/80 p-4"
+                      className="flex items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 p-3"
                     >
-                      <div className="h-12 w-12 flex-shrink-0 overflow-hidden rounded-lg bg-slate-100">
+                      <div className="h-10 w-10 flex-shrink-0 overflow-hidden rounded-lg bg-slate-100">
                         <img
                           src={hotel.image_url}
                           alt={hotel.name}
@@ -372,7 +367,7 @@ export default function AccommodationPage() {
                           {hotel.name}
                         </p>
                         <p className="truncate text-xs text-slate-500">
-                          Added to your Cape Coast stay ideas.
+                          Added to your stay ideas.
                         </p>
                       </div>
                       <button
@@ -384,27 +379,23 @@ export default function AccommodationPage() {
                       </button>
                     </div>
                   ))}
-                  <p className="pt-1 text-xs text-slate-500 leading-relaxed">
-                    You can share this list with your travel companions or your
-                    destination manager later.
-                  </p>
                 </div>
               )}
             </div>
-          </div>
-        </div>
+          </aside>
+        </main>
 
-        {/* FAQ / SEO section */}
-        <div className="mt-14 sm:mt-18">
-          <div className="mx-auto max-w-3xl rounded-2xl border border-slate-100 bg-white/95 p-6 sm:p-7 shadow-sm">
-            <p className="mb-4 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
+        {/* FAQ */}
+        <section className="mt-14">
+          <div className="mx-auto max-w-3xl rounded-2xl border border-slate-200 bg-white p-5 sm:p-6 shadow-sm">
+            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-slate-600">
               Accommodation in Cape Coast — FAQ
             </p>
-            <div className="divide-y divide-slate-100">
+            <div className="divide-y divide-slate-200">
               {faqItems.map((item) => {
                 const open = openFaq === item.id;
                 return (
-                  <div key={item.id} className="py-4">
+                  <div key={item.id} className="py-3">
                     <button
                       type="button"
                       onClick={() =>
@@ -424,7 +415,7 @@ export default function AccommodationPage() {
                       />
                     </button>
                     {open && (
-                      <p className="mt-3 text-sm text-slate-600 leading-relaxed">
+                      <p className="mt-2 text-sm text-slate-600 leading-relaxed">
                         {item.answer}
                       </p>
                     )}
@@ -433,27 +424,17 @@ export default function AccommodationPage() {
               })}
             </div>
           </div>
-        </div>
+        </section>
       </div>
 
-      {/* Mobile sticky summary bar */}
-      <div className="fixed inset-x-0 bottom-0 z-20 block border-t border-slate-200 bg-white/95 px-4 py-3 shadow-[0_-4px_18px_rgba(15,23,42,0.08)] sm:hidden">
-        <div className="mx-auto flex max-w-3xl items-center justify-between text-[11px] font-medium text-slate-700">
-          <span>
-            {filteredAccommodations.length} stays • {savedIds.length} saved
-          </span>
-          <span>{tripPlanIds.length} in trip plan</span>
-        </div>
-      </div>
-
-      {/* Gallery modal – still single image because only one image_url exists in data */}
+      {/* Gallery modal */}
       {galleryHotel && (
-        <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-          <div className="relative w-full max-w-3xl rounded-2xl bg-slate-950/95 p-3 sm:p-4">
+        <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/60">
+          <div className="relative w-full max-w-3xl rounded-2xl bg-slate-900 p-3 sm:p-4">
             <button
               type="button"
               onClick={() => setGalleryHotel(null)}
-              className="absolute right-3 top-3 inline-flex h-8 w-8 items-center justify-center rounded-full bg-black/50 text-slate-100 shadow hover:bg-black/70"
+              className="absolute right-3 top-3 inline-flex h-8 w-8 items-center justify-center rounded-full bg-black/60 text-slate-100 hover:bg-black"
             >
               <X className="h-4 w-4" />
             </button>
@@ -473,9 +454,6 @@ export default function AccommodationPage() {
                   A curated place to stay in the Cape Coast area.
                 </p>
               </div>
-              <span className="hidden text-xs font-medium uppercase tracking-[0.18em] text-slate-400 sm:inline">
-                Click outside to close
-              </span>
             </div>
           </div>
         </div>
@@ -483,4 +461,3 @@ export default function AccommodationPage() {
     </div>
   );
 }
- 
