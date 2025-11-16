@@ -413,7 +413,7 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({
 }) => {
   return (
     <article className="group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:shadow-lg hover:border-amber-200">
-      <div className="relative aspect-[3/4] w-full overflow-hidden">
+      <div className="relative aspect-[2/3] w-full overflow-hidden">
         <img
           src={experience.imageUrl}
           alt={experience.name}
@@ -431,7 +431,7 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({
 
         {/* Bottom overlay: name, description, buttons */}
         <div className="absolute left-4 right-4 bottom-3">
-          <div className="rounded-lg bg-black/80 px-3 py-2.5 backdrop-blur-sm">
+          <div className="rounded-lg bg.black/80 bg-black/80 px-3 py-2.5 backdrop-blur-sm">
             <h2 className="text-sm sm:text-base font-semibold text-white leading-tight line-clamp-2">
               {experience.name}
             </h2>
