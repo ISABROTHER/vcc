@@ -4,11 +4,8 @@ import {
   Landmark,
   ChefHat,
   Car,
-  Camera,
   Bed,
   HelpCircle,
-  Calendar,
-  Ticket,
 } from 'lucide-react';
 
 import Hero from '../components/Hero';
@@ -38,12 +35,6 @@ const gridItems = [
     color: 'bg-sky-100',
   },
   {
-    title: 'Sightseeing',
-    icon: Camera,
-    href: '/see-do',
-    color: 'bg-indigo-100',
-  },
-  {
     title: 'Accommodation',
     icon: Bed,
     href: '/accommodation',
@@ -55,24 +46,13 @@ const gridItems = [
     href: '/tourist-info',
     color: 'bg-lime-100',
   },
-  {
-    title: "What's On",
-    icon: Calendar,
-    href: '/see-do',
-    color: 'bg-purple-100',
-  },
-  {
-    title: 'Local Pass',
-    icon: Ticket,
-    href: '/partners',
-    color: 'bg-orange-100',
-  },
 ];
 
 const EssentialExplorerGrid = () => {
   return (
     <section className="bg-white">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
+
         <div className="mb-8 sm:mb-10 text-center">
           <p className="text-xs font-semibold tracking-[0.22em] text-slate-500 uppercase">
             Plan your visit
@@ -82,7 +62,7 @@ const EssentialExplorerGrid = () => {
           </h2>
         </div>
 
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-4 sm:gap-6">
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-5 sm:gap-6">
           {gridItems.map((item) => (
             <Link
               key={item.title}
