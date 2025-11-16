@@ -23,57 +23,57 @@ const gridItems = [
     title: 'Attractions',
     icon: Landmark,
     href: '/see-do',
-    color: 'bg-teal-50',
-    iconColor: 'text-teal-700',
+    color: 'bg-teal-100',
+    iconColor: 'text-teal-800',
   },
   {
     title: 'Restaurants',
     icon: ChefHat,
     href: '/eat-drink',
-    color: 'bg-amber-50',
-    iconColor: 'text-amber-700',
+    color: 'bg-amber-100',
+    iconColor: 'text-amber-800',
   },
   {
     title: 'Transportation',
     icon: Car,
     href: '/tourist-info',
-    color: 'bg-sky-50',
-    iconColor: 'text-sky-700',
+    color: 'bg-sky-100',
+    iconColor: 'text-sky-800',
   },
   {
     title: 'Sightseeing',
     icon: Camera,
     href: '/see-do',
-    color: 'bg-indigo-50',
-    iconColor: 'text-indigo-700',
+    color: 'bg-indigo-100',
+    iconColor: 'text-indigo-800',
   },
   {
     title: 'Accommodation',
     icon: Bed,
     href: '/accommodation',
-    color: 'bg-rose-50',
-    iconColor: 'text-rose-700',
+    color: 'bg-rose-100',
+    iconColor: 'text-rose-800',
   },
   {
     title: 'Ask the Expert',
     icon: HelpCircle,
     href: '/tourist-info',
-    color: 'bg-lime-50',
-    iconColor: 'text-lime-700',
+    color: 'bg-lime-100',
+    iconColor: 'text-lime-800',
   },
   {
     title: "What's On",
     icon: Calendar,
     href: '/see-do',
-    color: 'bg-purple-50',
-    iconColor: 'text-purple-700',
+    color: 'bg-purple-100',
+    iconColor: 'text-purple-800',
   },
   {
     title: 'Local Pass',
     icon: Ticket,
     href: '/partners',
-    color: 'bg-orange-50',
-    iconColor: 'text-orange-700',
+    color: 'bg-orange-100',
+    iconColor: 'text-orange-800',
   },
 ];
 
@@ -86,17 +86,17 @@ const EssentialExplorerGrid = () => {
             <Link
               key={item.title}
               to={item.href}
-              className={`group flex flex-col items-center justify-center rounded-2xl p-6 shadow-sm transition-all duration-300 ease-out hover:shadow-xl hover:-translate-y-1 ${item.color}`}
+              className={`group flex flex-col items-center justify-center rounded-2xl p-6 shadow-md transition-all duration-300 ease-out hover:shadow-xl hover:-translate-y-1 ${item.color}`}
             >
               <div
-                className={`flex h-16 w-16 sm:h-20 sm:w-20 items-center justify-center rounded-full bg-white transition-transform duration-300 group-hover:scale-110`}
+                className={`flex h-16 w-16 sm:h-20 sm:w-20 items-center justify-center rounded-full bg-white shadow-sm transition-transform duration-300 group-hover:scale-110`}
               >
                 <item.icon
                   className={`h-8 w-8 sm:h-10 sm:w-10 ${item.iconColor}`}
                   strokeWidth={1.5}
                 />
               </div>
-              <p className="mt-5 text-center text-sm sm:text-lg font-bold text-gray-900">
+              <p className="mt-5 text-center text-sm sm:text-lg font-bold text-slate-900">
                 {item.title}
               </p>
             </Link>
