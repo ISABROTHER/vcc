@@ -134,7 +134,6 @@ export default function EatDrinkPage() {
     monthFilter !== "any" ||
     locationFilter !== "any";
 
-  // Initialise filters from URL (shareable state)
   useEffect(() => {
     if (typeof window === "undefined") return;
     const params = new URLSearchParams(window.location.search);
@@ -152,7 +151,6 @@ export default function EatDrinkPage() {
     if (isViewMode(view)) setActiveView(view);
   }, []);
 
-  // Keep URL in sync with filters
   useEffect(() => {
     if (typeof window === "undefined") return;
     const params = new URLSearchParams(window.location.search);
@@ -180,7 +178,6 @@ export default function EatDrinkPage() {
     window.history.replaceState(null, "", newUrl);
   }, [searchQuery, activeCategory, monthFilter, locationFilter, activeView]);
 
-  // Small loading state whenever filters/search change (UX only)
   useEffect(() => {
     setIsLoading(true);
     const id = window.setTimeout(() => {
@@ -254,7 +251,7 @@ export default function EatDrinkPage() {
           </p>
         </header>
 
-        {/* Oslo-style highlight cards – clickable to set categories */}
+        {/* Highlight cards – clickable, warmer Cape Coast colours */}
         <section
           aria-label="Featured food and drink experiences"
           className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-3"
@@ -263,21 +260,21 @@ export default function EatDrinkPage() {
           <button
             type="button"
             onClick={() => setActiveCategory("all")}
-            className="relative h-60 w-full overflow-hidden rounded-lg text-left"
+            className="relative h-60 w-full overflow-hidden rounded-xl text-left shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
           >
             <img
               src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1500"
               className="h-full w-full object-cover"
               alt="The taste of Cape Coast"
             />
-            <div className="absolute bottom-0 left-0 w-[85%] bg-[#D9F3F0] p-4">
+            <div className="absolute bottom-0 left-0 w-[85%] rounded-tr-xl bg-amber-50/95 p-4 border-t border-r border-amber-100">
               <h3 className="font-semibold text-gray-900">
                 The taste of Cape Coast
               </h3>
               <p className="text-sm text-gray-700">
                 Discover authentic traditions and local ingredients.
               </p>
-              <p className="mt-1 text-xs font-medium text-gray-800">
+              <p className="mt-1 text-xs font-medium text-amber-700">
                 View all categories →
               </p>
             </div>
@@ -287,19 +284,19 @@ export default function EatDrinkPage() {
           <button
             type="button"
             onClick={() => setActiveCategory("restaurant")}
-            className="relative h-60 w-full overflow-hidden rounded-lg text-left"
+            className="relative h-60 w-full overflow-hidden rounded-xl text-left shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
           >
             <img
               src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1500"
               className="h-full w-full object-cover"
               alt="Easy & affordable"
             />
-            <div className="absolute bottom-0 left-0 w-[85%] bg-[#D9F3F0] p-4">
+            <div className="absolute bottom-0 left-0 w-[85%] rounded-tr-xl bg-amber-50/95 p-4 border-t border-r border-amber-100">
               <h3 className="font-semibold text-gray-900">Easy &amp; affordable</h3>
               <p className="text-sm text-gray-700">
                 Recommendations for low-cost, simple, friendly spots.
               </p>
-              <p className="mt-1 text-xs font-medium text-gray-800">
+              <p className="mt-1 text-xs font-medium text-amber-700">
                 Show restaurants →
               </p>
             </div>
@@ -309,21 +306,21 @@ export default function EatDrinkPage() {
           <button
             type="button"
             onClick={() => setActiveCategory("bar")}
-            className="relative h-60 w-full overflow-hidden rounded-lg text-left"
+            className="relative h-60 w-full overflow-hidden rounded-xl text-left shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
           >
             <img
               src="https://images.unsplash.com/photo-1552566626-52f8b828add9?q=80&w=1500"
               className="h-full w-full object-cover"
               alt="Bars, pubs and nightlife"
             />
-            <div className="absolute bottom-0 left-0 w-[85%] bg-[#D9F3F0] p-4">
+            <div className="absolute bottom-0 left-0 w-[85%] rounded-tr-xl bg-amber-50/95 p-4 border-t border-r border-amber-100">
               <h3 className="font-semibold text-gray-900">
                 Bars, pubs &amp; nightlife
               </h3>
               <p className="text-sm text-gray-700">
                 Social spots for drinks, dancing and good company.
               </p>
-              <p className="mt-1 text-xs font-medium text-gray-800">
+              <p className="mt-1 text-xs font-medium text-amber-700">
                 Show bars &amp; pubs →
               </p>
             </div>
@@ -333,19 +330,19 @@ export default function EatDrinkPage() {
           <button
             type="button"
             onClick={() => setActiveCategory("cafe")}
-            className="relative h-60 w-full overflow-hidden rounded-lg text-left"
+            className="relative h-60 w-full overflow-hidden rounded-xl text-left shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
           >
             <img
               src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=1500"
               className="h-full w-full object-cover"
               alt="Coffee & cake"
             />
-            <div className="absolute bottom-0 left-0 w-[85%] bg-[#D9F3F0] p-4">
+            <div className="absolute bottom-0 left-0 w-[85%] rounded-tr-xl bg-amber-50/95 p-4 border-t border-r border-amber-100">
               <h3 className="font-semibold text-gray-900">Coffee &amp; cake</h3>
               <p className="text-sm text-gray-700">
                 Perfect for brunch, pastries or chilled café moments.
               </p>
-              <p className="mt-1 text-xs font-medium text-gray-800">
+              <p className="mt-1 text-xs font-medium text-amber-700">
                 Show cafés →
               </p>
             </div>
@@ -355,21 +352,21 @@ export default function EatDrinkPage() {
           <button
             type="button"
             onClick={() => setActiveCategory("restaurant")}
-            className="relative h-60 w-full overflow-hidden rounded-lg text-left"
+            className="relative h-60 w-full overflow-hidden rounded-xl text-left shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
           >
             <img
               src="https://images.unsplash.com/photo-1604908177225-df3b3f0c39eb?q=80&w=1500"
               className="h-full w-full object-cover"
               alt="Vegan & vegetarian dishes"
             />
-            <div className="absolute bottom-0 left-0 w-[85%] bg-[#D9F3F0] p-4">
+            <div className="absolute bottom-0 left-0 w-[85%] rounded-tr-xl bg-amber-50/95 p-4 border-t border-r border-amber-100">
               <h3 className="font-semibold text-gray-900">
                 Vegan &amp; vegetarian
               </h3>
               <p className="text-sm text-gray-700">
                 Healthy and creative plant-based options around town.
               </p>
-              <p className="mt-1 text-xs font-medium text-gray-800">
+              <p className="mt-1 text-xs font-medium text-amber-700">
                 Show restaurants →
               </p>
             </div>
@@ -379,19 +376,19 @@ export default function EatDrinkPage() {
           <button
             type="button"
             onClick={() => setActiveCategory("restaurant")}
-            className="relative h-60 w-full overflow-hidden rounded-lg text-left"
+            className="relative h-60 w-full overflow-hidden rounded-xl text-left shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
           >
             <img
               src="https://images.unsplash.com/photo-1553621042-f6e147245754?q=80&w=1500"
               className="h-full w-full object-cover"
               alt="All restaurants overview"
             />
-            <div className="absolute bottom-0 left-0 w-[85%] bg-[#D9F3F0] p-4">
+            <div className="absolute bottom-0 left-0 w-[85%] rounded-tr-xl bg-amber-50/95 p-4 border-t border-r border-amber-100">
               <h3 className="font-semibold text-gray-900">All restaurants</h3>
               <p className="text-sm text-gray-700">
                 Full overview of every place to eat in Cape Coast.
               </p>
-              <p className="mt-1 text-xs font-medium text-gray-800">
+              <p className="mt-1 text-xs font-medium text-amber-700">
                 Show restaurants →
               </p>
             </div>
@@ -430,7 +427,7 @@ export default function EatDrinkPage() {
                   <Icon className="h-6 w-6" aria-hidden="true" />
                   <span className="text-xs sm:text-sm">{cat.label}</span>
                   {isActive && (
-                    <span className="mt-1 h-0.5 w-8 rounded-full bg-gray-900" />
+                    <span className="mt-1 h-0.5 w-8 rounded-full bg-amber-600" />
                   )}
                 </button>
               );
@@ -445,28 +442,28 @@ export default function EatDrinkPage() {
             <div className="flex-1 space-y-3">
               {/* Search bar with suggestions */}
               <div className="relative">
-                <div className="flex w-full overflow-hidden rounded-md border border-gray-300 bg-white shadow-sm transition hover:shadow-md focus-within:ring-2 focus-within:ring-gray-900/10">
+                <div className="flex w-full overflow-hidden rounded-full border border-gray-300 bg-white shadow-sm transition hover:shadow-md focus-within:ring-2 focus-within:ring-amber-500/50">
                   <input
                     type="text"
-                    placeholder="Search activities..."
+                    placeholder="Search restaurants, cafés and bars..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="flex-1 px-4 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 outline-none"
+                    className="flex-1 px-5 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 outline-none"
                     aria-label="Search restaurants, cafés and bars"
                   />
                   <button
                     type="button"
-                    className="flex items-center justify-center border-l border-gray-300 bg-gray-50 px-4 transition hover:bg-gray-100"
+                    className="mr-1 my-1 flex items-center justify-center rounded-full bg-amber-600 px-4 text-white transition hover:bg-amber-700"
                     aria-label="Search"
                   >
-                    <Search className="h-4 w-4 text-gray-700" aria-hidden="true" />
+                    <Search className="h-4 w-4" aria-hidden="true" />
                   </button>
                 </div>
 
                 {/* Autocomplete suggestions */}
                 {searchQuery.trim().length > 1 && searchSuggestions.length > 0 && (
                   <ul
-                    className="absolute z-20 mt-1 w-full overflow-hidden rounded-md border border-gray-200 bg-white text-sm shadow-lg"
+                    className="absolute z-20 mt-1 w-full overflow-hidden rounded-xl border border-gray-200 bg-white text-sm shadow-lg"
                     role="listbox"
                     aria-label="Search suggestions"
                   >
@@ -474,7 +471,7 @@ export default function EatDrinkPage() {
                       <li key={place.id}>
                         <button
                           type="button"
-                          className="flex w-full items-start justify-between px-3 py-2 text-left text-gray-800 hover:bg-gray-50"
+                          className="flex w-full items-start justify-between px-4 py-2 text-left text-gray-800 hover:bg-gray-50"
                           onMouseDown={() => setSearchQuery(place.name)}
                         >
                           <span>{place.name}</span>
@@ -498,12 +495,12 @@ export default function EatDrinkPage() {
                       setIsMonthOpen((prev) => !prev);
                       setIsLocationOpen(false);
                     }}
-                    className="flex w-full items-center justify-between rounded-md border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-700 shadow-sm transition hover:bg-gray-50"
+                    className="flex w-full items-center justify-between rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-700 shadow-sm transition hover:bg-gray-50"
                     aria-haspopup="listbox"
                     aria-expanded={isMonthOpen}
                   >
                     <span className="flex items-center gap-2">
-                      <Calendar className="h-4 w-4" aria-hidden="true" />
+                      <Calendar className="h-4 w-4 text-amber-600" aria-hidden="true" />
                       <span>
                         {monthFilter === "any" ? "Months" : selectedMonthLabel}
                       </span>
@@ -516,7 +513,7 @@ export default function EatDrinkPage() {
                     />
                   </button>
                   {isMonthOpen && (
-                    <div className="absolute z-10 mt-1 w-full rounded-md border border-gray-200 bg-white py-1 text-sm shadow-lg">
+                    <div className="absolute z-10 mt-1 w-full rounded-xl border border-gray-200 bg-white py-1 text-sm shadow-lg">
                       {MONTH_OPTIONS.map((m) => (
                         <button
                           key={m.id}
@@ -525,14 +522,14 @@ export default function EatDrinkPage() {
                             setMonthFilter(m.id);
                             setIsMonthOpen(false);
                           }}
-                          className="flex w-full items-center justify-between px-3 py-2 text-left text-gray-700 transition hover:bg-gray-50"
+                          className="flex w-full items-center justify-between px-3 py-2 text-left text-gray-700 transition hover:bg-amber-50"
                           role="option"
                           aria-selected={monthFilter === m.id}
                         >
                           <span>{m.label}</span>
                           {monthFilter === m.id && (
                             <Check
-                              className="h-4 w-4 text-gray-900"
+                              className="h-4 w-4 text-amber-600"
                               aria-hidden="true"
                             />
                           )}
@@ -550,12 +547,12 @@ export default function EatDrinkPage() {
                       setIsLocationOpen((prev) => !prev);
                       setIsMonthOpen(false);
                     }}
-                    className="flex w-full items-center justify-between rounded-md border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-700 shadow-sm transition hover:bg-gray-50"
+                    className="flex w-full items-center justify-between rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-700 shadow-sm transition hover:bg-gray-50"
                     aria-haspopup="listbox"
                     aria-expanded={isLocationOpen}
                   >
                     <span className="flex items-center gap-2">
-                      <MapPin className="h-4 w-4" aria-hidden="true" />
+                      <MapPin className="h-4 w-4 text-amber-600" aria-hidden="true" />
                       <span>
                         {locationFilter === "any"
                           ? "Location"
@@ -570,7 +567,7 @@ export default function EatDrinkPage() {
                     />
                   </button>
                   {isLocationOpen && (
-                    <div className="absolute z-10 mt-1 w-full rounded-md border border-gray-200 bg-white py-1 text-sm shadow-lg">
+                    <div className="absolute z-10 mt-1 w-full rounded-xl border border-gray-200 bg-white py-1 text-sm shadow-lg">
                       {LOCATION_OPTIONS.map((loc) => (
                         <button
                           key={loc.id}
@@ -579,14 +576,14 @@ export default function EatDrinkPage() {
                             setLocationFilter(loc.id);
                             setIsLocationOpen(false);
                           }}
-                          className="flex w-full items-center justify-between px-3 py-2 text-left text-gray-700 transition hover:bg-gray-50"
+                          className="flex w-full items-center justify-between px-3 py-2 text-left text-gray-700 transition hover:bg-amber-50"
                           role="option"
                           aria-selected={locationFilter === loc.id}
                         >
                           <span>{loc.label}</span>
                           {locationFilter === loc.id && (
                             <Check
-                              className="h-4 w-4 text-gray-900"
+                              className="h-4 w-4 text-amber-600"
                               aria-hidden="true"
                             />
                           )}
@@ -605,10 +602,10 @@ export default function EatDrinkPage() {
                     <button
                       type="button"
                       onClick={() => setSearchQuery("")}
-                      className="inline-flex items-center gap-1 rounded-full bg-gray-100 px-3 py-1 text-gray-700 hover:bg-gray-200"
+                      className="inline-flex items-center gap-1 rounded-full bg-amber-50 px-3 py-1 text-amber-800 hover:bg-amber-100"
                     >
                       <span>Search: {searchQuery}</span>
-                      <span className="text-gray-500" aria-hidden="true">
+                      <span className="text-amber-500" aria-hidden="true">
                         ×
                       </span>
                     </button>
@@ -617,7 +614,7 @@ export default function EatDrinkPage() {
                     <button
                       type="button"
                       onClick={() => setActiveCategory("all")}
-                      className="inline-flex items-center gap-1 rounded-full bg-gray-100 px-3 py-1 text-gray-700 hover:bg-gray-200"
+                      className="inline-flex items-center gap-1 rounded-full bg-amber-50 px-3 py-1 text-amber-800 hover:bg-amber-100"
                     >
                       <span>
                         Category:{" "}
@@ -626,7 +623,7 @@ export default function EatDrinkPage() {
                             ?.label
                         }
                       </span>
-                      <span className="text-gray-500" aria-hidden="true">
+                      <span className="text-amber-500" aria-hidden="true">
                         ×
                       </span>
                     </button>
@@ -635,10 +632,10 @@ export default function EatDrinkPage() {
                     <button
                       type="button"
                       onClick={() => setMonthFilter("any")}
-                      className="inline-flex items-center gap-1 rounded-full bg-gray-100 px-3 py-1 text-gray-700 hover:bg-gray-200"
+                      className="inline-flex items-center gap-1 rounded-full bg-amber-50 px-3 py-1 text-amber-800 hover:bg-amber-100"
                     >
                       <span>Month: {selectedMonthLabel}</span>
-                      <span className="text-gray-500" aria-hidden="true">
+                      <span className="text-amber-500" aria-hidden="true">
                         ×
                       </span>
                     </button>
@@ -647,10 +644,10 @@ export default function EatDrinkPage() {
                     <button
                       type="button"
                       onClick={() => setLocationFilter("any")}
-                      className="inline-flex items-center gap-1 rounded-full bg-gray-100 px-3 py-1 text-gray-700 hover:bg-gray-200"
+                      className="inline-flex items-center gap-1 rounded-full bg-amber-50 px-3 py-1 text-amber-800 hover:bg-amber-100"
                     >
                       <span>Location: {selectedLocationLabel}</span>
-                      <span className="text-gray-500" aria-hidden="true">
+                      <span className="text-amber-500" aria-hidden="true">
                         ×
                       </span>
                     </button>
@@ -674,8 +671,10 @@ export default function EatDrinkPage() {
               <button
                 type="button"
                 onClick={() => setActiveView("map")}
-                className={`inline-flex items-center gap-2 transition-colors hover:text-gray-900 ${
-                  activeView === "map" ? "font-medium text-gray-900" : ""
+                className={`inline-flex items-center gap-2 rounded-full px-3 py-1.5 transition-colors hover:bg-amber-50 hover:text-gray-900 ${
+                  activeView === "map"
+                    ? "bg-amber-100 text-gray-900"
+                    : "text-gray-700"
                 }`}
               >
                 <MapIcon className="h-4 w-4" aria-hidden="true" />
@@ -684,10 +683,10 @@ export default function EatDrinkPage() {
               <button
                 type="button"
                 onClick={() => setActiveView("list")}
-                className={`inline-flex items-center gap-2 pb-1 transition-colors hover:text-gray-900 ${
+                className={`inline-flex items-center gap-2 rounded-full px-3 py-1.5 transition-colors hover:bg-amber-50 hover:text-gray-900 ${
                   activeView === "list"
-                    ? "border-b-2 border-gray-900 font-medium text-gray-900"
-                    : "border-b-2 border-transparent"
+                    ? "bg-amber-600 text-white"
+                    : "text-gray-700"
                 }`}
               >
                 <ListIcon className="h-4 w-4" aria-hidden="true" />
@@ -696,8 +695,10 @@ export default function EatDrinkPage() {
               <button
                 type="button"
                 onClick={() => setActiveView("split")}
-                className={`inline-flex items-center gap-2 transition-colors hover:text-gray-900 ${
-                  activeView === "split" ? "font-medium text-gray-900" : ""
+                className={`inline-flex items-center gap-2 rounded-full px-3 py-1.5 transition-colors hover:bg-amber-50 hover:text-gray-900 ${
+                  activeView === "split"
+                    ? "bg-amber-100 text-gray-900"
+                    : "text-gray-700"
                 }`}
               >
                 <LayoutGrid className="h-4 w-4" aria-hidden="true" />
@@ -725,7 +726,7 @@ export default function EatDrinkPage() {
                 {Array.from({ length: 6 }).map((_, index) => (
                   <div
                     key={index}
-                    className="flex h-full flex-col overflow-hidden rounded-lg border border-gray-200 bg-gray-50 animate-pulse"
+                    className="flex h-full flex-col overflow-hidden rounded-xl border border-gray-200 bg-gray-50 animate-pulse"
                   >
                     <div className="h-40 w-full bg-gray-200" />
                     <div className="p-4 space-y-3">
@@ -738,18 +739,18 @@ export default function EatDrinkPage() {
                 ))}
               </div>
             ) : filteredPlaces.length === 0 ? (
-              <div className="rounded-lg border border-dashed border-gray-300 bg-gray-50 px-6 py-10 text-center">
+              <div className="rounded-xl border border-dashed border-amber-200 bg-amber-50 px-6 py-10 text-center">
                 <p className="text-sm font-medium text-gray-800">
                   No places match your search.
                 </p>
-                <p className="mt-2 text-sm text-gray-500">
+                <p className="mt-2 text-sm text-gray-600">
                   Try removing a filter or searching for something different.
                 </p>
                 {hasActiveFilters && (
                   <button
                     type="button"
                     onClick={handleClearAll}
-                    className="mt-4 inline-flex items-center rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-white hover:bg-black"
+                    className="mt-4 inline-flex items-center rounded-full bg-amber-600 px-4 py-2 text-sm font-medium text-white hover:bg-amber-700"
                   >
                     Clear all filters
                   </button>
@@ -768,7 +769,7 @@ export default function EatDrinkPage() {
                   return (
                     <article
                       key={place.id}
-                      className="flex h-full flex-col overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+                      className="flex h-full flex-col overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg"
                     >
                       {/* Image holder */}
                       <div className="relative h-40 w-full overflow-hidden">
@@ -777,7 +778,7 @@ export default function EatDrinkPage() {
                           alt={place.name}
                           className="h-full w-full object-cover"
                         />
-                        <div className="absolute left-3 top-3 rounded-full bg-white/85 px-3 py-1 text-xs text-gray-800 shadow-sm">
+                        <div className="absolute left-3 top-3 rounded-full bg-gray-900/80 px-3 py-1 text-xs text-white shadow-sm">
                           {typeLabel} • {place.locationLabel}
                         </div>
                       </div>
@@ -799,7 +800,7 @@ export default function EatDrinkPage() {
                           </span>
                           <button
                             type="button"
-                            className="text-xs font-medium text-gray-900 underline-offset-2 hover:underline"
+                            className="rounded-full px-3 py-1 text-xs font-medium text-amber-700 ring-1 ring-amber-200 hover:bg-amber-50"
                           >
                             View details
                           </button>
