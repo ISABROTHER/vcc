@@ -275,7 +275,7 @@ const experienceMeta: Record<
   },
   'Picnics & adventure experiences': {
     imageUrl:
-      'https-://images.unsplash.com/photo-1478146059778-339e08d1844e?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1478146059778-339e08d1844e?auto=format&fit=crop&w=1200&q=80',
     description:
       'Combine relaxed picnics with light adventure activities in scenic spots.',
     location: 'Beaches · Forest edges',
@@ -405,7 +405,7 @@ interface ExperienceCardProps {
   onToggleTrip: () => void;
 }
 
-// Experience Card Component — everything on the picture
+// Experience Card Component — portrait long image
 const ExperienceCard: React.FC<ExperienceCardProps> = ({
   experience,
   inTripPlan,
@@ -413,7 +413,6 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({
 }) => {
   return (
     <article className="group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:shadow-lg hover:border-amber-200">
-      {/* PORTRAIT: height longer than width */}
       <div className="relative aspect-[2/3] w-full overflow-hidden">
         <img
           src={experience.imageUrl}
@@ -433,8 +432,7 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({
         {/* Bottom overlay: name, description, buttons */}
         <div className="absolute left-4 right-4 bottom-3">
           <div className="rounded-lg bg-black/80 px-3 py-2.5 backdrop-blur-sm">
-            {/* NAME FONT SIZE bumped to be like hotel cards */}
-            <h2 className="text-lg sm:text-xl font-bold text-white leading-tight line-clamp-2">
+            <h2 className="text-sm sm:text-base font-semibold text-white leading-tight line-clamp-2">
               {experience.name}
             </h2>
             <p className="mt-1 text-[11px] sm:text-xs text-slate-100/90 line-clamp-2">
@@ -602,7 +600,7 @@ export default function SeeDoPage() {
           {/* Experiences grid */}
           <section>
             {filteredExperiences.length > 0 ? (
-              <div className="grid grid-cols-1 gap-6 sm:gap-8 sm:grid-cols-2 xl:grid-cols-3">
+              <div className="grid grid-cols-1 gap-6 sm:gap-8 sm:grid-cols-2 lg:grid-cols-3">
                 {filteredExperiences.map((exp) => (
                   <ExperienceCard
                     key={exp.id}
