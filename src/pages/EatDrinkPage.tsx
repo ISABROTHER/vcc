@@ -244,12 +244,17 @@ export default function EatDrinkPage() {
           </p>
         </header>
 
-        {/* Oslo-style highlight cards */}
+        {/* Oslo-style highlight cards – now clickable to set categories */}
         <section
           aria-label="Featured food and drink experiences"
           className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-3"
         >
-          <article className="relative h-60 w-full overflow-hidden rounded-lg">
+          {/* All categories */}
+          <button
+            type="button"
+            onClick={() => setActiveCategory("all")}
+            className="relative h-60 w-full overflow-hidden rounded-lg text-left"
+          >
             <img
               src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1500"
               className="h-full w-full object-cover"
@@ -262,24 +267,40 @@ export default function EatDrinkPage() {
               <p className="text-sm text-gray-700">
                 Discover authentic traditions and local ingredients.
               </p>
+              <p className="mt-1 text-xs font-medium text-gray-800">
+                View all categories →
+              </p>
             </div>
-          </article>
+          </button>
 
-          <article className="relative h-60 w-full overflow-hidden rounded-lg">
+          {/* Restaurant / affordable */}
+          <button
+            type="button"
+            onClick={() => setActiveCategory("restaurant")}
+            className="relative h-60 w-full overflow-hidden rounded-lg text-left"
+          >
             <img
               src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1500"
               className="h-full w-full object-cover"
-              alt="Easy & affordable places"
+              alt="Easy & affordable"
             />
             <div className="absolute bottom-0 left-0 w-[85%] bg-[#D9F3F0] p-4">
               <h3 className="font-semibold text-gray-900">Easy &amp; affordable</h3>
               <p className="text-sm text-gray-700">
                 Recommendations for low-cost, simple, friendly spots.
               </p>
+              <p className="mt-1 text-xs font-medium text-gray-800">
+                Show restaurants →
+              </p>
             </div>
-          </article>
+          </button>
 
-          <article className="relative h-60 w-full overflow-hidden rounded-lg">
+          {/* Bar & pub */}
+          <button
+            type="button"
+            onClick={() => setActiveCategory("bar")}
+            className="relative h-60 w-full overflow-hidden rounded-lg text-left"
+          >
             <img
               src="https://images.unsplash.com/photo-1552566626-52f8b828add9?q=80&w=1500"
               className="h-full w-full object-cover"
@@ -292,10 +313,18 @@ export default function EatDrinkPage() {
               <p className="text-sm text-gray-700">
                 Social spots for drinks, dancing and good company.
               </p>
+              <p className="mt-1 text-xs font-medium text-gray-800">
+                Show bars &amp; pubs →
+              </p>
             </div>
-          </article>
+          </button>
 
-          <article className="relative h-60 w-full overflow-hidden rounded-lg">
+          {/* Café */}
+          <button
+            type="button"
+            onClick={() => setActiveCategory("cafe")}
+            className="relative h-60 w-full overflow-hidden rounded-lg text-left"
+          >
             <img
               src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=1500"
               className="h-full w-full object-cover"
@@ -306,10 +335,18 @@ export default function EatDrinkPage() {
               <p className="text-sm text-gray-700">
                 Perfect for brunch, pastries or chilled café moments.
               </p>
+              <p className="mt-1 text-xs font-medium text-gray-800">
+                Show cafés →
+              </p>
             </div>
-          </article>
+          </button>
 
-          <article className="relative h-60 w-full overflow-hidden rounded-lg">
+          {/* Restaurant – vegan/veg */}
+          <button
+            type="button"
+            onClick={() => setActiveCategory("restaurant")}
+            className="relative h-60 w-full overflow-hidden rounded-lg text-left"
+          >
             <img
               src="https://images.unsplash.com/photo-1604908177225-df3b3f0c39eb?q=80&w=1500"
               className="h-full w-full object-cover"
@@ -322,10 +359,18 @@ export default function EatDrinkPage() {
               <p className="text-sm text-gray-700">
                 Healthy and creative plant-based options around town.
               </p>
+              <p className="mt-1 text-xs font-medium text-gray-800">
+                Show restaurants →
+              </p>
             </div>
-          </article>
+          </button>
 
-          <article className="relative h-60 w-full overflow-hidden rounded-lg">
+          {/* Restaurant – all restaurants */}
+          <button
+            type="button"
+            onClick={() => setActiveCategory("restaurant")}
+            className="relative h-60 w-full overflow-hidden rounded-lg text-left"
+          >
             <img
               src="https://images.unsplash.com/photo-1553621042-f6e147245754?q=80&w=1500"
               className="h-full w-full object-cover"
@@ -336,8 +381,11 @@ export default function EatDrinkPage() {
               <p className="text-sm text-gray-700">
                 Full overview of every place to eat in Cape Coast.
               </p>
+              <p className="mt-1 text-xs font-medium text-gray-800">
+                Show restaurants →
+              </p>
             </div>
-          </article>
+          </button>
         </section>
       </main>
 
