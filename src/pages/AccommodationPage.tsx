@@ -483,3 +483,4 @@ export default function AccommodationPage() {
     </div>
   );
 }
+ 
