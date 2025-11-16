@@ -104,7 +104,7 @@ const allCategories: ICategory[] = [
       { name: 'Beach picnics', icon: Sun },
       { name: 'Botel crocodile pond', icon: Swimmer },
       { name: 'Museums', icon: BookOpen },
-      { name: 'Kids’ history tours', icon: BookOpen },
+      { name: "Kids’ history tours", icon: BookOpen },
     ],
     tags: ['Adventure'],
   },
@@ -405,88 +405,62 @@ interface ExperienceCardProps {
   onToggleTrip: () => void;
 }
 
-// Experience Card Component (Airbnb-style with overlay text on image)
+// Experience Card Component — everything on the picture, only buttons on top of image
 const ExperienceCard: React.FC<ExperienceCardProps> = ({
   experience,
   inTripPlan,
   onToggleTrip,
 }) => {
-  const Icon = experience.icon;
-
   return (
-    <article className="group flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:shadow-lg hover:border-amber-200">
-      {/* Image with overlay name + description */}
+    <article className="group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:shadow-lg hover:border-amber-200">
       <div className="relative aspect-[4/3] w-full overflow-hidden">
         <img
           src={experience.imageUrl}
           alt={experience.name}
           className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
         />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+        {/* Dark gradient */}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/75 via-black/35 to-transparent" />
+
         {/* Top category chip */}
         <div className="absolute left-4 right-4 top-3 flex items-center justify-between gap-2">
           <span className="inline-flex items-center rounded-full bg-white/90 px-3 py-1 text-xs font-medium text-slate-800 shadow-sm">
             {experience.categoryTitle}
           </span>
         </div>
-        {/* Bottom name + description overlay */}
+
+        {/* Bottom overlay: name, description, buttons */}
         <div className="absolute left-4 right-4 bottom-3">
-          <div className="rounded-lg bg-black/75 px-3 py-2.5 backdrop-blur-sm">
+          <div className="rounded-lg bg-black/80 px-3 py-2.5 backdrop-blur-sm">
             <h2 className="text-sm sm:text-base font-semibold text-white leading-tight line-clamp-2">
               {experience.name}
             </h2>
             <p className="mt-1 text-[11px] sm:text-xs text-slate-100/90 line-clamp-2">
               {experience.description}
             </p>
-          </div>
-        </div>
-      </div>
 
-      {/* Content: meta + actions */}
-      <div className="flex flex-1 flex-col px-4 pb-4 pt-3 sm:px-5 sm:pt-4 bg-gradient-to-b from-white to-slate-50">
-        {/* Icon + meta chips */}
-        <div className="flex items-start gap-2">
-          <div className="mt-1 rounded-lg bg-amber-50 p-1.5">
-            <Icon className="h-4 w-4 text-amber-600" />
-          </div>
-          <div className="flex-1">
-            <div className="flex flex-wrap items-center gap-2 text-[11px] sm:text-xs text-slate-500">
-              <span className="inline-flex items-center gap-1 rounded-full bg-slate-50 px-2.5 py-1">
-                <MapPin className="h-3 w-3" />
-                {experience.location}
-              </span>
-              <span className="inline-flex items-center gap-1 rounded-full bg-slate-50 px-2.5 py-1">
-                <Camera className="h-3 w-3" />
-                {experience.duration}
-              </span>
-              <span className="inline-flex items-center gap-1 rounded-full bg-slate-50 px-2.5 py-1">
-                <Users className="h-3 w-3" />
-                {experience.bestFor}
-              </span>
+            {/* Buttons row */}
+            <div className="mt-2 flex items-center gap-2">
+              <button
+                type="button"
+                onClick={onToggleTrip}
+                className={`inline-flex items-center justify-center rounded-full px-3 py-1 text-[10px] sm:text-xs font-semibold border transition ${
+                  inTripPlan
+                    ? 'border-emerald-500 bg-emerald-50/90 text-emerald-900'
+                    : 'border-slate-200 bg-white/95 text-slate-800 hover:border-emerald-500 hover:text-emerald-800'
+                }`}
+              >
+                {inTripPlan ? 'In trip plan' : 'Add to trip plan'}
+              </button>
+
+              <button
+                type="button"
+                className="inline-flex items-center justify-center rounded-full border border-slate-200 bg-white/95 px-3 py-1 text-[10px] sm:text-xs font-semibold uppercase tracking-[0.14em] text-slate-700 transition hover:border-amber-400 hover:text-amber-700"
+              >
+                View details
+              </button>
             </div>
           </div>
-        </div>
-
-        {/* Actions */}
-        <div className="mt-4 flex items-center gap-3 border-t border-slate-100 pt-3">
-          <button
-            type="button"
-            onClick={onToggleTrip}
-            className={`inline-flex items-center justify-center rounded-full px-3.5 py-1.5 text-xs sm:text-sm font-semibold border transition ${
-              inTripPlan
-                ? 'border-emerald-600 bg-emerald-50 text-emerald-700'
-                : 'border-slate-300 bg-white text-slate-700 hover:border-emerald-600 hover:text-emerald-700'
-            }`}
-          >
-            {inTripPlan ? 'In trip plan' : 'Add to trip plan'}
-          </button>
-
-          <button
-            type="button"
-            className="ml-auto inline-flex items-center justify-center rounded-full border border-slate-300 bg-white px-3.5 py-1.5 text-[11px] sm:text-xs font-semibold uppercase tracking-[0.16em] text-slate-600 transition group-hover:border-amber-500 group-hover:text-amber-700"
-          >
-            View details
-          </button>
         </div>
       </div>
     </article>
