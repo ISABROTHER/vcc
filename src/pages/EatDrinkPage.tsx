@@ -1,819 +1,468 @@
-import { useEffect, useMemo, useState } from "react";
 import {
-  Heart,
-  Martini,
-  Coffee,
-  ChefHat,
-  Search,
-  Calendar,
   MapPin,
-  Map as MapIcon,
-  List as ListIcon,
-  LayoutGrid,
-  ChevronDown,
-  Check,
-} from "lucide-react";
+  Camera,
+  Star,
+  Users,
+  TreePine,
+  Palette,
+  Ship,
+  Drum,
+  Sun,
+  Waves as Swimmer,
+  Bird,
+  ShoppingBag,
+  Ticket,
+  Smile,
+  BookOpen,
+  SearchX,
+} from 'lucide-react';
+import React, { useState, useMemo } from 'react';
 
-type ViewMode = "map" | "list" | "split";
-type CategoryId = "all" | "bar" | "cafe" | "restaurant";
-type MonthFilterId = "any" | "jan-mar" | "apr-jun" | "jul-sep" | "oct-dec";
-type LocationFilterId = "any" | "cape-coast" | "elmina" | "abura" | "other";
+// Define types for clarity
+interface IListItem {
+  name: string;
+  icon: React.ElementType;
+}
 
-const PLACES = [
+interface ICategory {
+  title: string;
+  icon: React.ElementType;
+  items: IListItem[];
+  tags: string[]; // Tags for filtering
+}
+
+interface IExperience {
+  id: string;
+  name: string;
+  icon: React.ElementType;
+  categoryTitle: string;
+  tags: string[];
+  imageUrl: string;
+  description: string;
+  location: string;
+  duration: string;
+  bestFor: string;
+}
+
+// Data for the page – now restaurants / bars
+const allCategories: ICategory[] = [
   {
-    id: 1,
-    name: "Castle View Restaurant",
-    type: "restaurant" as const,
-    locationId: "cape-coast" as const,
-    locationLabel: "Cape Coast",
-    monthTags: ["any"],
-    imageUrl:
-      "https://images.unsplash.com/photo-1529042410759-befb1204b468?q=80&w=1200",
-    description: "Seafood and local dishes with views towards Cape Coast Castle.",
-  },
-  {
-    id: 2,
-    name: "Oasis Beach Bar",
-    type: "bar" as const,
-    locationId: "cape-coast" as const,
-    locationLabel: "Cape Coast",
-    monthTags: ["any", "jul-sep"],
-    imageUrl:
-      "https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1200",
-    description: "Beachfront bar with live music, cocktails and a relaxed vibe.",
-  },
-  {
-    id: 3,
-    name: "Elmina Harbour Café",
-    type: "cafe" as const,
-    locationId: "elmina" as const,
-    locationLabel: "Elmina",
-    monthTags: ["any", "jan-mar"],
-    imageUrl:
-      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=1200",
-    description: "Casual café near the harbour, perfect for coffee and light bites.",
-  },
-  {
-    id: 4,
-    name: "Abura Garden Spot",
-    type: "restaurant" as const,
-    locationId: "abura" as const,
-    locationLabel: "Abura",
-    monthTags: ["any", "apr-jun"],
-    imageUrl:
-      "https://images.unsplash.com/photo-1553621042-f6e147245754?q=80&w=1200",
-    description: "Garden-style dining with local favourites and grilled options.",
-  },
-  {
-    id: 5,
-    name: "Lagoon Night Lounge",
-    type: "bar" as const,
-    locationId: "other" as const,
-    locationLabel: "Around Cape Coast",
-    monthTags: ["any", "oct-dec"],
-    imageUrl:
-      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200",
-    description: "Late-night lounge with DJ sets and small plates.",
+    title: 'Eat & Drink',
+    icon: Smile,
+    items: [
+      { name: 'Becky Kay Restaurant & Bar', icon: MapPin },
+      { name: 'Da Breeze Bar & Restaurant', icon: MapPin },
+      { name: 'Castle Beach Restaurant', icon: MapPin },
+      { name: 'Lemon Lounge', icon: MapPin },
+      { name: 'Emperor Ital Joint', icon: MapPin },
+      { name: 'Sasakawa Restaurant', icon: MapPin },
+      { name: 'Oguaa Basiaba Tasty Cuisine', icon: MapPin },
+      { name: 'New Life Café', icon: MapPin },
+      { name: 'Cape Cafe & Restaurant', icon: MapPin },
+      { name: 'Coast to Coast Pub n Grill', icon: MapPin },
+      { name: 'Cape Coast Coffee House', icon: MapPin },
+      { name: 'Community Gardens Bar & Restaurant', icon: MapPin },
+      { name: 'Sahara Pub & Restaurant', icon: MapPin },
+      { name: 'Shipyard Café & Bar', icon: MapPin },
+      { name: 'Lush on the Coast Restaurant & Bar', icon: MapPin },
+    ],
+    tags: ['Food'],
   },
 ];
 
-const CATEGORY_CONFIG: { id: CategoryId; label: string; icon: any }[] = [
-  { id: "all", label: "All categories", icon: Heart },
-  { id: "bar", label: "Bar & pub", icon: Martini },
-  { id: "cafe", label: "Café", icon: Coffee },
-  { id: "restaurant", label: "Restaurant", icon: ChefHat },
+// Extra meta for nicer cards (images + locations)
+const experienceMeta: Record<
+  string,
+  Partial<
+    Pick<
+      IExperience,
+      'imageUrl' | 'description' | 'location' | 'duration' | 'bestFor'
+    >
+  >
+> = {
+  'Becky Kay Restaurant & Bar': {
+    imageUrl:
+      'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2c/50/20/5c/interior.jpg?w=1200&h=-1&s=1',
+    location: 'Cape Coast',
+  },
+  'Da Breeze Bar & Restaurant': {
+    imageUrl:
+      'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1b/f6/79/b6/da-breeze-from-above.jpg?w=1200&h=-1&s=1',
+    location: 'Cape Coast – Beachfront',
+  },
+  'Castle Beach Restaurant': {
+    imageUrl:
+      'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/03/a5/43/2c/castle-restaurant.jpg?w=1200&h=-1&s=1',
+    location: 'Cape Coast Castle',
+  },
+  'Lemon Lounge': {
+    imageUrl:
+      'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2c/6c/3a/c5/lemon-lounge.jpg?w=1200&h=-1&s=1',
+    location: 'Commercial Street, Cape Coast',
+  },
+  'Emperor Ital Joint': {
+    imageUrl:
+      'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/27/78/77/89/vegan-platter.jpg?w=1200&h=-1&s=1',
+    location: 'Victoria Road',
+  },
+  'Sasakawa Restaurant': {
+    imageUrl:
+      'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/03/8b/da/44/sasakawa-seafood.jpg?w=1200&h=-1&s=1',
+    location: 'Cape Coast',
+  },
+  'Oguaa Basiaba Tasty Cuisine': {
+    imageUrl:
+      'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/17/35/3c/9d/photo1jpg.jpg?w=1200&h=-1&s=1',
+    location: 'Cape Coast',
+  },
+  'New Life Café': {
+    imageUrl:
+      'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/18/27/2b/49/outdoor-seating.jpg?w=1200&h=-1&s=1',
+    location: 'Cape Coast',
+  },
+  'Cape Cafe & Restaurant': {
+    imageUrl:
+      'https://seekghana.com/wp-content/uploads/2021/05/cape-cafe-restaurant-ghana.jpg',
+    location: 'Adj. Melcom, Cape Coast',
+  },
+  'Coast to Coast Pub n Grill': {
+    imageUrl:
+      'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/18/4e/fb/93/pub-area.jpg?w=1200&h=-1&s=1',
+    location: 'Cape Coast',
+  },
+  'Cape Coast Coffee House': {
+    imageUrl:
+      'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/28/0c/7e/a5/interior.jpg?w=1200&h=-1&s=1',
+    location: 'Cape Coast',
+  },
+  'Community Gardens Bar & Restaurant': {
+    imageUrl:
+      'https://tortoisepath.com/wp-content/uploads/2021/04/community-gardens-bar-restaurant.jpg',
+    location: 'Cape Coast',
+  },
+  'Sahara Pub & Restaurant': {
+    imageUrl:
+      'https://scontent.cdninstagram.com/v/t51.29350-15/434487730_1139791624025233_1962534103158182481_n.jpg?stp=dst-jpg_e35_s1080x1080&_nc_ht=scontent.cdninstagram.com&_nc_cat=109&_nc_ohc=XXXX',
+    location: 'Cape Coast',
+  },
+  'Shipyard Café & Bar': {
+    imageUrl:
+      'https://scontent.cdninstagram.com/v/t51.2885-15/441340617_1526279964970633_6912111383066022251_n.jpg?stp=dst-jpg_e35_s1080x1080&_nc_ht=scontent.cdninstagram.com&_nc_cat=103',
+    location: 'Cape Coast',
+  },
+  'Lush on the Coast Restaurant & Bar': {
+    imageUrl:
+      'https://scontent.cdninstagram.com/v/t51.2885-15/441324904_398544569611268_9138072545394547879_n.jpg?stp=dst-jpg_e35_s1080x1080&_nc_ht=scontent.cdninstagram.com&_nc_cat=108',
+    location: 'Cape Coast',
+  },
+};
+
+const getExperienceMeta = (
+  itemName: string,
+): Omit<IExperience, 'id' | 'name' | 'icon' | 'categoryTitle' | 'tags'> => {
+  const meta = experienceMeta[itemName] ?? {};
+  return {
+    imageUrl:
+      meta.imageUrl ??
+      'https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=1200&q=80',
+    description:
+      meta.description ??
+      'Discover an authentic Cape Coast experience curated by local partners.',
+    location: meta.location ?? 'Cape Coast area',
+    duration: meta.duration ?? 'Flexible',
+    bestFor: meta.bestFor ?? 'All visitors',
+  };
+};
+
+// Flatten categories into a list of experiences
+const allExperiences: IExperience[] = allCategories.flatMap((category) =>
+  category.items.map((item, index) => {
+    const meta = getExperienceMeta(item.name);
+    return {
+      id: `${category.title}-${index}-${item.name}`,
+      name: item.name,
+      icon: item.icon,
+      categoryTitle: category.title,
+      tags: category.tags,
+      ...meta,
+    };
+  }),
+);
+
+// Filter categories
+const filterOptions = [
+  'All',
+  'Tours',
+  'Cultural',
+  'Castles',
+  'Adventure',
+  'Food',
+  'Creative',
 ];
 
-const MONTH_OPTIONS: { id: MonthFilterId; label: string }[] = [
-  { id: "any", label: "Any time" },
-  { id: "jan-mar", label: "Jan – Mar" },
-  { id: "apr-jun", label: "Apr – Jun" },
-  { id: "jul-sep", label: "Jul – Sep" },
-  { id: "oct-dec", label: "Oct – Dec" },
-];
+interface ExperienceCardProps {
+  experience: IExperience;
+  inTripPlan: boolean;
+  onToggleTrip: () => void;
+}
 
-const LOCATION_OPTIONS: { id: LocationFilterId; label: string }[] = [
-  { id: "any", label: "Any location" },
-  { id: "cape-coast", label: "Cape Coast" },
-  { id: "elmina", label: "Elmina" },
-  { id: "abura", label: "Abura" },
-  { id: "other", label: "Around Cape Coast" },
-];
+// Experience Card Component — portrait image, restaurant overlay
+const ExperienceCard: React.FC<ExperienceCardProps> = ({
+  experience,
+  inTripPlan,
+  onToggleTrip,
+}) => {
+  return (
+    <article className="group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:shadow-lg hover:border-amber-200">
+      {/* Portrait: height longer than width */}
+      <div className="relative aspect-[2/3] w-full overflow-hidden">
+        <img
+          src={experience.imageUrl}
+          alt={experience.name}
+          className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+        />
+        {/* Dark gradient */}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/75 via-black/35 to-transparent" />
 
-const isCategoryId = (value: string | null): value is CategoryId =>
-  !!value && ["all", "bar", "cafe", "restaurant"].includes(value);
+        {/* Top category chip */}
+        <div className="absolute left-4 right-4 top-3 flex items-center justify-between gap-2">
+          <span className="inline-flex items-center rounded-full bg-white/90 px-3 py-1 text-xs font-medium text-slate-800 shadow-sm">
+            {experience.categoryTitle}
+          </span>
+        </div>
 
-const isMonthFilterId = (value: string | null): value is MonthFilterId =>
-  !!value && ["any", "jan-mar", "apr-jun", "jul-sep", "oct-dec"].includes(value);
+        {/* Bottom overlay: name, description, buttons */}
+        <div className="absolute left-4 right-4 bottom-3">
+          <div className="rounded-lg bg-black/80 px-3 py-2.5 backdrop-blur-sm">
+            <h2 className="text-lg sm:text-xl font-bold text-white leading-tight line-clamp-2">
+              {experience.name}
+            </h2>
+            <p className="mt-1 text-[11px] sm:text-xs text-slate-100/90 line-clamp-2">
+              {experience.description}
+            </p>
 
-const isLocationFilterId = (value: string | null): value is LocationFilterId =>
-  !!value &&
-  ["any", "cape-coast", "elmina", "abura", "other"].includes(value);
+            {/* Buttons row */}
+            <div className="mt-2 flex items-center gap-2">
+              <button
+                type="button"
+                onClick={onToggleTrip}
+                className={`inline-flex items-center justify-center rounded-full px-3 py-1 text-[10px] sm:text-xs font-semibold border transition ${
+                  inTripPlan
+                    ? 'border-emerald-500 bg-emerald-50/90 text-emerald-900'
+                    : 'border-slate-200 bg-white/95 text-slate-800 hover:border-emerald-500 hover:text-emerald-800'
+                }`}
+              >
+                {inTripPlan ? 'In trip plan' : 'Add to trip plan'}
+              </button>
 
-const isViewMode = (value: string | null): value is ViewMode =>
-  !!value && ["map", "list", "split"].includes(value);
+              <button
+                type="button"
+                className="inline-flex items-center justify-center rounded-full border border-slate-200 bg-white/95 px-3 py-1 text-[10px] sm:text-xs font-semibold uppercase tracking-[0.14em] text-slate-700 transition hover:border-amber-400 hover:text-amber-700"
+              >
+                View details
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+  );
+};
 
-export default function EatDrinkPage() {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [activeCategory, setActiveCategory] = useState<CategoryId>("all");
-  const [activeView, setActiveView] = useState<ViewMode>("list");
-  const [isMonthOpen, setIsMonthOpen] = useState(false);
-  const [isLocationOpen, setIsLocationOpen] = useState(false);
-  const [monthFilter, setMonthFilter] = useState<MonthFilterId>("any");
-  const [locationFilter, setLocationFilter] = useState<LocationFilterId>("any");
-  const [isLoading, setIsLoading] = useState(false);
+// Horizontal Filter Bar Component
+const FilterBar: React.FC<{
+  selected: string;
+  onSelect: (category: string) => void;
+}> = ({ selected, onSelect }) => (
+  <div className="mb-6 sm:mb-8">
+    <div className="overflow-x-auto pb-1">
+      <div className="inline-flex min-w-full justify-center sm:justify-start">
+        <div className="flex w-full max-w-full gap-2 sm:gap-3">
+          {filterOptions.map((filter) => (
+            <button
+              key={filter}
+              onClick={() => onSelect(filter)}
+              className={`
+                flex-1 sm:flex-none flex-shrink-0 px-4 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-semibold
+                transition-all duration-200 whitespace-nowrap
+                ${
+                  selected === filter
+                    ? 'bg-amber-600 text-white shadow-sm'
+                    : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-50 hover:border-amber-400'
+                }
+              `}
+            >
+              {filter}
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+);
 
-  const selectedMonthLabel =
-    MONTH_OPTIONS.find((m) => m.id === monthFilter)?.label ?? "Any time";
-  const selectedLocationLabel =
-    LOCATION_OPTIONS.find((l) => l.id === locationFilter)?.label ?? "Any location";
+// No Results Component
+const NoResults = () => (
+  <div className="text-center py-16 px-6 bg-white/90 rounded-2xl border border-slate-100 shadow-sm">
+    <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-slate-50 border border-slate-100">
+      <SearchX className="h-8 w-8 text-slate-400" />
+    </div>
+    <h3 className="mt-5 text-2xl font-semibold text-slate-900">
+      No Activities Found
+    </h3>
+    <p className="mt-2 text-base text-slate-500 max-w-md mx-auto">
+      Try adjusting your filters or search to discover more ways to explore Cape
+      Coast.
+    </p>
+  </div>
+);
 
-  const hasActiveFilters =
-    searchQuery.trim().length > 0 ||
-    activeCategory !== "all" ||
-    monthFilter !== "any" ||
-    locationFilter !== "any";
+export default function SeeDoPage() {
+  const [selectedFilter, setSelectedFilter] = useState('All');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [tripPlanIds, setTripPlanIds] = useState<string[]>([]);
 
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const params = new URLSearchParams(window.location.search);
+  const filteredExperiences = useMemo(() => {
+    const term = searchTerm.trim().toLowerCase();
 
-    const q = params.get("q");
-    const cat = params.get("cat");
-    const month = params.get("month");
-    const loc = params.get("loc");
-    const view = params.get("view");
+    return allExperiences.filter((exp) => {
+      const matchesFilter =
+        selectedFilter === 'All' || exp.tags.includes(selectedFilter);
 
-    if (q) setSearchQuery(q);
-    if (isCategoryId(cat)) setActiveCategory(cat);
-    if (isMonthFilterId(month)) setMonthFilter(month);
-    if (isLocationFilterId(loc)) setLocationFilter(loc);
-    if (isViewMode(view)) setActiveView(view);
-  }, []);
+      const matchesSearch =
+        term === '' ||
+        exp.name.toLowerCase().includes(term) ||
+        exp.description.toLowerCase().includes(term) ||
+        exp.location.toLowerCase().includes(term);
 
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const params = new URLSearchParams(window.location.search);
-
-    if (searchQuery) params.set("q", searchQuery);
-    else params.delete("q");
-
-    if (activeCategory !== "all") params.set("cat", activeCategory);
-    else params.delete("cat");
-
-    if (monthFilter !== "any") params.set("month", monthFilter);
-    else params.delete("month");
-
-    if (locationFilter !== "any") params.set("loc", locationFilter);
-    else params.delete("loc");
-
-    if (activeView !== "list") params.set("view", activeView);
-    else params.delete("view");
-
-    const queryString = params.toString();
-    const newUrl = queryString
-      ? `${window.location.pathname}?${queryString}`
-      : window.location.pathname;
-
-    window.history.replaceState(null, "", newUrl);
-  }, [searchQuery, activeCategory, monthFilter, locationFilter, activeView]);
-
-  useEffect(() => {
-    setIsLoading(true);
-    const id = window.setTimeout(() => {
-      setIsLoading(false);
-    }, 250);
-    return () => window.clearTimeout(id);
-  }, [searchQuery, activeCategory, monthFilter, locationFilter]);
-
-  const filteredPlaces = useMemo(() => {
-    return PLACES.filter((place) => {
-      if (activeCategory !== "all" && place.type !== activeCategory) {
-        return false;
-      }
-
-      if (monthFilter !== "any" && !place.monthTags.includes(monthFilter)) {
-        return false;
-      }
-
-      if (locationFilter !== "any" && place.locationId !== locationFilter) {
-        return false;
-      }
-
-      if (searchQuery.trim()) {
-        const query = searchQuery.toLowerCase();
-        const text =
-          `${place.name} ${place.description} ${place.locationLabel}`.toLowerCase();
-        if (!text.includes(query)) {
-          return false;
-        }
-      }
-
-      return true;
+      return matchesFilter && matchesSearch;
     });
-  }, [activeCategory, monthFilter, locationFilter, searchQuery]);
+  }, [selectedFilter, searchTerm]);
 
-  const searchSuggestions = useMemo(() => {
-    if (!searchQuery.trim()) return [];
-    const query = searchQuery.toLowerCase();
-    return PLACES.filter((place) =>
-      place.name.toLowerCase().includes(query)
-    ).slice(0, 5);
-  }, [searchQuery]);
+  const tripPlanExperiences = useMemo(
+    () => allExperiences.filter((exp) => tripPlanIds.includes(exp.id)),
+    [tripPlanIds],
+  );
 
-  const handleClearAll = () => {
-    setSearchQuery("");
-    setActiveCategory("all");
-    setMonthFilter("any");
-    setLocationFilter("any");
+  const toggleTripPlan = (id: string) => {
+    setTripPlanIds((prev) =>
+      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id],
+    );
   };
 
   return (
-    <div className="w-full bg-white">
-      {/* Hero image */}
-      <div className="h-[260px] w-full overflow-hidden sm:h-[360px] lg:h-[420px]">
-        <img
-          src="https://images.unsplash.com/photo-1529042410759-befb1204b468?q=80&w=1500"
-          alt="Restaurants and food"
-          className="h-full w-full object-cover object-center"
-        />
-      </div>
-
-      {/* Intro heading + description + highlight cards */}
-      <main className="mx-auto max-w-7xl px-6 py-12 sm:py-16">
-        <header>
-          <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-            Restaurants, cafés &amp; nightlife
-          </h1>
-          <p className="mt-6 max-w-2xl text-lg leading-8 text-gray-600">
-            Discover Cape Coast’s vibrant food and drink scene – from local chop
-            bars and cosy cafés to beachfront bars and late-night spots.
+    <div className="min-h-screen bg-slate-50">
+      <div className="mx-auto max-w-7xl px-6 py-14 sm:py-20 lg:px-8">
+        {/* Page Header */}
+        <div className="mx-auto max-w-3xl text-center mb-10 sm:mb-14">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-500 mb-3">
+            Discover Cape Coast
           </p>
-        </header>
+          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl text-slate-900">
+            See &amp; Do
+          </h1>
+          <p className="mt-5 text-base sm:text-lg leading-7 sm:leading-8 text-slate-600 max-w-2xl mx-auto">
+            Explore where to eat, drink and unwind in Cape Coast — from beachfront bars to cozy cafés.
+          </p>
+        </div>
 
-        {/* Highlight cards – clickable, warmer Cape Coast colours */}
-        <section
-          aria-label="Featured food and drink experiences"
-          className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-3"
-        >
-          {/* All categories */}
-          <button
-            type="button"
-            onClick={() => setActiveCategory("all")}
-            className="relative h-60 w-full overflow-hidden rounded-xl text-left shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
-          >
-            <img
-              src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1500"
-              className="h-full w-full object-cover"
-              alt="The taste of Cape Coast"
-            />
-            <div className="absolute bottom-0 left-0 w-[85%] rounded-tr-xl bg-amber-50/95 p-4 border-t border-r border-amber-100">
-              <h3 className="font-semibold text-gray-900">
-                The taste of Cape Coast
-              </h3>
-              <p className="text-sm text-gray-700">
-                Discover authentic traditions and local ingredients.
-              </p>
-              <p className="mt-1 text-xs font-medium text-amber-700">
-                View all categories →
-              </p>
-            </div>
-          </button>
-
-          {/* Restaurant / affordable */}
-          <button
-            type="button"
-            onClick={() => setActiveCategory("restaurant")}
-            className="relative h-60 w-full overflow-hidden rounded-xl text-left shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
-          >
-            <img
-              src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1500"
-              className="h-full w-full object-cover"
-              alt="Easy & affordable"
-            />
-            <div className="absolute bottom-0 left-0 w-[85%] rounded-tr-xl bg-amber-50/95 p-4 border-t border-r border-amber-100">
-              <h3 className="font-semibold text-gray-900">Easy &amp; affordable</h3>
-              <p className="text-sm text-gray-700">
-                Recommendations for low-cost, simple, friendly spots.
-              </p>
-              <p className="mt-1 text-xs font-medium text-amber-700">
-                Show restaurants →
-              </p>
-            </div>
-          </button>
-
-          {/* Bar & pub */}
-          <button
-            type="button"
-            onClick={() => setActiveCategory("bar")}
-            className="relative h-60 w-full overflow-hidden rounded-xl text-left shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
-          >
-            <img
-              src="https://images.unsplash.com/photo-1552566626-52f8b828add9?q=80&w=1500"
-              className="h-full w-full object-cover"
-              alt="Bars, pubs and nightlife"
-            />
-            <div className="absolute bottom-0 left-0 w-[85%] rounded-tr-xl bg-amber-50/95 p-4 border-t border-r border-amber-100">
-              <h3 className="font-semibold text-gray-900">
-                Bars, pubs &amp; nightlife
-              </h3>
-              <p className="text-sm text-gray-700">
-                Social spots for drinks, dancing and good company.
-              </p>
-              <p className="mt-1 text-xs font-medium text-amber-700">
-                Show bars &amp; pubs →
-              </p>
-            </div>
-          </button>
-
-          {/* Café */}
-          <button
-            type="button"
-            onClick={() => setActiveCategory("cafe")}
-            className="relative h-60 w-full overflow-hidden rounded-xl text-left shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
-          >
-            <img
-              src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=1500"
-              className="h-full w-full object-cover"
-              alt="Coffee & cake"
-            />
-            <div className="absolute bottom-0 left-0 w-[85%] rounded-tr-xl bg-amber-50/95 p-4 border-t border-r border-amber-100">
-              <h3 className="font-semibold text-gray-900">Coffee &amp; cake</h3>
-              <p className="text-sm text-gray-700">
-                Perfect for brunch, pastries or chilled café moments.
-              </p>
-              <p className="mt-1 text-xs font-medium text-amber-700">
-                Show cafés →
-              </p>
-            </div>
-          </button>
-
-          {/* Restaurant – vegan/veg */}
-          <button
-            type="button"
-            onClick={() => setActiveCategory("restaurant")}
-            className="relative h-60 w-full overflow-hidden rounded-xl text-left shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
-          >
-            <img
-              src="https://images.unsplash.com/photo-1604908177225-df3b3f0c39eb?q=80&w=1500"
-              className="h-full w-full object-cover"
-              alt="Vegan & vegetarian dishes"
-            />
-            <div className="absolute bottom-0 left-0 w-[85%] rounded-tr-xl bg-amber-50/95 p-4 border-t border-r border-amber-100">
-              <h3 className="font-semibold text-gray-900">
-                Vegan &amp; vegetarian
-              </h3>
-              <p className="text-sm text-gray-700">
-                Healthy and creative plant-based options around town.
-              </p>
-              <p className="mt-1 text-xs font-medium text-amber-700">
-                Show restaurants →
-              </p>
-            </div>
-          </button>
-
-          {/* Restaurant – all restaurants */}
-          <button
-            type="button"
-            onClick={() => setActiveCategory("restaurant")}
-            className="relative h-60 w-full overflow-hidden rounded-xl text-left shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
-          >
-            <img
-              src="https://images.unsplash.com/photo-1553621042-f6e147245754?q=80&w=1500"
-              className="h-full w-full object-cover"
-              alt="All restaurants overview"
-            />
-            <div className="absolute bottom-0 left-0 w-[85%] rounded-tr-xl bg-amber-50/95 p-4 border-t border-r border-amber-100">
-              <h3 className="font-semibold text-gray-900">All restaurants</h3>
-              <p className="text-sm text-gray-700">
-                Full overview of every place to eat in Cape Coast.
-              </p>
-              <p className="mt-1 text-xs font-medium text-amber-700">
-                Show restaurants →
-              </p>
-            </div>
-          </button>
-        </section>
-      </main>
-
-      {/* Main content: search, filters, results */}
-      <section
-        aria-label="Search and filter food and drink places"
-        className="mx-auto max-w-7xl px-6 pb-24 sm:pb-32"
-      >
-        <div className="mx-auto max-w-5xl border-t border-gray-200 pt-8">
-          {/* Category tabs */}
-          <div
-            className="flex items-end gap-8 overflow-x-auto pb-3 text-sm"
-            role="tablist"
-            aria-label="Food and drink categories"
-          >
-            {CATEGORY_CONFIG.map((cat) => {
-              const Icon = cat.icon;
-              const isActive = activeCategory === cat.id;
-              return (
-                <button
-                  key={cat.id}
-                  type="button"
-                  role="tab"
-                  aria-selected={isActive}
-                  onClick={() => setActiveCategory(cat.id)}
-                  className={`flex flex-col items-center gap-1 whitespace-nowrap pb-2 transition-colors ${
-                    isActive
-                      ? "text-gray-900"
-                      : "text-gray-600 hover:text-gray-900"
-                  }`}
-                >
-                  <Icon className="h-6 w-6" aria-hidden="true" />
-                  <span className="text-xs sm:text-sm">{cat.label}</span>
-                  {isActive && (
-                    <span className="mt-1 h-0.5 w-8 rounded-full bg-amber-600" />
-                  )}
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Divider */}
-          <div className="h-px w-full bg-gray-200" />
-
-          {/* Search + dropdown filters + view mode */}
-          <div className="mt-6 flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
-            <div className="flex-1 space-y-3">
-              {/* Search bar with suggestions */}
+        {/* Search + Filters */}
+        <section className="mb-10 sm:mb-12">
+          <div className="rounded-2xl border border-slate-200 bg-white/95 p-4 sm:p-5 shadow-sm">
+            {/* Search */}
+            <div className="mb-4 sm:mb-5">
+              <label className="mb-2 block text-sm font-medium text-slate-800">
+                Search places to eat &amp; drink
+              </label>
               <div className="relative">
-                <div className="flex w-full overflow-hidden rounded-full border border-gray-300 bg-white shadow-sm transition hover:shadow-md focus-within:ring-2 focus-within:ring-amber-500/50">
-                  <input
-                    type="text"
-                    placeholder="Search restaurants, cafés and bars..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="flex-1 px-5 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 outline-none"
-                    aria-label="Search restaurants, cafés and bars"
+                <div className="pointer-events-none absolute inset-y-0 left-3 flex items-center">
+                  <SearchX className="h-4 w-4 text-slate-400" />
+                </div>
+                <input
+                  type="text"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  placeholder="Search by name or area (Becky Kay, beachfront, café)..."
+                  className="w-full rounded-xl border border-slate-300 bg-white pl-10 pr-4 py-2.5 text-sm text-slate-800 outline-none transition focus:border-amber-500 focus:ring-1 focus:ring-amber-300 placeholder:text-slate-400"
+                />
+              </div>
+            </div>
+
+            {/* Filter Bar */}
+            <FilterBar
+              selected={selectedFilter}
+              onSelect={setSelectedFilter}
+            />
+          </div>
+        </section>
+
+        {/* Layout: experiences + trip plan */}
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,1.8fr)_minmax(0,0.9fr)] lg:items-start">
+          {/* Experiences grid */}
+          <section>
+            {filteredExperiences.length > 0 ? (
+              <div className="grid grid-cols-1 gap-6 sm:gap-8 sm:grid-cols-2 xl:grid-cols-3">
+                {filteredExperiences.map((exp) => (
+                  <ExperienceCard
+                    key={exp.id}
+                    experience={exp}
+                    inTripPlan={tripPlanIds.includes(exp.id)}
+                    onToggleTrip={() => toggleTripPlan(exp.id)}
                   />
-                  <button
-                    type="button"
-                    className="mr-1 my-1 flex items-center justify-center rounded-full bg-amber-600 px-4 text-white transition hover:bg-amber-700"
-                    aria-label="Search"
-                  >
-                    <Search className="h-4 w-4" aria-hidden="true" />
-                  </button>
-                </div>
-
-                {/* Autocomplete suggestions */}
-                {searchQuery.trim().length > 1 && searchSuggestions.length > 0 && (
-                  <ul
-                    className="absolute z-20 mt-1 w-full overflow-hidden rounded-xl border border-gray-200 bg-white text-sm shadow-lg"
-                    role="listbox"
-                    aria-label="Search suggestions"
-                  >
-                    {searchSuggestions.map((place) => (
-                      <li key={place.id}>
-                        <button
-                          type="button"
-                          className="flex w-full items-start justify-between px-4 py-2 text-left text-gray-800 hover:bg-gray-50"
-                          onMouseDown={() => setSearchQuery(place.name)}
-                        >
-                          <span>{place.name}</span>
-                          <span className="ml-2 text-xs text-gray-500">
-                            {place.locationLabel}
-                          </span>
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                )}
+                ))}
               </div>
+            ) : (
+              <NoResults />
+            )}
+          </section>
 
-              {/* Dropdown filters */}
-              <div className="space-y-3 md:flex md:flex-wrap md:gap-3 md:space-y-0">
-                {/* Months */}
-                <div className="relative w-full md:w-auto md:min-w-[200px]">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setIsMonthOpen((prev) => !prev);
-                      setIsLocationOpen(false);
-                    }}
-                    className="flex w-full items-center justify-between rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-700 shadow-sm transition hover:bg-gray-50"
-                    aria-haspopup="listbox"
-                    aria-expanded={isMonthOpen}
-                  >
-                    <span className="flex items-center gap-2">
-                      <Calendar className="h-4 w-4 text-amber-600" aria-hidden="true" />
-                      <span>
-                        {monthFilter === "any" ? "Months" : selectedMonthLabel}
-                      </span>
-                    </span>
-                    <ChevronDown
-                      className={`h-4 w-4 text-gray-500 transition-transform ${
-                        isMonthOpen ? "rotate-180" : ""
-                      }`}
-                      aria-hidden="true"
-                    />
-                  </button>
-                  {isMonthOpen && (
-                    <div className="absolute z-10 mt-1 w-full rounded-xl border border-gray-200 bg-white py-1 text-sm shadow-lg">
-                      {MONTH_OPTIONS.map((m) => (
-                        <button
-                          key={m.id}
-                          type="button"
-                          onClick={() => {
-                            setMonthFilter(m.id);
-                            setIsMonthOpen(false);
-                          }}
-                          className="flex w-full items-center justify-between px-3 py-2 text-left text-gray-700 transition hover:bg-amber-50"
-                          role="option"
-                          aria-selected={monthFilter === m.id}
-                        >
-                          <span>{m.label}</span>
-                          {monthFilter === m.id && (
-                            <Check
-                              className="h-4 w-4 text-amber-600"
-                              aria-hidden="true"
-                            />
-                          )}
-                        </button>
-                      ))}
+          {/* Trip plan sidebar */}
+          <aside className="space-y-6 lg:sticky lg:top-24">
+            <div className="rounded-2xl border border-slate-200 bg-white/95 p-5 shadow-sm">
+              <p className="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-slate-600">
+                Trip plan
+              </p>
+              {tripPlanExperiences.length === 0 ? (
+                <p className="text-sm text-slate-600 leading-relaxed">
+                  Add restaurants and cafés to your trip plan to remember where you&apos;d like to eat and relax in Cape Coast.
+                </p>
+              ) : (
+                <div className="space-y-3">
+                  {tripPlanExperiences.map((exp) => (
+                    <div
+                      key={exp.id}
+                      className="flex items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 p-3"
+                    >
+                      <div className="h-10 w-10 flex-shrink-0 overflow-hidden rounded-lg bg-slate-100">
+                        <img
+                          src={exp.imageUrl}
+                          alt={exp.name}
+                          className="h-full w-full object-cover"
+                        />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <p className="truncate text-sm font-semibold text-slate-900">
+                          {exp.name}
+                        </p>
+                        <p className="truncate text-xs text-slate-500">
+                          {exp.location}
+                        </p>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => toggleTripPlan(exp.id)}
+                        className="text-xs font-medium text-amber-700 hover:text-amber-900"
+                      >
+                        Remove
+                      </button>
                     </div>
-                  )}
-                </div>
-
-                {/* Location */}
-                <div className="relative w-full md:w-auto md:min-w-[200px]">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setIsLocationOpen((prev) => !prev);
-                      setIsMonthOpen(false);
-                    }}
-                    className="flex w-full items-center justify-between rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-700 shadow-sm transition hover:bg-gray-50"
-                    aria-haspopup="listbox"
-                    aria-expanded={isLocationOpen}
-                  >
-                    <span className="flex items-center gap-2">
-                      <MapPin className="h-4 w-4 text-amber-600" aria-hidden="true" />
-                      <span>
-                        {locationFilter === "any"
-                          ? "Location"
-                          : selectedLocationLabel}
-                      </span>
-                    </span>
-                    <ChevronDown
-                      className={`h-4 w-4 text-gray-500 transition-transform ${
-                        isLocationOpen ? "rotate-180" : ""
-                      }`}
-                      aria-hidden="true"
-                    />
-                  </button>
-                  {isLocationOpen && (
-                    <div className="absolute z-10 mt-1 w-full rounded-xl border border-gray-200 bg-white py-1 text-sm shadow-lg">
-                      {LOCATION_OPTIONS.map((loc) => (
-                        <button
-                          key={loc.id}
-                          type="button"
-                          onClick={() => {
-                            setLocationFilter(loc.id);
-                            setIsLocationOpen(false);
-                          }}
-                          className="flex w-full items-center justify-between px-3 py-2 text-left text-gray-700 transition hover:bg-amber-50"
-                          role="option"
-                          aria-selected={locationFilter === loc.id}
-                        >
-                          <span>{loc.label}</span>
-                          {locationFilter === loc.id && (
-                            <Check
-                              className="h-4 w-4 text-amber-600"
-                              aria-hidden="true"
-                            />
-                          )}
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              {/* Selected filter chips */}
-              {hasActiveFilters && (
-                <div className="flex flex-wrap items-center gap-2 pt-1 text-xs sm:text-sm">
-                  <span className="text-gray-500">Filters:</span>
-                  {searchQuery.trim() && (
-                    <button
-                      type="button"
-                      onClick={() => setSearchQuery("")}
-                      className="inline-flex items-center gap-1 rounded-full bg-amber-50 px-3 py-1 text-amber-800 hover:bg-amber-100"
-                    >
-                      <span>Search: {searchQuery}</span>
-                      <span className="text-amber-500" aria-hidden="true">
-                        ×
-                      </span>
-                    </button>
-                  )}
-                  {activeCategory !== "all" && (
-                    <button
-                      type="button"
-                      onClick={() => setActiveCategory("all")}
-                      className="inline-flex items-center gap-1 rounded-full bg-amber-50 px-3 py-1 text-amber-800 hover:bg-amber-100"
-                    >
-                      <span>
-                        Category:{" "}
-                        {
-                          CATEGORY_CONFIG.find((c) => c.id === activeCategory)
-                            ?.label
-                        }
-                      </span>
-                      <span className="text-amber-500" aria-hidden="true">
-                        ×
-                      </span>
-                    </button>
-                  )}
-                  {monthFilter !== "any" && (
-                    <button
-                      type="button"
-                      onClick={() => setMonthFilter("any")}
-                      className="inline-flex items-center gap-1 rounded-full bg-amber-50 px-3 py-1 text-amber-800 hover:bg-amber-100"
-                    >
-                      <span>Month: {selectedMonthLabel}</span>
-                      <span className="text-amber-500" aria-hidden="true">
-                        ×
-                      </span>
-                    </button>
-                  )}
-                  {locationFilter !== "any" && (
-                    <button
-                      type="button"
-                      onClick={() => setLocationFilter("any")}
-                      className="inline-flex items-center gap-1 rounded-full bg-amber-50 px-3 py-1 text-amber-800 hover:bg-amber-100"
-                    >
-                      <span>Location: {selectedLocationLabel}</span>
-                      <span className="text-amber-500" aria-hidden="true">
-                        ×
-                      </span>
-                    </button>
-                  )}
-                  <button
-                    type="button"
-                    onClick={handleClearAll}
-                    className="ml-auto text-xs font-medium text-gray-500 underline-offset-2 hover:text-gray-700 hover:underline"
-                  >
-                    Clear all
-                  </button>
+                  ))}
                 </div>
               )}
             </div>
-
-            {/* View mode toggle */}
-            <div
-              className="flex items-center justify-start gap-6 text-sm text-gray-600 md:justify-end"
-              aria-label="Change view mode"
-            >
-              <button
-                type="button"
-                onClick={() => setActiveView("map")}
-                className={`inline-flex items-center gap-2 rounded-full px-3 py-1.5 transition-colors hover:bg-amber-50 hover:text-gray-900 ${
-                  activeView === "map"
-                    ? "bg-amber-100 text-gray-900"
-                    : "text-gray-700"
-                }`}
-              >
-                <MapIcon className="h-4 w-4" aria-hidden="true" />
-                <span>Map</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => setActiveView("list")}
-                className={`inline-flex items-center gap-2 rounded-full px-3 py-1.5 transition-colors hover:bg-amber-50 hover:text-gray-900 ${
-                  activeView === "list"
-                    ? "bg-amber-600 text-white"
-                    : "text-gray-700"
-                }`}
-              >
-                <ListIcon className="h-4 w-4" aria-hidden="true" />
-                <span>List</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => setActiveView("split")}
-                className={`inline-flex items-center gap-2 rounded-full px-3 py-1.5 transition-colors hover:bg-amber-50 hover:text-gray-900 ${
-                  activeView === "split"
-                    ? "bg-amber-100 text-gray-900"
-                    : "text-gray-700"
-                }`}
-              >
-                <LayoutGrid className="h-4 w-4" aria-hidden="true" />
-                <span>Split</span>
-              </button>
-            </div>
-          </div>
-
-          {/* Results section */}
-          <div className="mt-8 space-y-4">
-            <div className="flex items-center justify-between text-sm text-gray-600">
-              <p>
-                {isLoading
-                  ? "Loading places…"
-                  : filteredPlaces.length === 0
-                  ? "No places found"
-                  : `${filteredPlaces.length} place${
-                      filteredPlaces.length === 1 ? "" : "s"
-                    } found`}
-              </p>
-            </div>
-
-            {isLoading ? (
-              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {Array.from({ length: 6 }).map((_, index) => (
-                  <div
-                    key={index}
-                    className="flex h-full flex-col overflow-hidden rounded-xl border border-gray-200 bg-gray-50 animate-pulse"
-                  >
-                    <div className="h-40 w-full bg-gray-200" />
-                    <div className="p-4 space-y-3">
-                      <div className="h-3 w-3/4 rounded bg-gray-200" />
-                      <div className="h-3 w-1/2 rounded bg-gray-200" />
-                      <div className="h-3 w-full rounded bg-gray-200" />
-                      <div className="h-3 w-5/6 rounded bg-gray-200" />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ) : filteredPlaces.length === 0 ? (
-              <div className="rounded-xl border border-dashed border-amber-200 bg-amber-50 px-6 py-10 text-center">
-                <p className="text-sm font-medium text-gray-800">
-                  No places match your search.
-                </p>
-                <p className="mt-2 text-sm text-gray-600">
-                  Try removing a filter or searching for something different.
-                </p>
-                {hasActiveFilters && (
-                  <button
-                    type="button"
-                    onClick={handleClearAll}
-                    className="mt-4 inline-flex items-center rounded-full bg-amber-600 px-4 py-2 text-sm font-medium text-white hover:bg-amber-700"
-                  >
-                    Clear all filters
-                  </button>
-                )}
-              </div>
-            ) : (
-              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {filteredPlaces.map((place) => {
-                  const typeLabel =
-                    place.type === "bar"
-                      ? "Bar & pub"
-                      : place.type === "cafe"
-                      ? "Café"
-                      : "Restaurant";
-
-                  return (
-                    <article
-                      key={place.id}
-                      className="flex h-full flex-col overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg"
-                    >
-                      {/* Image holder */}
-                      <div className="relative h-40 w-full overflow-hidden">
-                        <img
-                          src={place.imageUrl}
-                          alt={place.name}
-                          className="h-full w-full object-cover"
-                        />
-                        <div className="absolute left-3 top-3 rounded-full bg-gray-900/80 px-3 py-1 text-xs text-white shadow-sm">
-                          {typeLabel} • {place.locationLabel}
-                        </div>
-                      </div>
-
-                      {/* Text content */}
-                      <div className="flex flex-1 flex-col p-4">
-                        <h2 className="text-sm font-semibold text-gray-900">
-                          {place.name}
-                        </h2>
-                        <p className="mt-2 line-clamp-3 text-sm text-gray-600">
-                          {place.description}
-                        </p>
-
-                        <div className="mt-4 flex items-center justify-between text-xs text-gray-500">
-                          <span>
-                            {place.monthTags.includes("any")
-                              ? "Open all year"
-                              : "Seasonal availability"}
-                          </span>
-                          <button
-                            type="button"
-                            className="rounded-full px-3 py-1 text-xs font-medium text-amber-700 ring-1 ring-amber-200 hover:bg-amber-50"
-                          >
-                            View details
-                          </button>
-                        </div>
-                      </div>
-                    </article>
-                  );
-                })}
-              </div>
-            )}
-          </div>
+          </aside>
         </div>
-      </section>
+      </div>
     </div>
   );
 }
