@@ -27,6 +27,8 @@ const PLACES = [
     locationId: "cape-coast" as const,
     locationLabel: "Cape Coast",
     monthTags: ["any"],
+    imageUrl:
+      "https://images.unsplash.com/photo-1529042410759-befb1204b468?q=80&w=1200",
     description: "Seafood and local dishes with views towards Cape Coast Castle.",
   },
   {
@@ -36,6 +38,8 @@ const PLACES = [
     locationId: "cape-coast" as const,
     locationLabel: "Cape Coast",
     monthTags: ["any", "jul-sep"],
+    imageUrl:
+      "https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1200",
     description: "Beachfront bar with live music, cocktails and a relaxed vibe.",
   },
   {
@@ -45,6 +49,8 @@ const PLACES = [
     locationId: "elmina" as const,
     locationLabel: "Elmina",
     monthTags: ["any", "jan-mar"],
+    imageUrl:
+      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=1200",
     description: "Casual café near the harbour, perfect for coffee and light bites.",
   },
   {
@@ -54,6 +60,8 @@ const PLACES = [
     locationId: "abura" as const,
     locationLabel: "Abura",
     monthTags: ["any", "apr-jun"],
+    imageUrl:
+      "https://images.unsplash.com/photo-1553621042-f6e147245754?q=80&w=1200",
     description: "Garden-style dining with local favourites and grilled options.",
   },
   {
@@ -63,6 +71,8 @@ const PLACES = [
     locationId: "other" as const,
     locationLabel: "Around Cape Coast",
     monthTags: ["any", "oct-dec"],
+    imageUrl:
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200",
     description: "Late-night lounge with DJ sets and small plates.",
   },
 ];
@@ -244,7 +254,7 @@ export default function EatDrinkPage() {
           </p>
         </header>
 
-        {/* Oslo-style highlight cards – now clickable to set categories */}
+        {/* Oslo-style highlight cards – clickable to set categories */}
         <section
           aria-label="Featured food and drink experiences"
           className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-3"
@@ -715,21 +725,15 @@ export default function EatDrinkPage() {
                 {Array.from({ length: 6 }).map((_, index) => (
                   <div
                     key={index}
-                    className="flex h-full flex-col rounded-lg border border-gray-200 bg-gray-50 p-4 animate-pulse"
+                    className="flex h-full flex-col overflow-hidden rounded-lg border border-gray-200 bg-gray-50 animate-pulse"
                   >
-                    <div className="flex items-start gap-3">
-                      <div className="h-9 w-9 rounded-full bg-gray-200" />
-                      <div className="flex-1 space-y-2">
-                        <div className="h-3 w-3/4 rounded bg-gray-200" />
-                        <div className="h-3 w-1/2 rounded bg-gray-200" />
-                      </div>
-                    </div>
-                    <div className="mt-4 space-y-2">
+                    <div className="h-40 w-full bg-gray-200" />
+                    <div className="p-4 space-y-3">
+                      <div className="h-3 w-3/4 rounded bg-gray-200" />
+                      <div className="h-3 w-1/2 rounded bg-gray-200" />
                       <div className="h-3 w-full rounded bg-gray-200" />
                       <div className="h-3 w-5/6 rounded bg-gray-200" />
-                      <div className="h-3 w-4/6 rounded bg-gray-200" />
                     </div>
-                    <div className="mt-4 h-3 w-1/3 rounded bg-gray-200" />
                   </div>
                 ))}
               </div>
@@ -754,56 +758,52 @@ export default function EatDrinkPage() {
             ) : (
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {filteredPlaces.map((place) => {
-                  const CategoryIcon =
-                    CATEGORY_CONFIG.find((c) => c.id === place.type)?.icon ??
-                    Heart;
+                  const typeLabel =
+                    place.type === "bar"
+                      ? "Bar & pub"
+                      : place.type === "cafe"
+                      ? "Café"
+                      : "Restaurant";
+
                   return (
                     <article
                       key={place.id}
-                      className="flex h-full flex-col rounded-lg border border-gray-200 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+                      className="flex h-full flex-col overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
                     >
-                      <div className="flex items-start gap-3">
-                        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gray-100">
-                          <CategoryIcon
-                            className="h-4 w-4 text-gray-700"
-                            aria-hidden="true"
-                          />
-                        </div>
-                        <div className="space-y-1">
-                          <h2 className="text-sm font-semibold text-gray-900">
-                            {place.name}
-                          </h2>
-                          <div className="flex flex-wrap items-center gap-2 text-xs text-gray-500">
-                            <span className="capitalize">
-                              {place.type === "bar"
-                                ? "Bar & pub"
-                                : place.type === "cafe"
-                                ? "Café"
-                                : "Restaurant"}
-                            </span>
-                            <span aria-hidden="true">•</span>
-                            <span className="inline-flex items-center gap-1">
-                              <MapPin className="h-3 w-3" aria-hidden="true" />
-                              {place.locationLabel}
-                            </span>
-                          </div>
+                      {/* Image holder */}
+                      <div className="relative h-40 w-full overflow-hidden">
+                        <img
+                          src={place.imageUrl}
+                          alt={place.name}
+                          className="h-full w-full object-cover"
+                        />
+                        <div className="absolute left-3 top-3 rounded-full bg-white/85 px-3 py-1 text-xs text-gray-800 shadow-sm">
+                          {typeLabel} • {place.locationLabel}
                         </div>
                       </div>
-                      <p className="mt-3 line-clamp-3 text-sm text-gray-600">
-                        {place.description}
-                      </p>
-                      <div className="mt-4 flex items-center justify-between text-xs text-gray-500">
-                        <span>
-                          {place.monthTags.includes("any")
-                            ? "Open all year"
-                            : "Seasonal availability"}
-                        </span>
-                        <button
-                          type="button"
-                          className="text-xs font-medium text-gray-900 underline-offset-2 hover:underline"
-                        >
-                          View details
-                        </button>
+
+                      {/* Text content */}
+                      <div className="flex flex-1 flex-col p-4">
+                        <h2 className="text-sm font-semibold text-gray-900">
+                          {place.name}
+                        </h2>
+                        <p className="mt-2 line-clamp-3 text-sm text-gray-600">
+                          {place.description}
+                        </p>
+
+                        <div className="mt-4 flex items-center justify-between text-xs text-gray-500">
+                          <span>
+                            {place.monthTags.includes("any")
+                              ? "Open all year"
+                              : "Seasonal availability"}
+                          </span>
+                          <button
+                            type="button"
+                            className="text-xs font-medium text-gray-900 underline-offset-2 hover:underline"
+                          >
+                            View details
+                          </button>
+                        </div>
                       </div>
                     </article>
                   );
