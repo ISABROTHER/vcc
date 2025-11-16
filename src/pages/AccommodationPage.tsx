@@ -112,6 +112,22 @@ export default function AccommodationPage() {
     [tripPlanIds],
   );
 
+  const getEmotionalLine = (hotel: Accommodation): string => {
+    if (hotel.category === 'beachfront') {
+      return 'Wake up close to the ocean with easy access to Cape Coast’s beaches.';
+    }
+    if (hotel.category === 'cultural') {
+      return 'Stay close to local history, culture and everyday Cape Coast life.';
+    }
+    if (hotel.category === 'airbnb') {
+      return 'A flexible base for longer stays and independent travellers.';
+    }
+    if (hotel.category === 'hotel_and_guest_house') {
+      return 'Comfortable rooms with easy access to key attractions and services.';
+    }
+    return 'A convenient base for exploring Cape Coast and the surrounding area.';
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-slate-50 font-sans">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
@@ -130,77 +146,91 @@ export default function AccommodationPage() {
           </p>
         </div>
 
-        {/* Search */}
-        <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-          <div className="w-full md:max-w-xl">
-            <div className="relative">
-              <div className="pointer-events-none absolute inset-y-0 left-3 flex items-center">
-                <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-amber-50 text-[11px] font-semibold uppercase tracking-wide text-amber-700">
-                  <Filter className="h-3.5 w-3.5" />
-                </span>
+        {/* Unified filter panel: search + categories + amenities */}
+        <section className="mb-12">
+          <div className="rounded-2xl border border-slate-100 bg-white/95 p-5 sm:p-6 lg:p-7 shadow-sm">
+            {/* Search */}
+            <div className="mb-5 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+              <div className="w-full md:max-w-xl">
+                <div className="relative">
+                  <div className="pointer-events-none absolute inset-y-0 left-3 flex items-center">
+                    <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-amber-50 text-[11px] font-semibold uppercase tracking-wide text-amber-700">
+                      <Filter className="h-3.5 w-3.5" />
+                    </span>
+                  </div>
+                  <input
+                    type="text"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    placeholder="Search by name, area or facilities..."
+                    className="w-full rounded-full border border-slate-200 bg-white/90 pl-12 pr-4 py-2.5 text-sm text-slate-800 shadow-sm outline-none transition-all duration-200 placeholder:text-slate-400 focus:border-amber-500 focus:ring-2 focus:ring-amber-100"
+                  />
+                </div>
               </div>
-              <input
-                type="text"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                placeholder="Search by name, area or facilities..."
-                className="w-full rounded-full border border-slate-200 bg-white/90 pl-12 pr-4 py-2.5 text-sm text-slate-800 shadow-sm outline-none transition-all duration-200 placeholder:text-slate-400 focus:border-amber-500 focus:ring-2 focus:ring-amber-100"
-              />
+              <div className="text-xs text-slate-500 md:text-right">
+                <p className="font-medium">Refine your stay search</p>
+                <p>Use filters to match your interests and comfort level.</p>
+              </div>
+            </div>
+
+            {/* Category filter */}
+            <div className="mb-6">
+              <div className="mb-2">
+                <p className="text-sm font-semibold text-slate-700">
+                  Stay type
+                </p>
+              </div>
+              <div className="flex flex-wrap justify-start gap-2 sm:gap-3">
+                {categories.map((category) => (
+                  <button
+                    key={category.id}
+                    onClick={() => setSelectedCategory(category.id)}
+                    className={`px-4 sm:px-5 py-2 rounded-full text-sm font-semibold transition-all duration-200 ${
+                      selectedCategory === category.id
+                        ? 'bg-slate-900 text-white shadow-md shadow-slate-300/40'
+                        : 'bg-white text-slate-700 border border-slate-200 hover:border-amber-500 hover:text-amber-700 hover:shadow-sm'
+                    }`}
+                  >
+                    {category.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Amenity chips */}
+            <div>
+              <div className="mb-3">
+                <p className="text-sm font-semibold text-slate-700">
+                  Amenities
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-3">
+                {amenityChips.map((amenity) => {
+                  const active = amenityFilters.includes(amenity);
+                  return (
+                    <button
+                      key={amenity}
+                      type="button"
+                      onClick={() => toggleAmenityFilter(amenity)}
+                      className={`inline-flex items-center gap-1 rounded-full border px-4 py-1.5 text-sm font-medium transition-all ${
+                        active
+                          ? 'border-amber-500 bg-amber-50 text-amber-700 shadow-sm'
+                          : 'border-slate-200 bg-white text-slate-700 hover:border-amber-400 hover:bg-amber-50/60 hover:text-amber-700'
+                      }`}
+                    >
+                      <span
+                        className={`h-1.5 w-1.5 rounded-full ${
+                          active ? 'bg-amber-500' : 'bg-slate-300'
+                        }`}
+                      />
+                      {amenity}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           </div>
-        </div>
-
-        {/* Category filter */}
-        <div className="mb-8">
-          <div className="flex flex-wrap justify-center gap-2 sm:gap-3">
-            {categories.map((category) => (
-              <button
-                key={category.id}
-                onClick={() => setSelectedCategory(category.id)}
-                className={`px-4 sm:px-5 py-2 rounded-full text-sm font-semibold transition-all duration-200 ${
-                  selectedCategory === category.id
-                    ? 'bg-slate-900 text-white shadow-md shadow-slate-300/40'
-                    : 'bg-white text-slate-700 border border-slate-200 hover:border-amber-500 hover:text-amber-700 hover:shadow-sm'
-                }`}
-              >
-                {category.label}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Amenity chips */}
-        <div className="mb-10">
-          <div className="flex items-center justify-between mb-3">
-            <p className="text-sm font-semibold text-slate-700">
-              Amenities
-            </p>
-          </div>
-          <div className="flex flex-wrap gap-3">
-            {amenityChips.map((amenity) => {
-              const active = amenityFilters.includes(amenity);
-              return (
-                <button
-                  key={amenity}
-                  type="button"
-                  onClick={() => toggleAmenityFilter(amenity)}
-                  className={`inline-flex items-center gap-1 rounded-full border px-4 py-1.5 text-sm font-medium transition-all ${
-                    active
-                      ? 'border-amber-500 bg-amber-50 text-amber-700 shadow-sm'
-                      : 'border-slate-200 bg-white text-slate-700 hover:border-amber-400 hover:bg-amber-50/60 hover:text-amber-700'
-                  }`}
-                >
-                  <span
-                    className={`h-1.5 w-1.5 rounded-full ${
-                      active ? 'bg-amber-500' : 'bg-slate-300'
-                    }`}
-                  />
-                  {amenity}
-                </button>
-              );
-            })}
-          </div>
-        </div>
+        </section>
 
         {/* Main layout: list + sidebar */}
         <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.7fr)_minmax(0,0.9fr)] gap-10 lg:items-start">
@@ -231,11 +261,11 @@ export default function AccommodationPage() {
                         alt={hotel.name}
                         className="h-full w-full transform object-cover transition duration-500 group-hover:scale-110"
                       />
-                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/45 via-black/10 to-transparent opacity-80 group-hover:opacity-90 transition-opacity" />
+                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/55 via-black/15 to-transparent opacity-90 group-hover:opacity-95 transition-opacity" />
                       <div className="absolute inset-x-5 bottom-5 flex items-center justify-between gap-3">
-                        <div className="max-w-[70%]">
-                          <p className="line-clamp-1 text-[11px] font-medium uppercase tracking-wide text-white/70">
-                            Cape Coast • Curated stay
+                        <div className="max-w-[72%]">
+                          <p className="line-clamp-1 text-[11px] font-medium uppercase tracking-wide text-white/80">
+                            Verified by Visit Cape Coast
                           </p>
                           <p className="mt-0.5 line-clamp-1 text-sm font-semibold text-white">
                             {hotel.name}
@@ -248,7 +278,7 @@ export default function AccommodationPage() {
                             e.stopPropagation();
                             toggleSaved(hotel.id);
                           }}
-                          className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/90 text-amber-500 shadow-sm transition hover:scale-105 hover:bg-white"
+                          className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/95 text-amber-500 shadow-sm transition hover:scale-105 hover:bg-white"
                         >
                           <Heart
                             className={`h-4 w-4 ${
@@ -259,13 +289,22 @@ export default function AccommodationPage() {
                       </div>
                     </div>
 
-                    {/* Card body – ONLY name, description, actions */}
+                    {/* Card body – name, emotional line, description, trust line, actions */}
                     <div className="flex flex-1 flex-col p-6 sm:p-7">
                       <h3 className="text-lg sm:text-xl font-semibold text-slate-900 group-hover:text-amber-700 transition-colors">
                         {hotel.name}
                       </h3>
+
+                      <p className="mt-2 text-xs sm:text-sm font-medium text-slate-700">
+                        {getEmotionalLine(hotel)}
+                      </p>
+
                       <p className="mt-3 text-sm sm:text-[15px] text-slate-600 leading-relaxed line-clamp-4">
                         {hotel.description}
+                      </p>
+
+                      <p className="mt-3 text-xs sm:text-sm font-medium text-emerald-700">
+                        Verified by Visit Cape Coast • Visited by our team in 2025
                       </p>
 
                       {/* Actions: Add to trip plan + View details */}
@@ -442,7 +481,7 @@ export default function AccommodationPage() {
         </div>
       </div>
 
-      {/* Gallery modal */}
+      {/* Gallery modal – still single image because only one image_url exists in data */}
       {galleryHotel && (
         <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/60 backdrop-blur-sm">
           <div className="relative w-full max-w-3xl rounded-2xl bg-slate-950/95 p-3 sm:p-4">
@@ -479,4 +518,3 @@ export default function AccommodationPage() {
     </div>
   );
 }
- 
