@@ -22,58 +22,183 @@ type LocationFilterId = "any" | "cape-coast" | "elmina" | "abura" | "other";
 const PLACES = [
   {
     id: 1,
-    name: "Castle View Restaurant",
+    name: "Becky Kay Restaurant & Bar",
     type: "restaurant" as const,
     locationId: "cape-coast" as const,
     locationLabel: "Cape Coast",
     monthTags: ["any"],
     imageUrl:
-      "https://images.unsplash.com/photo-1529042410759-befb1204b468?q=80&w=1200",
-    description: "Seafood and local dishes with views towards Cape Coast Castle.",
+      "https://images.unsplash.com/photo-1521017432531-fbd92d768814?q=80&w=1200",
+    description:
+      "Modern restaurant and bar in Cape Coast serving local and continental dishes in a cosy setting.",
   },
   {
     id: 2,
-    name: "Oasis Beach Bar",
+    name: "Da Breeze Bar & Restaurant",
     type: "bar" as const,
     locationId: "cape-coast" as const,
     locationLabel: "Cape Coast",
     monthTags: ["any", "jul-sep"],
     imageUrl:
-      "https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1200",
-    description: "Beachfront bar with live music, cocktails and a relaxed vibe.",
+      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=1200",
+    description:
+      "Beachfront bar and restaurant with sea views, chilled music and fresh grilled favourites.",
   },
   {
     id: 3,
-    name: "Elmina Harbour Café",
-    type: "cafe" as const,
-    locationId: "elmina" as const,
-    locationLabel: "Elmina",
-    monthTags: ["any", "jan-mar"],
+    name: "Castle Beach Restaurant",
+    type: "restaurant" as const,
+    locationId: "cape-coast" as const,
+    locationLabel: "Cape Coast",
+    monthTags: ["any"],
     imageUrl:
-      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=1200",
-    description: "Casual café near the harbour, perfect for coffee and light bites.",
+      "https://images.unsplash.com/photo-1514933651103-005eec06c04b?q=80&w=1200",
+    description:
+      "Seafood and Ghanaian meals right by the ocean, a short walk from Cape Coast Castle.",
   },
   {
     id: 4,
-    name: "Abura Garden Spot",
+    name: "Lemon Lounge",
     type: "restaurant" as const,
-    locationId: "abura" as const,
-    locationLabel: "Abura",
-    monthTags: ["any", "apr-jun"],
+    locationId: "cape-coast" as const,
+    locationLabel: "Cape Coast",
+    monthTags: ["any", "oct-dec"],
     imageUrl:
-      "https://images.unsplash.com/photo-1553621042-f6e147245754?q=80&w=1200",
-    description: "Garden-style dining with local favourites and grilled options.",
+      "https://images.unsplash.com/photo-1514933651103-005eec06c04b?q=80&w=1200",
+    description:
+      "Stylish lounge with cocktails, sharing plates and a relaxed evening atmosphere.",
   },
   {
     id: 5,
-    name: "Lagoon Night Lounge",
+    name: "Emperor Ital Joint",
+    type: "restaurant" as const,
+    locationId: "cape-coast" as const,
+    locationLabel: "Cape Coast",
+    monthTags: ["any"],
+    imageUrl:
+      "https://images.unsplash.com/photo-1546793665-c74683f339c1?q=80&w=1200",
+    description:
+      "Plant-based and ital-inspired meals, fresh juices and relaxed vibes in Cape Coast.",
+  },
+  {
+    id: 6,
+    name: "Sasakawa Restaurant",
+    type: "restaurant" as const,
+    locationId: "cape-coast" as const,
+    locationLabel: "Cape Coast",
+    monthTags: ["any", "jan-mar"],
+    imageUrl:
+      "https://images.unsplash.com/photo-1421622548261-c45bfe178854?q=80&w=1200",
+    description:
+      "Classic spot combining local Ghanaian dishes with simple continental favourites.",
+  },
+  {
+    id: 7,
+    name: "Oguaa Basiaba Tasty Cuisine",
+    type: "restaurant" as const,
+    locationId: "cape-coast" as const,
+    locationLabel: "Cape Coast",
+    monthTags: ["any", "apr-jun"],
+    imageUrl:
+      "https://images.unsplash.com/photo-1504753793650-d4a2b783c15e?q=80&w=1200",
+    description:
+      "Budget-friendly local eatery serving Fufu, Banku, Red-Red and other Ghanaian favourites.",
+  },
+  {
+    id: 8,
+    name: "New Life Café",
+    type: "cafe" as const,
+    locationId: "cape-coast" as const,
+    locationLabel: "Cape Coast",
+    monthTags: ["any"],
+    imageUrl:
+      "https://images.unsplash.com/photo-1485808191679-5f86510681a2?q=80&w=1200",
+    description:
+      "Casual café with light meals, snacks and drinks, ideal for small meetups and study sessions.",
+  },
+  {
+    id: 9,
+    name: "Cape Cafe & Restaurant",
+    type: "cafe" as const,
+    locationId: "cape-coast" as const,
+    locationLabel: "Cape Coast",
+    monthTags: ["any", "jul-sep"],
+    imageUrl:
+      "https://images.unsplash.com/photo-1514933651103-005eec06c04b?q=80&w=1200",
+    description:
+      "A mix of café and restaurant, offering breakfast plates, coffees and hearty main dishes.",
+  },
+  {
+    id: 10,
+    name: "Coast to Coast Pub n Grill",
     type: "bar" as const,
-    locationId: "other" as const,
-    locationLabel: "Around Cape Coast",
+    locationId: "cape-coast" as const,
+    locationLabel: "Cape Coast",
     monthTags: ["any", "oct-dec"],
     imageUrl:
       "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200",
-    description: "Late-night lounge with DJ sets and small plates.",
+    description:
+      "Lively pub and grill with cold drinks, grilled meat and football on TV.",
+  },
+  {
+    id: 11,
+    name: "Cape Coast Coffee House",
+    type: "cafe" as const,
+    locationId: "cape-coast" as const,
+    locationLabel: "Cape Coast",
+    monthTags: ["any"],
+    imageUrl:
+      "https://images.unsplash.com/photo-1514933651103-005eec06c04b?q=80&w=1200",
+    description:
+      "Specialty coffee, pastries and light bites in a cosy, modern café interior.",
+  },
+  {
+    id: 12,
+    name: "Community Gardens Bar & Restaurant",
+    type: "bar" as const,
+    locationId: "cape-coast" as const,
+    locationLabel: "Cape Coast",
+    monthTags: ["any", "jan-mar"],
+    imageUrl:
+      "https://images.unsplash.com/photo-1544123944-22f26348c1e5?q=80&w=1200",
+    description:
+      "Garden-style venue with outdoor seating, music and a mix of drinks and grilled food.",
+  },
+  {
+    id: 13,
+    name: "Sahara Pub & Restaurant",
+    type: "bar" as const,
+    locationId: "cape-coast" as const,
+    locationLabel: "Cape Coast",
+    monthTags: ["any"],
+    imageUrl:
+      "https://images.unsplash.com/photo-1551024601-bec78aea704b?q=80&w=1200",
+    description:
+      "Popular pub and restaurant for nightlife, drinks and late-evening meals.",
+  },
+  {
+    id: 14,
+    name: "Shipyard Café & Bar",
+    type: "bar" as const,
+    locationId: "cape-coast" as const,
+    locationLabel: "Cape Coast",
+    monthTags: ["any", "apr-jun"],
+    imageUrl:
+      "https://images.unsplash.com/photo-1521017432531-fbd92d768814?q=80&w=1200",
+    description:
+      "Trendy spot with cocktails, quick bites and a modern indoor–outdoor feel.",
+  },
+  {
+    id: 15,
+    name: "Lush on the Coast Restaurant & Bar",
+    type: "bar" as const,
+    locationId: "cape-coast" as const,
+    locationLabel: "Cape Coast",
+    monthTags: ["any"],
+    imageUrl:
+      "https://images.unsplash.com/photo-1521017432540-1f1a6c5e52a0?q=80&w=1200",
+    description:
+      "Chic restaurant and bar for date nights, celebrations and group hangouts by the coast.",
   },
 ];
 
