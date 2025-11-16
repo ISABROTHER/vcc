@@ -44,33 +44,73 @@ interface IExperience {
   bestFor: string;
 }
 
-// Data for the page – now restaurants / bars
+// Data for the page
 const allCategories: ICategory[] = [
   {
-    title: 'Eat & Drink',
+    title: 'Top Attractions',
+    icon: Star,
+    items: [
+      { name: 'Cape Coast Castle (UNESCO Site)', icon: MapPin },
+      { name: 'Elmina Castle', icon: MapPin },
+      { name: 'Kakum National Park (Canopy Walk)', icon: TreePine },
+      { name: 'Fort William Lighthouse', icon: MapPin },
+      { name: 'Assin Manso Ancestral Slave River', icon: MapPin },
+      { name: 'Beaches & coastlines', icon: Sun },
+    ],
+    tags: ['Castles', 'Adventure'],
+  },
+  {
+    title: 'Tours & Experiences',
+    icon: Users,
+    items: [
+      { name: 'Heritage & History Tours', icon: BookOpen },
+      { name: 'Kakum Forest Hikes', icon: TreePine },
+      { name: 'Coastal Boat Rides', icon: Ship },
+      { name: 'Cultural Experiences (drumming, cooking)', icon: Drum },
+      { name: 'Fishing Village Visits', icon: Users },
+      { name: 'Storytelling & Night Tours', icon: BookOpen },
+      { name: 'Diaspora Return/Naming Ceremonies', icon: Users },
+    ],
+    tags: ['Tours', 'Cultural', 'Adventure'],
+  },
+  {
+    title: 'Outdoor & Nature',
+    icon: Camera,
+    items: [
+      { name: 'Beach activities', icon: Swimmer },
+      { name: 'Nature photography', icon: Camera },
+      { name: 'Bird watching', icon: Bird },
+      { name: 'Eco trails', icon: TreePine },
+      { name: 'Picnics & adventure experiences', icon: Sun },
+    ],
+    tags: ['Adventure'],
+  },
+  {
+    title: 'Arts & Culture',
+    icon: Palette,
+    items: [
+      { name: 'Festivals & events', icon: Ticket },
+      { name: 'Art markets', icon: ShoppingBag },
+      { name: 'Museums', icon: BookOpen },
+      { name: 'Local craft shops', icon: ShoppingBag },
+      { name: 'Live performances', icon: Drum },
+    ],
+    tags: ['Cultural', 'Creative'],
+  },
+  {
+    title: 'Family Activities',
     icon: Smile,
     items: [
-      { name: 'Becky Kay Restaurant & Bar', icon: MapPin },
-      { name: 'Da Breeze Bar & Restaurant', icon: MapPin },
-      { name: 'Castle Beach Restaurant', icon: MapPin },
-      { name: 'Lemon Lounge', icon: MapPin },
-      { name: 'Emperor Ital Joint', icon: MapPin },
-      { name: 'Sasakawa Restaurant', icon: MapPin },
-      { name: 'Oguaa Basiaba Tasty Cuisine', icon: MapPin },
-      { name: 'New Life Café', icon: MapPin },
-      { name: 'Cape Cafe & Restaurant', icon: MapPin },
-      { name: 'Coast to Coast Pub n Grill', icon: MapPin },
-      { name: 'Cape Coast Coffee House', icon: MapPin },
-      { name: 'Community Gardens Bar & Restaurant', icon: MapPin },
-      { name: 'Sahara Pub & Restaurant', icon: MapPin },
-      { name: 'Shipyard Café & Bar', icon: MapPin },
-      { name: 'Lush on the Coast Restaurant & Bar', icon: MapPin },
+      { name: 'Beach picnics', icon: Sun },
+      { name: 'Botel crocodile pond', icon: Swimmer },
+      { name: 'Museums', icon: BookOpen },
+      { name: "Kids’ history tours", icon: BookOpen },
     ],
-    tags: ['Food'],
+    tags: ['Adventure'],
   },
 ];
 
-// Extra meta for nicer cards (images + locations)
+// Extra meta for nicer cards (images + descriptions)
 const experienceMeta: Record<
   string,
   Partial<
@@ -80,80 +120,239 @@ const experienceMeta: Record<
     >
   >
 > = {
-  'Becky Kay Restaurant & Bar': {
+  'Cape Coast Castle (UNESCO Site)': {
     imageUrl:
-      'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2c/50/20/5c/interior.jpg?w=1200&h=-1&s=1',
-    location: 'Cape Coast',
+      'https://images.unsplash.com/photo-1526481280695-3c687fd543c0?auto=format&fit=crop&w=1200&q=80',
+    description:
+      'Walk through centuries of history at one of West Africa’s most important UNESCO World Heritage Sites.',
+    location: 'Cape Coast city centre',
+    duration: '1.5–2 hours',
+    bestFor: 'History lovers · Heritage travellers',
   },
-  'Da Breeze Bar & Restaurant': {
+  'Elmina Castle': {
     imageUrl:
-      'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1b/f6/79/b6/da-breeze-from-above.jpg?w=1200&h=-1&s=1',
-    location: 'Cape Coast – Beachfront',
+      'https://images.unsplash.com/photo-1598961889904-1568a6314054?auto=format&fit=crop&w=1200&q=80',
+    description:
+      'Explore one of the oldest European-built structures in sub-Saharan Africa on the shores of Elmina.',
+    location: 'Elmina, 20–30 mins from Cape Coast',
+    duration: '1.5–2 hours',
+    bestFor: 'Heritage · Culture · Groups',
   },
-  'Castle Beach Restaurant': {
+  'Kakum National Park (Canopy Walk)': {
     imageUrl:
-      'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/03/a5/43/2c/castle-restaurant.jpg?w=1200&h=-1&s=1',
-    location: 'Cape Coast Castle',
+      'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80',
+    description:
+      'Experience the famous canopy walkway suspended above lush rainforest in Kakum.',
+    location: 'Kakum area, 45–60 mins from Cape Coast',
+    duration: 'Half day',
+    bestFor: 'Families · Nature lovers · Adventure seekers',
   },
-  'Lemon Lounge': {
+  'Fort William Lighthouse': {
     imageUrl:
-      'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2c/6c/3a/c5/lemon-lounge.jpg?w=1200&h=-1&s=1',
-    location: 'Commercial Street, Cape Coast',
+      'https://images.unsplash.com/photo-1525939864511-4886a631b4a3?auto=format&fit=crop&w=1200&q=80',
+    description:
+      'Climb towards panoramic views over Cape Coast and its historic shoreline.',
+    location: 'Cape Coast hilltop',
+    duration: '1–1.5 hours',
+    bestFor: 'Photography · Sunset views',
   },
-  'Emperor Ital Joint': {
+  'Assin Manso Ancestral Slave River': {
     imageUrl:
-      'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/27/78/77/89/vegan-platter.jpg?w=1200&h=-1&s=1',
-    location: 'Victoria Road',
+      'https://images.unsplash.com/photo-1544989164-31dc3c645987?auto=format&fit=crop&w=1200&q=80',
+    description:
+      'A deeply moving memorial site linked to the transatlantic slave trade and diaspora history.',
+    location: 'Assin Manso, inland from Cape Coast',
+    duration: 'Half day',
+    bestFor: 'Heritage · Reflection',
   },
-  'Sasakawa Restaurant': {
+  'Beaches & coastlines': {
     imageUrl:
-      'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/03/8b/da/44/sasakawa-seafood.jpg?w=1200&h=-1&s=1',
-    location: 'Cape Coast',
+      'https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=1200&q=80',
+    description:
+      'Relax along golden beaches, fishing villages, and coastal viewpoints near Cape Coast.',
+    location: 'Cape Coast and Elmina coastline',
+    duration: 'Flexible',
+    bestFor: 'Relaxation · Couples · Families',
   },
-  'Oguaa Basiaba Tasty Cuisine': {
+  'Heritage & History Tours': {
     imageUrl:
-      'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/17/35/3c/9d/photo1jpg.jpg?w=1200&h=-1&s=1',
-    location: 'Cape Coast',
+      'https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=1200&q=80',
+    description:
+      'Curated guided tours linking castles, memorial sites, and local stories.',
+    location: 'Cape Coast · Elmina · Assin Manso',
+    duration: 'Half or full day',
+    bestFor: 'Groups · Study tours',
   },
-  'New Life Café': {
+  'Kakum Forest Hikes': {
     imageUrl:
-      'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/18/27/2b/49/outdoor-seating.jpg?w=1200&h=-1&s=1',
-    location: 'Cape Coast',
+      'https://images.unsplash.com/photo-1533636721434-0e2d61030955?auto=format&fit=crop&w=1200&q=80',
+    description:
+      'Forest trails beneath the canopy with birdsong, fresh air and local guides.',
+    location: 'Kakum National Park',
+    duration: 'Half day',
+    bestFor: 'Active travellers · Nature lovers',
   },
-  'Cape Cafe & Restaurant': {
+  'Coastal Boat Rides': {
     imageUrl:
-      'https://seekghana.com/wp-content/uploads/2021/05/cape-cafe-restaurant-ghana.jpg',
-    location: 'Adj. Melcom, Cape Coast',
+      'https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=1200&q=80',
+    description:
+      'Gentle boat rides along the coast or lagoons with views of fishing life.',
+    location: 'Coastal areas near Cape Coast & Elmina',
+    duration: '1–2 hours',
+    bestFor: 'Couples · Small groups',
   },
-  'Coast to Coast Pub n Grill': {
+  'Cultural Experiences (drumming, cooking)': {
     imageUrl:
-      'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/18/4e/fb/93/pub-area.jpg?w=1200&h=-1&s=1',
-    location: 'Cape Coast',
+      'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1200&q=80',
+    description:
+      'Hands-on drumming, dance or cooking sessions with local instructors.',
+    location: 'Cape Coast area',
+    duration: '2–3 hours',
+    bestFor: 'Groups · Culture seekers',
   },
-  'Cape Coast Coffee House': {
+  'Fishing Village Visits': {
     imageUrl:
-      'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/28/0c/7e/a5/interior.jpg?w=1200&h=-1&s=1',
-    location: 'Cape Coast',
+      'https://images.unsplash.com/photo-1509099863731-ef4bff19e808?auto=format&fit=crop&w=1200&q=80',
+    description:
+      'Visit active fishing communities, watch boat landings and learn about coastal life.',
+    location: 'Villages along the Cape Coast–Elmina stretch',
+    duration: '2–3 hours',
+    bestFor: 'Curious travellers · Photographers',
   },
-  'Community Gardens Bar & Restaurant': {
+  'Storytelling & Night Tours': {
     imageUrl:
-      'https://tortoisepath.com/wp-content/uploads/2021/04/community-gardens-bar-restaurant.jpg',
-    location: 'Cape Coast',
+      'https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&w=1200&q=80',
+    description:
+      'Evening stories, legends and guided night walks for a different side of Cape Coast.',
+    location: 'Cape Coast area',
+    duration: 'Evening · 1.5–2 hours',
+    bestFor: 'Adults · Small groups',
   },
-  'Sahara Pub & Restaurant': {
+  'Diaspora Return/Naming Ceremonies': {
     imageUrl:
-      'https://scontent.cdninstagram.com/v/t51.29350-15/434487730_1139791624025233_1962534103158182481_n.jpg?stp=dst-jpg_e35_s1080x1080&_nc_ht=scontent.cdninstagram.com&_nc_cat=109&_nc_ohc=XXXX',
-    location: 'Cape Coast',
+      'https://images.unsplash.com/photo-1519710164239-da123dc03ef4?auto=format&fit=crop&w=1200&q=80',
+    description:
+      'Meaningful, personalised ceremonies connecting diaspora visitors with local traditions.',
+    location: 'Cape Coast & surrounding communities',
+    duration: 'Custom',
+    bestFor: 'Diaspora visitors · Families',
   },
-  'Shipyard Café & Bar': {
+  'Beach activities': {
     imageUrl:
-      'https://scontent.cdninstagram.com/v/t51.2885-15/441340617_1526279964970633_6912111383066022251_n.jpg?stp=dst-jpg_e35_s1080x1080&_nc_ht=scontent.cdninstagram.com&_nc_cat=103',
-    location: 'Cape Coast',
+      'https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=1200&q=80',
+    description:
+      'Play, relax or walk along the sand with easy access to local food and music.',
+    location: 'Cape Coast beaches',
+    duration: 'Flexible',
+    bestFor: 'Families · Friends',
   },
-  'Lush on the Coast Restaurant & Bar': {
+  'Nature photography': {
     imageUrl:
-      'https://scontent.cdninstagram.com/v/t51.2885-15/441324904_398544569611268_9138072545394547879_n.jpg?stp=dst-jpg_e35_s1080x1080&_nc_ht=scontent.cdninstagram.com&_nc_cat=108',
-    location: 'Cape Coast',
+      'https://images.unsplash.com/photo-1496482475496-a91f31e0386a?auto=format&fit=crop&w=1200&q=80',
+    description:
+      'Capture forest, coast and cityscapes with guidance on the best viewpoints.',
+    location: 'Kakum · Coastline · City viewpoints',
+    duration: 'Half day',
+    bestFor: 'Photographers · Creatives',
+  },
+  'Bird watching': {
+    imageUrl:
+      'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1200&q=80',
+    description:
+      'Early morning birding with guides who know the calls and hotspots.',
+    location: 'Kakum and nearby forests',
+    duration: 'Morning · 2–4 hours',
+    bestFor: 'Birders · Nature lovers',
+  },
+  'Eco trails': {
+    imageUrl:
+      'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1200&q=80',
+    description:
+      'Walk eco-conscious trails with opportunities to learn about conservation.',
+    location: 'Forested areas near Kakum & villages',
+    duration: 'Half day',
+    bestFor: 'Eco travellers',
+  },
+  'Picnics & adventure experiences': {
+    imageUrl:
+      'https-://images.unsplash.com/photo-1478146059778-339e08d1844e?auto=format&fit=crop&w=1200&q=80',
+    description:
+      'Combine relaxed picnics with light adventure activities in scenic spots.',
+    location: 'Beaches · Forest edges',
+    duration: 'Half day',
+    bestFor: 'Families · Friends',
+  },
+  'Festivals & events': {
+    imageUrl:
+      'https://images.unsplash.com/photo-1512428559087-560fa5ceab42?auto=format&fit=crop&w=1200&q=80',
+    description:
+      'Join local festivals, durbars and special events when they are in season.',
+    location: 'Cape Coast & Central Region',
+    duration: 'Varies',
+    bestFor: 'Culture lovers',
+  },
+  'Art markets': {
+    imageUrl:
+      'https://images.unsplash.com/photo-1509099863731-ef4bff19e808?auto=format&fit=crop&w=1200&q=80',
+    description:
+      'Browse paintings, crafts and handmade pieces from local artists.',
+    location: 'Cape Coast art centres',
+    duration: '1–2 hours',
+    bestFor: 'Shoppers · Art lovers',
+  },
+  Museums: {
+    imageUrl:
+      'https://images.unsplash.com/photo-1533107862482-0e6974b06ec4?auto=format&fit=crop&w=1200&q=80',
+    description:
+      'Visit local museums that share stories of history, culture and everyday life.',
+    location: 'Cape Coast area',
+    duration: '1–2 hours',
+    bestFor: 'History · Education',
+  },
+  'Local craft shops': {
+    imageUrl:
+      'https://images.unsplash.com/photo-1519710164239-da123dc03ef4?auto=format&fit=crop&w=1200&q=80',
+    description:
+      'Support artisans by purchasing beads, textiles, carvings and souvenirs.',
+    location: 'Cape Coast & nearby towns',
+    duration: 'Flexible',
+    bestFor: 'Shoppers · Visitors',
+  },
+  'Live performances': {
+    imageUrl:
+      'https://images.unsplash.com/photo-1487958449943-2429e8be8625?auto=format&fit=crop&w=1200&q=80',
+    description:
+      'Enjoy music, dance and theatre showcasing local talent and rhythms.',
+    location: 'Venues in Cape Coast',
+    duration: 'Evening',
+    bestFor: 'Nightlife · Culture',
+  },
+  'Beach picnics': {
+    imageUrl:
+      'https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1200&q=80',
+    description:
+      'Simple, relaxed picnics by the sea with family or friends.',
+    location: 'Beaches near Cape Coast',
+    duration: 'Flexible',
+    bestFor: 'Families · Couples',
+  },
+  'Botel crocodile pond': {
+    imageUrl:
+      'https://images.unsplash.com/photo-1504198458649-3128b932f49b?auto=format&fit=crop&w=1200&q=80',
+    description:
+      'Visit the popular crocodile pond experience linked with a lakeside hotel.',
+    location: 'Hans Cottage Botel area',
+    duration: '1–2 hours',
+    bestFor: 'Families · Curious visitors',
+  },
+  "Kids’ history tours": {
+    imageUrl:
+      'https://images.unsplash.com/photo-1519458246479-6acae7536988?auto=format&fit=crop&w=1200&q=80',
+    description:
+      'Child-friendly tours that introduce history through stories and age-appropriate stops.',
+    location: 'Castles & museums',
+    duration: '1.5–2 hours',
+    bestFor: 'Families · Schools',
   },
 };
 
@@ -206,7 +405,7 @@ interface ExperienceCardProps {
   onToggleTrip: () => void;
 }
 
-// Experience Card Component — portrait image, restaurant overlay
+// Experience Card Component — everything on the picture
 const ExperienceCard: React.FC<ExperienceCardProps> = ({
   experience,
   inTripPlan,
@@ -214,7 +413,7 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({
 }) => {
   return (
     <article className="group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:shadow-lg hover:border-amber-200">
-      {/* Portrait: height longer than width */}
+      {/* PORTRAIT: height longer than width */}
       <div className="relative aspect-[2/3] w-full overflow-hidden">
         <img
           src={experience.imageUrl}
@@ -234,6 +433,7 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({
         {/* Bottom overlay: name, description, buttons */}
         <div className="absolute left-4 right-4 bottom-3">
           <div className="rounded-lg bg-black/80 px-3 py-2.5 backdrop-blur-sm">
+            {/* NAME FONT SIZE bumped to be like hotel cards */}
             <h2 className="text-lg sm:text-xl font-bold text-white leading-tight line-clamp-2">
               {experience.name}
             </h2>
@@ -362,7 +562,8 @@ export default function SeeDoPage() {
             See &amp; Do
           </h1>
           <p className="mt-5 text-base sm:text-lg leading-7 sm:leading-8 text-slate-600 max-w-2xl mx-auto">
-            Explore where to eat, drink and unwind in Cape Coast — from beachfront bars to cozy cafés.
+            Explore powerful history, coastal life, rainforest adventures and
+            cultural experiences — all within Cape Coast and the Central Region.
           </p>
         </div>
 
@@ -372,7 +573,7 @@ export default function SeeDoPage() {
             {/* Search */}
             <div className="mb-4 sm:mb-5">
               <label className="mb-2 block text-sm font-medium text-slate-800">
-                Search places to eat &amp; drink
+                Search experiences
               </label>
               <div className="relative">
                 <div className="pointer-events-none absolute inset-y-0 left-3 flex items-center">
@@ -382,7 +583,7 @@ export default function SeeDoPage() {
                   type="text"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  placeholder="Search by name or area (Becky Kay, beachfront, café)..."
+                  placeholder="Search by name, area or keywords (castle, beach, forest, culture)..."
                   className="w-full rounded-xl border border-slate-300 bg-white pl-10 pr-4 py-2.5 text-sm text-slate-800 outline-none transition focus:border-amber-500 focus:ring-1 focus:ring-amber-300 placeholder:text-slate-400"
                 />
               </div>
@@ -424,7 +625,8 @@ export default function SeeDoPage() {
               </p>
               {tripPlanExperiences.length === 0 ? (
                 <p className="text-sm text-slate-600 leading-relaxed">
-                  Add restaurants and cafés to your trip plan to remember where you&apos;d like to eat and relax in Cape Coast.
+                  Add experiences to your trip plan to keep track of what you&apos;d
+                  like to see and do while in Cape Coast.
                 </p>
               ) : (
                 <div className="space-y-3">
@@ -466,4 +668,3 @@ export default function SeeDoPage() {
     </div>
   );
 }
- 
