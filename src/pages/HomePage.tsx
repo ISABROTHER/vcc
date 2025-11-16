@@ -24,86 +24,83 @@ const gridItems = [
     icon: Landmark,
     href: '/see-do',
     color: 'bg-teal-100',
-    iconColor: 'text-teal-800',
   },
   {
     title: 'Restaurants',
     icon: ChefHat,
     href: '/eat-drink',
     color: 'bg-amber-100',
-    iconColor: 'text-amber-800',
   },
   {
     title: 'Transportation',
     icon: Car,
     href: '/tourist-info',
     color: 'bg-sky-100',
-    iconColor: 'text-sky-800',
   },
   {
     title: 'Sightseeing',
     icon: Camera,
     href: '/see-do',
     color: 'bg-indigo-100',
-    iconColor: 'text-indigo-800',
   },
   {
     title: 'Accommodation',
     icon: Bed,
     href: '/accommodation',
     color: 'bg-rose-100',
-    iconColor: 'text-rose-800',
   },
   {
     title: 'Ask the Expert',
     icon: HelpCircle,
     href: '/tourist-info',
     color: 'bg-lime-100',
-    iconColor: 'text-lime-800',
   },
   {
     title: "What's On",
     icon: Calendar,
     href: '/see-do',
     color: 'bg-purple-100',
-    iconColor: 'text-purple-800',
   },
   {
     title: 'Local Pass',
     icon: Ticket,
     href: '/partners',
     color: 'bg-orange-100',
-    iconColor: 'text-orange-800',
   },
 ];
 
 const EssentialExplorerGrid = () => {
   return (
-    <div className="bg-white">
-      <div className="mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:px-8">
-        <div className="grid grid-cols-2 gap-5 sm:grid-cols-4 md:gap-8">
+    <section className="bg-white">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
+        <div className="mb-8 sm:mb-10 text-center">
+          <p className="text-xs font-semibold tracking-[0.22em] text-slate-500 uppercase">
+            Plan your visit
+          </p>
+          <h2 className="mt-2 text-2xl sm:text-3xl font-semibold text-slate-900">
+            Everything you need in one place
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-4 sm:gap-6">
           {gridItems.map((item) => (
             <Link
               key={item.title}
               to={item.href}
-              className={`group flex flex-col items-center justify-center rounded-2xl p-6 shadow-md transition-all duration-300 ease-out hover:shadow-xl hover:-translate-y-1 ${item.color}`}
+              aria-label={item.title}
+              className={`group flex aspect-[4/3] flex-col items-center justify-center ${item.color} transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(15,23,42,0.12)]`}
             >
-              <div
-                className={`flex h-16 w-16 sm:h-20 sm:w-20 items-center justify-center rounded-full bg-white shadow-sm transition-transform duration-300 group-hover:scale-110`}
-              >
-                <item.icon
-                  className={`h-8 w-8 sm:h-10 sm:w-10 ${item.iconColor}`}
-                  strokeWidth={1.5}
-                />
+              <div className="flex h-20 w-20 items-center justify-center rounded-full border-2 border-slate-900 bg-white/70 transition-transform duration-300 group-hover:scale-110">
+                <item.icon className="h-9 w-9 text-slate-900" strokeWidth={1.7} />
               </div>
-              <p className="mt-5 text-center text-sm sm:text-lg font-bold text-slate-900">
+              <p className="mt-5 text-center text-sm sm:text-lg font-semibold tracking-tight text-slate-900">
                 {item.title}
               </p>
             </Link>
           ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
