@@ -269,7 +269,7 @@ export default function AccommodationPage() {
                   >
                     {/* Image + overlay */}
                     <div
-                      className="relative h-72 sm:h-80 cursor-pointer overflow-hidden"
+                      className="relative h-96 sm:h-104 cursor-pointer overflow-hidden"
                       onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
@@ -481,4 +481,4 @@ export default function AccommodationPage() {
       )}
     </div>
   );
-} 
+}
