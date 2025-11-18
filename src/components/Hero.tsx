@@ -60,7 +60,7 @@ export default function Hero() {
       ))}
 
       {/* --- CONTENT CONTAINER --- */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pb-24 md:pb-32 pt-24 pointer-events-none">
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pb-20 md:pb-28 pt-24 pointer-events-none">
         <div 
           className={`max-w-4xl transition-all duration-1000 ease-out ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
@@ -87,45 +87,53 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* --- COMPACT GLASS CAPSULE (Arrows + Dashes) --- */}
-      <div className="absolute bottom-6 md:bottom-10 left-0 right-0 z-30 flex justify-center pointer-events-auto">
-        <div className="flex items-center gap-3 px-4 py-2 bg-black/30 backdrop-blur-md rounded-full border border-white/10 shadow-xl hover:bg-black/40 transition-all">
-          
-          {/* Previous Button */}
-          <button 
-            onClick={prevSlide}
-            className="text-white/70 hover:text-white hover:scale-110 transition-all active:scale-95"
-            aria-label="Previous slide"
-          >
-            <ChevronLeft className="w-5 h-5" />
-          </button>
+      {/* --- NAVIGATION ARROWS (Absolute Edges) --- */}
+      <button 
+        onClick={prevSlide}
+        className="absolute left-2 md:left-6 top-1/2 -translate-y-1/2 z-30 p-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 text-white/70 hover:bg-white/20 hover:text-white hover:scale-110 transition-all active:scale-95 hidden sm:flex pointer-events-auto"
+        aria-label="Previous slide"
+      >
+        <ChevronLeft className="w-6 h-6" />
+      </button>
 
-          {/* Expanding Dashes Indicator */}
-          <div className="flex items-center gap-1.5 h-5">
-            {backgroundImages.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentImageIndex(index)}
-                className={`h-1.5 rounded-full transition-all duration-500 ease-out ${
-                  index === currentImageIndex
-                    ? 'w-6 bg-white shadow-[0_0_8px_rgba(255,255,255,0.5)]' // Active: Wide & Glowing
-                    : 'w-1.5 bg-white/30 hover:bg-white/50' // Inactive: Small Dot
-                }`}
-                aria-label={`Go to slide ${index + 1}`}
-              />
-            ))}
-          </div>
+      <button 
+        onClick={nextSlide}
+        className="absolute right-2 md:right-6 top-1/2 -translate-y-1/2 z-30 p-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 text-white/70 hover:bg-white/20 hover:text-white hover:scale-110 transition-all active:scale-95 hidden sm:flex pointer-events-auto"
+        aria-label="Next slide"
+      >
+        <ChevronRight className="w-6 h-6" />
+      </button>
 
-          {/* Next Button */}
-          <button 
-            onClick={nextSlide}
-            className="text-white/70 hover:text-white hover:scale-110 transition-all active:scale-95"
-            aria-label="Next slide"
+      {/* --- STORY-STYLE LOADING BARS --- */}
+      <div className="absolute bottom-6 left-6 right-6 md:left-12 md:right-12 z-30 flex gap-2 md:gap-4 pointer-events-auto">
+        {backgroundImages.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => setCurrentImageIndex(index)}
+            className="relative h-1 md:h-1.5 flex-1 rounded-full bg-white/20 overflow-hidden transition-all hover:bg-white/30"
+            aria-label={`Go to slide ${index + 1}`}
           >
-            <ChevronRight className="w-5 h-5" />
+            {/* The Loading Fill Animation */}
+            <div 
+              className={`absolute top-0 left-0 h-full bg-amber-400 rounded-full transition-all duration-300 ${
+                index === currentImageIndex 
+                  ? 'animate-[load_6s_linear_forwards] w-full' // Active: Fills up
+                  : index < currentImageIndex 
+                    ? 'w-full opacity-100' // Passed: Full
+                    : 'w-0 opacity-0' // Future: Empty
+              }`}
+            />
           </button>
-        </div>
+        ))}
       </div>
+
+      {/* Animation Keyframes */}
+      <style>{`
+        @keyframes load {
+          0% { width: 0%; }
+          100% { width: 100%; }
+        }
+      `}</style>
     </section>
   );
 }
