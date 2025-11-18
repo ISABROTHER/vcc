@@ -84,7 +84,7 @@ export default function Hero() {
             </span>
           </div>
 
-          {/* Headline – ALWAYS TWO LINES */}
+          {/* Headline */}
           <h1
             className="
               text-3xl 
@@ -98,8 +98,7 @@ export default function Hero() {
               pointer-events-auto
             "
           >
-            Discover
-            <br />
+            Discover <br className="hidden md:block" />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-white/90">
               Cape Coast
             </span>
@@ -145,4 +144,35 @@ export default function Hero() {
       </button>
 
       {/* --- COMPACT STORY-STYLE LOADING BARS --- */}
-      <div clas
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex gap-2 w-32 md:w-48 pointer-events-auto">
+        {backgroundImages.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => setCurrentImageIndex(index)}
+            className="relative h-1 md:h-1.5 flex-1 rounded-full bg-white/20 overflow-hidden transition-all hover:bg-white/30"
+            aria-label={`Go to slide ${index + 1}`}
+          >
+            {/* The Loading Fill Animation */}
+            <div
+              className={`absolute top-0 left-0 h-full bg-amber-400 rounded-full transition-all duration-300 ${
+                index === currentImageIndex
+                  ? 'animate-[load_6s_linear_forwards] w-full' // Active: Fills up
+                  : index < currentImageIndex
+                  ? 'w-full opacity-100' // Passed: Full
+                  : 'w-0 opacity-0' // Future: Empty
+              }`}
+            />
+          </button>
+        ))}
+      </div> 
+
+      {/* Animation Keyframes */}
+      <style>{`
+        @keyframes load {
+          0% { width: 0%; }
+          100% { width: 100%; }
+        }
+      `}</style>
+    </section>
+  );
+}
