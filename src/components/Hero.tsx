@@ -12,7 +12,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="relative w-full h-[85vh] min-h-[600px] flex items-end overflow-hidden font-sans bg-slate-900">
+    <section className="relative w-full h-[350px] md:h-[550px] flex items-end overflow-hidden font-sans bg-slate-900">
       {/* Background Image Layer */}
       <div
         className="absolute inset-0 w-full h-full transform scale-105 transition-transform duration-[20s] ease-out"
