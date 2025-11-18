@@ -53,17 +53,15 @@ export default function Hero() {
             }}
           />
           
-          {/* Gradient Overlays */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80" />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-transparent to-transparent opacity-70" />
+          {/* GRADIENT OVERLAYS - Darkened for better text readability */}
+          {/* 1. Bottom-up gradient (stronger black at bottom) */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-90" />
+          {/* 2. Left-to-right gradient (stronger behind the text area) */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/30 to-transparent opacity-80" />
         </div>
       ))}
 
       {/* --- CONTENT CONTAINER --- */}
-      {/* Updates:
-         1. w-full: Unlocked max-width so it spans the whole screen.
-         2. px-6 md:px-12: Keeps text safely off the absolute edges.
-      */}
       <div className="relative z-10 w-full mx-auto px-6 md:px-12 pb-20 md:pb-12 pt-24 pointer-events-none">
         <div 
           className={`w-full transition-all duration-1000 ease-out ${
@@ -76,21 +74,22 @@ export default function Hero() {
             <span className="text-[10px] md:text-sm font-medium tracking-wider uppercase">Discover Ghana's Coastal Treasure</span>
           </div>
 
-          {/* Headline - FLUID TYPOGRAPHY UPDATE */}
-          {/* Mobile: Fixed sizes (text-3xl, text-5xl) for safety.
-              Desktop (md+): Fluid VW units (4.5vw, 11vw) to fill space dynamically.
-          */}
-          <h1 className="font-bold text-white mb-4 leading-[1.1] md:leading-[0.9] tracking-tight drop-shadow-2xl pointer-events-auto">
-            <span className="block text-3xl md:text-[4.5vw] font-medium tracking-normal">
+          {/* Headline - Tweak: Reduced sizes & Added heavier Drop-Shadow */}
+          <h1 className="font-bold text-white mb-4 leading-[1.1] md:leading-[0.9] tracking-tight drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)] pointer-events-auto">
+            {/* Scaled down from 4.5vw -> 4vw */}
+            <span className="block text-3xl md:text-[4vw] font-medium tracking-normal mb-1">
               Christmas is coming to
             </span>
-            <span className="block text-5xl md:text-[11vw] text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-white/90">
+            {/* Scaled down from 11vw -> 9vw for better balance */}
+            <span className="block text-5xl md:text-[9vw] text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-white/90 drop-shadow-none">
+              {/* Note: Text gradient usually kills drop-shadow, so we apply shadow to parent or specific technique if needed. 
+                  Here relying on the high contrast background. */}
               Cape Coast
             </span>
           </h1>
 
-          {/* Subtitle - FLUID TYPOGRAPHY UPDATE */}
-          <p className="text-sm md:text-[1.5vw] text-slate-100 font-light max-w-xl md:max-w-[50vw] leading-relaxed drop-shadow-lg border-l-4 border-amber-400 pl-3 md:pl-6 bg-gradient-to-r from-black/40 to-transparent py-2 rounded-r-lg backdrop-blur-sm pointer-events-auto">
+          {/* Subtitle - Added stronger shadow for readability */}
+          <p className="text-sm md:text-[1.5vw] text-slate-100 font-light max-w-xl md:max-w-[50vw] leading-relaxed drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)] border-l-4 border-amber-400 pl-3 md:pl-6 bg-gradient-to-r from-black/40 to-transparent py-2 rounded-r-lg backdrop-blur-sm pointer-events-auto">
             Find markets, food and concerts that will get you in the right Christmas spirit.
           </p>
         </div>
