@@ -3,9 +3,9 @@ import { Sparkles } from 'lucide-react';
 
 // Three high-quality images for the slideshow
 const backgroundImages = [
-  'https://v.imgi.no/eplj24ump5', // The cinematic banner you liked
-  'https://images.pexels.com/photos/3155726/pexels-photo-3155726.jpeg?auto=compress&cs=tinysrgb&w=1920', // Coastal/Castle vibe
-  'https://images.pexels.com/photos/3889742/pexels-photo-3889742.jpeg?auto=compress&cs=tinysrgb&w=1920', // Tropical Beach vibe
+  'https://v.imgi.no/eplj24ump5', // The cinematic banner
+  'https://content.r9cdn.net/rimg/dimg/dd/30/25eecbb5-city-5989-174dc0226d1.jpg?crop=true&width=1366&height=768&xhint=1359&yhint=918', // Second image (Coastal/Castle)
+  'https://www.adomonline.com/wp-content/uploads/2024/09/DSCF3019.jpg', // Third image (New Fetu Afahye/Cultural vibe)
 ];
 
 export default function Hero() {
