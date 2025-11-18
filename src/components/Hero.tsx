@@ -59,28 +59,8 @@ export default function Hero() {
         </div>
       ))}
 
-      {/* --- NAVIGATION ARROWS --- */}
-      {/* Left Arrow */}
-      <button 
-        onClick={prevSlide}
-        className="absolute left-1 md:left-4 top-1/2 -translate-y-1/2 z-30 p-1.5 md:p-3 rounded-full bg-white/10 backdrop-blur-md border border-white/10 text-white/90 hover:bg-white/30 hover:scale-110 active:scale-95 transition-all"
-        aria-label="Previous slide"
-      >
-        <ChevronLeft className="w-5 h-5 md:w-8 md:h-8" strokeWidth={1.5} />
-      </button>
-
-      {/* Right Arrow */}
-      <button 
-        onClick={nextSlide}
-        className="absolute right-1 md:right-4 top-1/2 -translate-y-1/2 z-30 p-1.5 md:p-3 rounded-full bg-white/10 backdrop-blur-md border border-white/10 text-white/90 hover:bg-white/30 hover:scale-110 active:scale-95 transition-all"
-        aria-label="Next slide"
-      >
-        <ChevronRight className="w-5 h-5 md:w-8 md:h-8" strokeWidth={1.5} />
-      </button>
-
       {/* --- CONTENT CONTAINER --- */}
-      {/* Added safe-zone padding (px-12 on mobile) so text NEVER goes under the arrows */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-12 md:px-20 pb-12 md:pb-16 lg:pb-20 pt-24 pointer-events-none">
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pb-20 md:pb-24 lg:pb-32 pt-24 pointer-events-none">
         <div 
           className={`max-w-4xl transition-all duration-1000 ease-out ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
@@ -107,21 +87,43 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* --- SLIDER DOTS --- */}
-      <div className="absolute bottom-4 md:bottom-6 left-0 right-0 flex justify-center gap-2 md:gap-3 z-20 pointer-events-auto">
-        {backgroundImages.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => setCurrentImageIndex(index)}
-            className={`h-1 md:h-1.5 rounded-full shadow-sm backdrop-blur-sm transition-all duration-500 ease-out ${
-              index === currentImageIndex
-                ? 'w-8 md:w-12 bg-white' 
-                : 'w-2 bg-white/40 hover:bg-white/60'
-            }`}
-            aria-label={`View slide ${index + 1}`}
-          />
-        ))}
+      {/* --- BOTTOM CONTROLS (Arrows + Dots) --- */}
+      <div className="absolute bottom-6 md:bottom-8 left-0 right-0 z-30 flex items-center justify-center gap-4 md:gap-6 pointer-events-auto">
+        
+        {/* Left Arrow */}
+        <button 
+          onClick={prevSlide}
+          className="p-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/30 transition-all hover:scale-110 active:scale-95"
+          aria-label="Previous slide"
+        >
+          <ChevronLeft className="w-5 h-5 md:w-6 md:h-6" />
+        </button>
+
+        {/* Dots Indicator */}
+        <div className="flex gap-2 md:gap-3">
+          {backgroundImages.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentImageIndex(index)}
+              className={`h-1.5 rounded-full shadow-sm backdrop-blur-sm transition-all duration-500 ease-out ${
+                index === currentImageIndex
+                  ? 'w-8 md:w-12 bg-white' 
+                  : 'w-2 bg-white/40 hover:bg-white/60'
+              }`}
+              aria-label={`View slide ${index + 1}`}
+            />
+          ))}
+        </div>
+
+        {/* Right Arrow */}
+        <button 
+          onClick={nextSlide}
+          className="p-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/30 transition-all hover:scale-110 active:scale-95"
+          aria-label="Next slide"
+        >
+          <ChevronRight className="w-5 h-5 md:w-6 md:h-6" />
+        </button>
       </div>
     </section>
   );
-} 
+}
