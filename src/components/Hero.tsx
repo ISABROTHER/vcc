@@ -104,8 +104,8 @@ export default function Hero() {
         <ChevronRight className="w-6 h-6" />
       </button>
 
-      {/* --- STORY-STYLE LOADING BARS --- */}
-      <div className="absolute bottom-6 left-6 right-6 md:left-12 md:right-12 z-30 flex gap-2 md:gap-4 pointer-events-auto">
+      {/* --- COMPACT STORY-STYLE LOADING BARS --- */}
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex gap-2 w-32 md:w-48 pointer-events-auto">
         {backgroundImages.map((_, index) => (
           <button
             key={index}
