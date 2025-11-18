@@ -34,7 +34,7 @@ export default function Hero() {
   }, [nextSlide]);
 
   return (
-    <section className="relative w-full min-h-[400px] md:h-[550px] flex items-end overflow-hidden font-sans bg-slate-900 group">
+    <section className="relative w-full min-h-[400px] md:h-[600px] flex items-end overflow-hidden font-sans bg-slate-900 group">
       {/* Background Image Carousel */}
       {backgroundImages.map((image, index) => (
         <div
@@ -60,9 +60,13 @@ export default function Hero() {
       ))}
 
       {/* --- CONTENT CONTAINER --- */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pb-20 md:pb-28 pt-24 pointer-events-none">
+      {/* Updates: 
+          1. Changed max-w-4xl to md:max-w-6xl to allow text to spread wide.
+          2. Reduced bottom padding (md:pb-12) so text sits lower, not floating in the middle. 
+      */}
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pb-20 md:pb-12 pt-24 pointer-events-none">
         <div 
-          className={`max-w-4xl transition-all duration-1000 ease-out ${
+          className={`w-full md:max-w-6xl transition-all duration-1000 ease-out ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
           }`}
         >
@@ -73,7 +77,7 @@ export default function Hero() {
           </div>
 
           {/* Headline */}
-          <h1 className="text-3xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white mb-3 md:mb-5 leading-[1.1] md:leading-[0.95] tracking-tight drop-shadow-2xl pointer-events-auto">
+          <h1 className="text-3xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white mb-3 md:mb-5 leading-[1.1] md:leading-none tracking-tight drop-shadow-2xl pointer-events-auto">
             Discover <br className="hidden md:block" />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-white/90">
               Cape Coast
@@ -81,7 +85,7 @@ export default function Hero() {
           </h1>
 
           {/* Subtitle */}
-          <p className="text-sm sm:text-xl md:text-2xl text-slate-100 font-light max-w-xl leading-relaxed drop-shadow-lg border-l-4 border-amber-400 pl-3 md:pl-6 bg-gradient-to-r from-black/40 to-transparent py-2 rounded-r-lg backdrop-blur-sm pointer-events-auto">
+          <p className="text-sm sm:text-xl md:text-2xl text-slate-100 font-light max-w-xl md:max-w-2xl leading-relaxed drop-shadow-lg border-l-4 border-amber-400 pl-3 md:pl-6 bg-gradient-to-r from-black/40 to-transparent py-2 rounded-r-lg backdrop-blur-sm pointer-events-auto">
             Where heritage meets the ocean. Experience Ghana's coastal gem through authentic culture, pristine beaches, and unforgettable adventures.
           </p>
         </div>
@@ -128,7 +132,7 @@ export default function Hero() {
       </div>
 
       {/* Animation Keyframes */}
-      <style>{` 
+      <style>{`
         @keyframes load {
           0% { width: 0%; }
           100% { width: 100%; }
