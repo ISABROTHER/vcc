@@ -1,32 +1,52 @@
 import { useState, useEffect } from 'react';
 import { Sparkles } from 'lucide-react';
 
-// Background image as requested
-const heroImage = 'https://v.imgi.no/eplj24ump5';
+// Three high-quality images for the slideshow
+const backgroundImages = [
+  'https://v.imgi.no/eplj24ump5', // The cinematic banner you liked
+  'https://images.pexels.com/photos/3155726/pexels-photo-3155726.jpeg?auto=compress&cs=tinysrgb&w=1920', // Coastal/Castle vibe
+  'https://images.pexels.com/photos/3889742/pexels-photo-3889742.jpeg?auto=compress&cs=tinysrgb&w=1920', // Tropical Beach vibe
+];
 
 export default function Hero() {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     setIsVisible(true);
+
+    // Auto-advance slides every 6 seconds
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % backgroundImages.length);
+    }, 6000);
+
+    return () => clearInterval(interval);
   }, []);
 
   return (
     <section className="relative w-full min-h-[400px] md:h-[550px] flex items-end overflow-hidden font-sans bg-slate-900">
-      {/* Background Image Layer */}
-      <div
-        className="absolute inset-0 w-full h-full transform scale-105 transition-transform duration-[20s] ease-out"
-        style={{
-          backgroundImage: `url(${heroImage})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-        }}
-      >
-        {/* Premium Dark Overlay for Text Contrast */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/80" />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/20 to-transparent" />
-      </div>
+      {/* Background Image Carousel */}
+      {backgroundImages.map((image, index) => (
+        <div
+          key={image}
+          className={`absolute inset-0 w-full h-full transition-opacity duration-2000 ease-in-out ${
+            index === currentImageIndex ? 'opacity-100' : 'opacity-0'
+          }`}
+        >
+          <div
+            className="absolute inset-0 w-full h-full transform scale-105 transition-transform duration-[20s] ease-out"
+            style={{
+              backgroundImage: `url(${image})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+            }}
+          />
+          {/* Dark Overlay for Text Contrast (applied to each image) */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/80" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/20 to-transparent" />
+        </div>
+      ))}
 
       {/* Content Container */}
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pb-16 md:pb-24 lg:pb-32 pt-24">
@@ -56,16 +76,18 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Slider Dots - Decorative */}
+      {/* Slider Dots - Functional & Interactive */}
       <div className="absolute bottom-6 md:bottom-8 left-0 right-0 flex justify-center gap-3 z-20">
-        {[0, 1, 2].map((index) => (
-          <div
+        {backgroundImages.map((_, index) => (
+          <button
             key={index}
-            className={`h-1.5 rounded-full shadow-sm backdrop-blur-sm transition-all duration-300 ${
-              index === 0 
+            onClick={() => setCurrentImageIndex(index)}
+            className={`h-1.5 rounded-full shadow-sm backdrop-blur-sm transition-all duration-500 ease-out ${
+              index === currentImageIndex
                 ? 'w-12 bg-white' 
-                : 'w-2 bg-white/40'
+                : 'w-2 bg-white/40 hover:bg-white/60'
             }`}
+            aria-label={`View slide ${index + 1}`}
           />
         ))}
       </div>
