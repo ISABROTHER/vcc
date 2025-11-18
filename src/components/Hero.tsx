@@ -60,7 +60,7 @@ export default function Hero() {
       ))}
 
       {/* --- CONTENT CONTAINER --- */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pb-20 md:pb-24 lg:pb-32 pt-24 pointer-events-none">
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pb-24 md:pb-32 pt-24 pointer-events-none">
         <div 
           className={`max-w-4xl transition-all duration-1000 ease-out ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
@@ -87,43 +87,52 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* --- BOTTOM CONTROLS (Arrows + Dots) --- */}
-      <div className="absolute bottom-6 md:bottom-8 left-0 right-0 z-30 flex items-center justify-center gap-4 md:gap-6 pointer-events-auto">
-        
-        {/* Left Arrow */}
-        <button 
-          onClick={prevSlide}
-          className="p-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/30 transition-all hover:scale-110 active:scale-95"
-          aria-label="Previous slide"
-        >
-          <ChevronLeft className="w-5 h-5 md:w-6 md:h-6" />
-        </button>
+      {/* --- MODERN GLASS CONTROL CAPSULE --- */}
+      <div className="absolute bottom-6 md:bottom-10 left-0 right-0 z-30 flex justify-center pointer-events-auto">
+        <div className="flex items-center gap-1 p-1.5 bg-black/20 backdrop-blur-xl rounded-full border border-white/10 shadow-2xl">
+          
+          {/* Previous Button */}
+          <button 
+            onClick={prevSlide}
+            className="p-3 rounded-full text-white/80 hover:text-white hover:bg-white/10 transition-all active:scale-95"
+            aria-label="Previous slide"
+          >
+            <ChevronLeft className="w-5 h-5" />
+          </button>
 
-        {/* Dots Indicator */}
-        <div className="flex gap-2 md:gap-3">
-          {backgroundImages.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentImageIndex(index)}
-              className={`h-1.5 rounded-full shadow-sm backdrop-blur-sm transition-all duration-500 ease-out ${
-                index === currentImageIndex
-                  ? 'w-8 md:w-12 bg-white' 
-                  : 'w-2 bg-white/40 hover:bg-white/60'
-              }`}
-              aria-label={`View slide ${index + 1}`}
-            />
-          ))}
+          {/* Slide Counter / Indicator */}
+          <div className="px-4 flex flex-col items-center min-w-[80px]">
+            <span className="text-sm font-medium text-white tracking-widest font-mono">
+              0{currentImageIndex + 1} <span className="text-white/40">/ 0{backgroundImages.length}</span>
+            </span>
+            {/* Tiny Progress Bar Indicator */}
+            <div className="w-full h-0.5 bg-white/20 mt-1 rounded-full overflow-hidden">
+              <div 
+                key={currentImageIndex} // Re-renders animation on slide change
+                className="h-full bg-amber-400 animate-[grow_6s_linear_forwards]"
+                style={{ width: '100%' }} 
+              />
+            </div>
+          </div>
+
+          {/* Next Button */}
+          <button 
+            onClick={nextSlide}
+            className="p-3 rounded-full text-white/80 hover:text-white hover:bg-white/10 transition-all active:scale-95"
+            aria-label="Next slide"
+          >
+            <ChevronRight className="w-5 h-5" />
+          </button>
         </div>
-
-        {/* Right Arrow */}
-        <button 
-          onClick={nextSlide}
-          className="p-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/30 transition-all hover:scale-110 active:scale-95"
-          aria-label="Next slide"
-        >
-          <ChevronRight className="w-5 h-5 md:w-6 md:h-6" />
-        </button>
       </div>
+
+      {/* Animation Style for the Progress Bar */}
+      <style>{`
+        @keyframes grow {
+          from { transform: translateX(-100%); }
+          to { transform: translateX(0%); }
+        }
+      `}</style>
     </section>
   );
 }
