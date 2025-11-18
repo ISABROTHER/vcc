@@ -60,9 +60,13 @@ export default function Hero() {
       ))}
 
       {/* --- CONTENT CONTAINER --- */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pb-20 md:pb-12 pt-24 pointer-events-none">
+      {/* Updates:
+         1. w-full: Unlocked max-width so it spans the whole screen.
+         2. px-6 md:px-12: Keeps text safely off the absolute edges.
+      */}
+      <div className="relative z-10 w-full mx-auto px-6 md:px-12 pb-20 md:pb-12 pt-24 pointer-events-none">
         <div 
-          className={`w-full md:max-w-6xl transition-all duration-1000 ease-out ${
+          className={`w-full transition-all duration-1000 ease-out ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
           }`}
         >
@@ -72,16 +76,21 @@ export default function Hero() {
             <span className="text-[10px] md:text-sm font-medium tracking-wider uppercase">Discover Ghana's Coastal Treasure</span>
           </div>
 
-          {/* Headline - Updated for Christmas */}
-          <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-3 md:mb-5 leading-[1.1] md:leading-none tracking-tight drop-shadow-2xl pointer-events-auto">
-            Christmas is coming to <br className="hidden md:block" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-white/90">
+          {/* Headline - FLUID TYPOGRAPHY UPDATE */}
+          {/* Mobile: Fixed sizes (text-3xl, text-5xl) for safety.
+              Desktop (md+): Fluid VW units (4.5vw, 11vw) to fill space dynamically.
+          */}
+          <h1 className="font-bold text-white mb-4 leading-[1.1] md:leading-[0.9] tracking-tight drop-shadow-2xl pointer-events-auto">
+            <span className="block text-3xl md:text-[4.5vw] font-medium tracking-normal">
+              Christmas is coming to
+            </span>
+            <span className="block text-5xl md:text-[11vw] text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-white/90">
               Cape Coast
             </span>
           </h1>
 
-          {/* Subtitle - Updated */}
-          <p className="text-sm sm:text-xl md:text-2xl text-slate-100 font-light max-w-xl md:max-w-3xl leading-relaxed drop-shadow-lg border-l-4 border-amber-400 pl-3 md:pl-6 bg-gradient-to-r from-black/40 to-transparent py-2 rounded-r-lg backdrop-blur-sm pointer-events-auto">
+          {/* Subtitle - FLUID TYPOGRAPHY UPDATE */}
+          <p className="text-sm md:text-[1.5vw] text-slate-100 font-light max-w-xl md:max-w-[50vw] leading-relaxed drop-shadow-lg border-l-4 border-amber-400 pl-3 md:pl-6 bg-gradient-to-r from-black/40 to-transparent py-2 rounded-r-lg backdrop-blur-sm pointer-events-auto">
             Find markets, food and concerts that will get you in the right Christmas spirit.
           </p>
         </div>
