@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Sparkles, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 // Three high-quality images for the slideshow
 const backgroundImages = [
@@ -63,16 +63,6 @@ export default function Hero() {
       <div className="relative z-10 w-full mx-auto px-6 md:px-12 pb-20 md:pb-12 pt-24 pointer-events-none">
         <div className="w-full">
           
-          {/* Luxury Tag - Animates In */}
-          <div 
-            className={`inline-flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 bg-white/10 backdrop-blur-md rounded-full border border-white/20 text-white mb-4 shadow-lg transition-all duration-1000 delay-100 cursor-default pointer-events-auto ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-            }`}
-          >
-            <Sparkles className="w-3 h-3 md:w-4 md:h-4 text-amber-400" />
-            <span className="text-[10px] md:text-sm font-medium tracking-wider uppercase">Discover Ghana's Coastal Treasure</span>
-          </div>
-
           {/* Headline - STAGGERED ANIMATION */}
           <h1 className="font-bold text-white mb-4 leading-[1.1] md:leading-[0.9] tracking-tight drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)] pointer-events-auto">
             
