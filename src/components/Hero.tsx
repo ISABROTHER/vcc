@@ -38,7 +38,7 @@ export default function Hero() {
           {/* Luxury Tag */}
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-md rounded-full border border-white/20 text-white mb-8 shadow-lg hover:bg-white/20 transition-colors cursor-default">
             <Sparkles className="w-4 h-4 text-amber-400" />
-            <span className="text-sm font-medium tracking-wider uppercase">Christmas is coming to CAPE COAST</span>
+            <span className="text-sm font-medium tracking-wider uppercase">Discover Ghana's Coastal Treasure</span>
           </div>
 
           {/* Headline */}
