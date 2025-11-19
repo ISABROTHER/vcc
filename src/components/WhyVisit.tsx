@@ -7,49 +7,44 @@ export default function WhyVisit() {
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsInView(true);
-        } else {
-          setIsInView(false);
-        }
-      },
+      ([entry]) => setIsInView(entry.isIntersecting),
       { threshold: 0.5 }
     );
 
-    if (headingRef.current) {
-      observer.observe(headingRef.current);
-    }
-
-    return () => {
-      if (headingRef.current) {
-        observer.unobserve(headingRef.current);
-      }
-    };
+    if (headingRef.current) observer.observe(headingRef.current);
+    return () => headingRef.current && observer.unobserve(headingRef.current);
   }, []);
 
   const reasons = [
     {
       icon: Castle,
       title: 'Rich heritage',
+      image:
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Cape_Coast_Castle_Courtyard.jpg/1280px-Cape_Coast_Castle_Courtyard.jpg',
       description:
         'Walk through Cape Coast and Elmina castles with local guides who share real stories about the transatlantic slave trade and the people who lived through it.',
     },
     {
       icon: Waves,
       title: 'Life on the coastline',
+      image:
+        'https://upload.wikimedia.org/wikipedia/commons/7/79/Cape_Coast_Fishing.jpg',
       description:
         'Watch fishermen launch their boats at sunrise, relax on quiet beaches, and take boat rides along a shoreline that has carried centuries of journeys.',
     },
     {
       icon: Heart,
       title: 'A homecoming for the diaspora',
+      image:
+        'https://upload.wikimedia.org/wikipedia/commons/9/9c/Door_of_No_Return_Cape_Coast.jpg',
       description:
         'Many in the African diaspora come here to stand where their ancestors last stood, walk through the Door of No Return, and quietly say, “I am back.”',
     },
     {
       icon: Users,
       title: 'Living culture and everyday life',
+      image:
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Oguaa_Fetu_Afahye_2014.jpg/1280px-Oguaa_Fetu_Afahye_2014.jpg',
       description:
         'Join festivals, hear drums and hymns in the same streets, taste home-cooked food, and meet the families who keep Cape Coast’s traditions alive.',
     },
@@ -58,7 +53,7 @@ export default function WhyVisit() {
   return (
     <section className="py-20 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* HEADING MATCHING "Your guide to discovering Cape Coast" */}
+        {/* HEADING — MATCHES MAIN HERO HEADING STYLE */}
         <div className="text-center mb-14" ref={headingRef}>
           <div className="group inline-block mb-5">
             <h2 className="text-[28px] sm:text-[34px] font-normal text-slate-900 leading-tight font-playwrite">
@@ -85,29 +80,42 @@ export default function WhyVisit() {
             `}
           </style>
 
-          {/* Smaller, traditional, readable sub font */}
           <p className="mt-1 text-sm sm:text-base text-gray-700 max-w-3xl mx-auto leading-relaxed">
             Because families still live beside the castles, the ocean still carries the stories,
             and visitors come to stand where their ancestors once stood.
           </p>
         </div>
 
-        {/* GRID: 2 cards per row on mobile, then up to 4 on large screens */}
+        {/* GRID: 2 per row on mobile */}
         <div className="grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-4">
           {reasons.map((reason, index) => (
             <div
               key={index}
-              className="bg-white rounded-2xl p-5 sm:p-6 shadow-sm hover:shadow-lg transition-shadow text-center border border-slate-100"
+              className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow border border-slate-100"
             >
-              <div className="inline-flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 bg-blue-50 rounded-full mb-4 sm:mb-5">
-                <reason.icon className="text-blue-900" size={28} />
+              {/* IMAGE */}
+              <div className="h-32 sm:h-40 w-full overflow-hidden">
+                <img
+                  src={reason.image}
+                  alt={reason.title}
+                  className="w-full h-full object-cover"
+                />
               </div>
-              <h3 className="text-sm sm:text-lg font-semibold text-gray-900 mb-2">
-                {reason.title}
-              </h3>
-              <p className="text-[11px] sm:text-sm text-gray-700 leading-snug">
-                {reason.description}
-              </p>
+
+              {/* CONTENT */}
+              <div className="p-4 sm:p-5 text-center">
+                <div className="inline-flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 bg-blue-50 rounded-full mb-3 sm:mb-4 mx-auto">
+                  <reason.icon className="text-blue-900" size={26} />
+                </div>
+
+                <h3 className="text-[13px] sm:text-lg font-semibold text-gray-900 mb-1">
+                  {reason.title}
+                </h3>
+
+                <p className="text-[10px] sm:text-sm text-gray-700 leading-snug">
+                  {reason.description}
+                </p>
+              </div>
             </div>
           ))}
         </div>
