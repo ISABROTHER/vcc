@@ -1,86 +1,113 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-// Three high-quality images for the slideshow
-const backgroundImages = [
-  'https://v.imgi.no/eplj24ump5', // The cinematic banner
-  'https://content.r9cdn.net/rimg/dimg/dd/30/25eecbb5-city-5989-174dc0226d1.jpg?crop=true&width=1366&height=768&xhint=1359&yhint=918', // Castle/Coast
-  'https://www.adomonline.com/wp-content/uploads/2024/09/DSCF3019.jpg', // Festival/Crowd
+// Define the content for each slide
+const slides = [
+  {
+    image: 'https://v.imgi.no/eplj24ump5', // Cinematic Banner
+    line1: 'Christmas is coming to',
+    line2: 'Cape Coast',
+    subtitle: 'Find markets, food and concerts that will get you in the right Christmas spirit.',
+  },
+  {
+    image: 'https://content.r9cdn.net/rimg/dimg/dd/30/25eecbb5-city-5989-174dc0226d1.jpg?crop=true&width=1366&height=768&xhint=1359&yhint=918', // Castle
+    line1: 'Walk through history at',
+    line2: 'Elmina Castle',
+    subtitle: 'Experience the profound legacy and timeless stories of the past.',
+  },
+  {
+    image: 'https://www.adomonline.com/wp-content/uploads/2024/09/DSCF3019.jpg', // Festival
+    line1: 'Feel the rhythm of',
+    line2: 'Fetu Afahye',
+    subtitle: 'Join the vibrant celebration of culture, drumming, and dance.',
+  },
 ];
 
 export default function Hero() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [isVisible, setIsVisible] = useState(false);
   
   // Typewriter State
   const [line1, setLine1] = useState('');
   const [line2, setLine2] = useState('');
   const [typingPhase, setTypingPhase] = useState<'idle' | 'line1' | 'line2' | 'done'>('idle');
 
-  const fullLine1 = "Christmas is coming to";
-  const fullLine2 = "Cape Coast";
+  // Refs to manage timeouts for cleanup
+  const timeoutsRef = useRef<number[]>([]);
+
+  const currentSlide = slides[currentImageIndex];
+
+  // Function to safely add timeouts
+  const addTimeout = (callback: () => void, delay: number) => {
+    const id = setTimeout(callback, delay);
+    timeoutsRef.current.push(id);
+    return id;
+  };
+
+  // Function to clear all running timeouts
+  const clearTimeouts = () => {
+    timeoutsRef.current.forEach((id) => clearTimeout(id));
+    timeoutsRef.current = [];
+  };
 
   // Function to go to the next slide
   const nextSlide = useCallback(() => {
-    setCurrentImageIndex((prev) => (prev + 1) % backgroundImages.length);
+    setCurrentImageIndex((prev) => (prev + 1) % slides.length);
   }, []);
 
   // Function to go to the previous slide
   const prevSlide = () => {
-    setCurrentImageIndex((prev) => (prev - 1 + backgroundImages.length) % backgroundImages.length);
+    setCurrentImageIndex((prev) => (prev - 1 + slides.length) % slides.length);
   };
 
-  // Initialize animation on mount
+  // Handle Slide Changes & Reset Animations
   useEffect(() => {
-    setIsVisible(true);
+    // 1. Cleanup previous typing
+    clearTimeouts();
     
-    // Start Typewriter Sequence
-    const startTyping = setTimeout(() => {
-      setTypingPhase('line1');
-    }, 500); // Short delay before typing starts
+    // 2. Reset State
+    setLine1('');
+    setLine2('');
+    setTypingPhase('idle');
 
-    return () => clearTimeout(startTyping);
-  }, []);
+    // 3. Start New Sequence
+    addTimeout(() => setTypingPhase('line1'), 300); // Slight delay after slide change
+
+    return () => clearTimeouts();
+  }, [currentImageIndex]);
 
   // Handle Typing Logic
   useEffect(() => {
     if (typingPhase === 'line1') {
-      if (line1.length < fullLine1.length) {
-        const timeout = setTimeout(() => {
-          setLine1(fullLine1.slice(0, line1.length + 1));
-        }, 50); // Speed for Line 1
-        return () => clearTimeout(timeout);
+      if (line1.length < currentSlide.line1.length) {
+        addTimeout(() => {
+          setLine1(currentSlide.line1.slice(0, line1.length + 1));
+        }, 40); // Faster speed for smoother slide transitions
       } else {
-        // Line 1 finished, move to Line 2
-        const timeout = setTimeout(() => {
-          setTypingPhase('line2');
-        }, 300); // Pause before starting next line
-        return () => clearTimeout(timeout);
+        addTimeout(() => setTypingPhase('line2'), 200);
       }
     } else if (typingPhase === 'line2') {
-      if (line2.length < fullLine2.length) {
-        const timeout = setTimeout(() => {
-          setLine2(fullLine2.slice(0, line2.length + 1));
-        }, 100); // Speed for Line 2 (Slower for impact)
-        return () => clearTimeout(timeout);
+      if (line2.length < currentSlide.line2.length) {
+        addTimeout(() => {
+          setLine2(currentSlide.line2.slice(0, line2.length + 1));
+        }, 80); // Slower for impact
       } else {
         setTypingPhase('done');
       }
     }
-  }, [typingPhase, line1, line2]);
+  }, [typingPhase, line1, line2, currentSlide]);
 
-  // Auto-advance slides every 6 seconds
+  // Auto-advance slides every 8 seconds (increased time to read text)
   useEffect(() => {
-    const interval = setInterval(nextSlide, 6000);
+    const interval = setInterval(nextSlide, 8000);
     return () => clearInterval(interval);
   }, [nextSlide]);
 
   return (
     <section className="relative w-full min-h-[400px] md:h-[600px] flex items-end overflow-hidden font-sans bg-slate-900 group">
       {/* Background Image Carousel */}
-      {backgroundImages.map((image, index) => (
+      {slides.map((slide, index) => (
         <div
-          key={image}
+          key={slide.image}
           className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out ${
             index === currentImageIndex ? 'opacity-100' : 'opacity-0'
           }`}
@@ -88,7 +115,7 @@ export default function Hero() {
           <div
             className="absolute inset-0 w-full h-full transform scale-105 transition-transform duration-[20s] ease-out"
             style={{
-              backgroundImage: `url(${image})`,
+              backgroundImage: `url(${slide.image})`,
               backgroundSize: 'cover',
               backgroundPosition: 'center center',
               backgroundRepeat: 'no-repeat',
@@ -106,47 +133,41 @@ export default function Hero() {
         <div className="w-full">
           
           {/* Headline - TYPEWRITER EFFECT */}
-          <h1 className="font-bold text-white mb-4 leading-[1.1] md:leading-[0.9] tracking-tight drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)] pointer-events-auto">
+          {/* Using key={currentImageIndex} forces React to treat this as a fresh element on slide change, ensuring animations restart */}
+          <h1 key={currentImageIndex} className="font-bold text-white mb-4 leading-[1.1] md:leading-[0.9] tracking-tight drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)] pointer-events-auto">
             
-            {/* Line 1: "Christmas is coming to" */}
+            {/* Line 1 */}
             <span className="block text-xl sm:text-2xl md:text-[4vw] font-medium tracking-normal mb-1 whitespace-nowrap min-h-[1.5em]">
               {line1}
-              {/* Blinking Cursor for Line 1 */}
+              {/* Cursor Line 1 */}
               {typingPhase === 'line1' && (
                 <span className="inline-block w-[2px] h-[0.8em] bg-white ml-1 animate-pulse align-middle" />
               )}
             </span>
 
-            {/* Line 2: "Cape Coast!" (Top 1% Animation) */}
-            {/* UPDATES:
-                1. animate-blur-in: Text starts blurry and snaps to focus.
-                2. animate-text-shimmer: The gradient continuously shifts like liquid gold.
-                3. bg-gradient-to-r: Enhanced rich gold colors.
-            */}
-            {typingPhase !== 'line1' && (
-               <span className="block font-outfit font-extrabold tracking-tight text-5xl md:text-[9vw] text-transparent bg-clip-text bg-gradient-to-r from-white via-amber-300 to-yellow-500 animate-blur-in animate-text-shimmer drop-shadow-sm min-h-[1.4em]">
-                {line2}
-                {/* Blinking Cursor for Line 2 */}
-                {(typingPhase === 'line2' || typingPhase === 'done') && (
-                  <span className="inline-block w-[3px] md:w-[6px] h-[0.8em] bg-amber-400 ml-1 md:ml-2 animate-pulse align-baseline" />
-                )}
-              </span>
-            )}
-            {/* Placeholder to prevent layout shift before Line 2 starts */}
-            {typingPhase === 'line1' && (
-               <span className="block font-outfit font-extrabold tracking-tight text-5xl md:text-[9vw] opacity-0 min-h-[1.4em]">
-                 &nbsp;
-               </span>
-            )}
+            {/* Line 2 (Golden Gradient + Blur Animation) */}
+            {/* Only show text container when phase moves past line 1 to prevent jumping */}
+            <span className={`block font-outfit font-extrabold tracking-tight text-5xl md:text-[9vw] text-transparent bg-clip-text bg-gradient-to-r from-white via-amber-300 to-yellow-500 drop-shadow-sm min-h-[1.4em] ${
+                typingPhase !== 'line1' ? 'animate-blur-in animate-text-shimmer' : ''
+            }`}>
+              {/* We render line2 directly if typing, or full text if we want the blur effect to apply to the whole word at once. 
+                  To mix Typewriter + Blur, we type it out. */}
+              {line2}
+              
+              {/* Cursor Line 2 */}
+              {(typingPhase === 'line2' || typingPhase === 'done') && (
+                <span className="inline-block w-[3px] md:w-[6px] h-[0.8em] bg-amber-400 ml-1 md:ml-2 animate-pulse align-baseline" />
+              )}
+            </span>
           </h1>
 
-          {/* Subtitle - Fades Up After Typing */}
+          {/* Subtitle - Fades Up */}
           <p 
             className={`text-sm md:text-[1.5vw] text-slate-100 font-light max-w-xl md:max-w-[50vw] leading-relaxed drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)] border-l-4 border-amber-400 pl-3 md:pl-6 bg-gradient-to-r from-black/40 to-transparent py-2 rounded-r-lg backdrop-blur-sm pointer-events-auto transition-all duration-1000 ${
               typingPhase === 'done' ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
             }`}
           >
-            Find markets, food and concerts that will get you in the right Christmas spirit.
+            {currentSlide.subtitle}
           </p>
         </div>
       </div>
@@ -170,7 +191,7 @@ export default function Hero() {
 
       {/* --- COMPACT LOADING BARS --- */}
       <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex gap-2 w-32 md:w-48 pointer-events-auto">
-        {backgroundImages.map((_, index) => (
+        {slides.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrentImageIndex(index)}
@@ -180,7 +201,7 @@ export default function Hero() {
             <div 
               className={`absolute top-0 left-0 h-full bg-amber-400 rounded-full transition-all duration-300 ${
                 index === currentImageIndex 
-                  ? 'animate-[load_6s_linear_forwards] w-full' 
+                  ? 'animate-[load_8s_linear_forwards] w-full' 
                   : index < currentImageIndex 
                     ? 'w-full opacity-100' 
                     : 'w-0 opacity-0'
