@@ -68,14 +68,15 @@ const EssentialExplorerGrid = () => {
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
         <div className="mb-8 sm:mb-10 text-center">
 
-          {/* MAIN HEADING — Updated Styling */}
-          <h2 className="text-[32px] sm:text-[42px] leading-tight font-playwrite font-light text-slate-900 tracking-[-0.01em] mb-4">
+          {/* MAIN HEADING — Apple Style */}
+          <h2 className="text-[40px] sm:text-[54px] font-light text-slate-900 tracking-[-0.03em] leading-[1.05] font-playwrite mb-4">
             Your guide to discovering Cape Coast
           </h2>
 
           <p className="text-xs font-semibold tracking-[0.22em] text-slate-500 uppercase">
             Plan your Cape Coast trip
           </p>
+
           <h3 className="text-xl sm:text-2xl font-medium text-slate-900 mt-2">
             Start with the essentials.
           </h3>
