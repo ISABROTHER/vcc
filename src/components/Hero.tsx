@@ -120,8 +120,8 @@ export default function Hero() {
             </span>
 
             {/* Line 2: "Cape Coast" (Golden Gradient) */}
-            {/* UPDATED: Changed font-normal to font-bold for a thicker look */}
-            <span className="block font-playwrite font-bold text-5xl md:text-[9vw] text-transparent bg-clip-text bg-gradient-to-r from-white via-amber-200 to-amber-500 drop-shadow-sm min-h-[1.4em]">
+            {/* APPLIED FONT: font-outfit with tight tracking for modern look */}
+            <span className="block font-outfit font-extrabold tracking-tight text-5xl md:text-[9vw] text-transparent bg-clip-text bg-gradient-to-r from-white via-amber-200 to-amber-500 drop-shadow-sm min-h-[1.4em]">
               {line2}
               {/* Blinking Cursor for Line 2 (Visible during typing or when done) */}
               {(typingPhase === 'line2' || typingPhase === 'done') && (
