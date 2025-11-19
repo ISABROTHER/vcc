@@ -109,7 +109,8 @@ export default function Hero() {
           <h1 className="font-bold text-white mb-4 leading-[1.1] md:leading-[0.9] tracking-tight drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)] pointer-events-auto min-h-[3em] md:min-h-[2.5em]">
             
             {/* Line 1: "Christmas is coming to" */}
-            <span className="block text-3xl md:text-[4vw] font-medium tracking-normal mb-1">
+            {/* UPDATED: Added whitespace-nowrap and adjusted text size to text-xl/2xl to ensure single line on mobile */}
+            <span className="block text-xl sm:text-2xl md:text-[4vw] font-medium tracking-normal mb-1 whitespace-nowrap">
               {line1}
               {/* Blinking Cursor for Line 1 */}
               {typingPhase === 'line1' && (
