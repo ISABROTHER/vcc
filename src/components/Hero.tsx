@@ -1,165 +1,211 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
-import {
-  Landmark,
-  ChefHat,
-  Car,
-  Bed,
-  HelpCircle,
-  Compass,
-} from 'lucide-react';
+import { useState, useEffect, useCallback, useRef } from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-import Hero from '../components/Hero';
-import WhyVisit from '../components/WhyVisit';
-import Heritage from '../components/Heritage';
-import Experiences from '../components/Experiences';
-import Events from '../components/Events';
-import CallToAction from '../components/CallToAction';
-import BottomNav from '../components/BottomNav';
-
-const gridItems = [
+// Define the content for each slide
+const slides = [
   {
-    title: 'Attractions',
-    description: 'Castles, beaches, museums and other must-see places.',
-    icon: Landmark,
-    href: '/see-do',
-    color: 'bg-amber-100',
+    image: 'https://v.imgi.no/eplj24ump5', // Cinematic Banner
+    line1: 'Christmas is coming to',
+    line2: 'Cape Coast',
+    subtitle: 'Find markets, food and concerts that will get you in the right Christmas spirit.',
   },
   {
-    title: 'Accommodation',
-    description: 'Hotels, guesthouses and unique local stays.',
-    icon: Bed,
-    href: '/accommodation',
-    color: 'bg-teal-100',
+    image: 'https://content.r9cdn.net/rimg/dimg/dd/30/25eecbb5-city-5989-174dc0226d1.jpg?crop=true&width=1366&height=768&xhint=1359&yhint=918', // Castle
+    line1: 'Walk through history at',
+    line2: 'Cape Coast Castle',
+    subtitle: 'Stand at the Door of No Return, where the silence of the walls speaks of a resilience that oceans could never extinguish.',
   },
   {
-    title: 'Food & Drinks',
-    description: 'Local favourites, seafood spots, cafés and bars.',
-    icon: ChefHat,
-    href: '/eat-drink',
-    color: 'bg-sky-100',
-  },
-  {
-    title: 'Tours & Experiences',
-    description: 'Guided tours, day trips and activities you can book.',
-    icon: Compass,
-    href: '/see-do',
-    color: 'bg-amber-100',
-  },
-  {
-    title: 'Transportation',
-    description: 'How to get around Cape Coast with ease.',
-    icon: Car,
-    href: '/tourist-info',
-    color: 'bg-teal-100',
-  },
-  {
-    title: 'Ask the Expert',
-    description: 'Get local help, tips and answers in one place.',
-    icon: HelpCircle,
-    href: '/tourist-info',
-    color: 'bg-sky-100',
+    image: 'https://www.adomonline.com/wp-content/uploads/2024/09/DSCF3019.jpg', // Festival
+    line1: 'Feel the rhythm of',
+    line2: 'Fetu Afahye',
+    subtitle: 'Join the vibrant celebration of culture, drumming, and dance.',
   },
 ];
 
-const EssentialExplorerGrid = () => {
-  // State to track if the element is in the viewport
-  const [isInView, setIsInView] = useState(false);
-  const headingRef = useRef<HTMLDivElement>(null);
+export default function Hero() {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  
+  // Typewriter State
+  const [line1, setLine1] = useState('');
+  const [line2, setLine2] = useState('');
+  const [typingPhase, setTypingPhase] = useState<'idle' | 'line1' | 'line2' | 'done'>('idle');
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsInView(true);
-        } else {
-           // Optional: Set to false if you want it to stop when scrolling away
-           setIsInView(false);
-        }
-      },
-      { threshold: 0.5 } // Trigger when 50% visible
-    );
+  // Refs to manage timeouts for cleanup
+  const timeoutsRef = useRef<number[]>([]);
 
-    if (headingRef.current) {
-      observer.observe(headingRef.current);
-    }
+  const currentSlide = slides[currentImageIndex];
 
-    return () => {
-      if (headingRef.current) {
-        observer.unobserve(headingRef.current);
-      }
-    };
+  // Function to safely add timeouts
+  const addTimeout = (callback: () => void, delay: number) => {
+    const id = setTimeout(callback, delay);
+    timeoutsRef.current.push(id);
+    return id;
+  };
+
+  // Function to clear all running timeouts
+  const clearTimeouts = () => {
+    timeoutsRef.current.forEach((id) => clearTimeout(id));
+    timeoutsRef.current = [];
+  };
+
+  // Function to go to the next slide
+  const nextSlide = useCallback(() => {
+    setCurrentImageIndex((prev) => (prev + 1) % slides.length);
   }, []);
 
+  // Function to go to the previous slide
+  const prevSlide = () => {
+    setCurrentImageIndex((prev) => (prev - 1 + slides.length) % slides.length);
+  };
+
+  // Handle Slide Changes & Reset Animations
+  useEffect(() => {
+    clearTimeouts();
+    setLine1('');
+    setLine2('');
+    setTypingPhase('idle');
+    addTimeout(() => setTypingPhase('line1'), 300);
+    return () => clearTimeouts();
+  }, [currentImageIndex]);
+
+  // Handle Typing Logic
+  useEffect(() => {
+    if (typingPhase === 'line1') {
+      if (line1.length < currentSlide.line1.length) {
+        addTimeout(() => {
+          setLine1(currentSlide.line1.slice(0, line1.length + 1));
+        }, 40);
+      } else {
+        addTimeout(() => setTypingPhase('line2'), 200);
+      }
+    } else if (typingPhase === 'line2') {
+      if (line2.length < currentSlide.line2.length) {
+        addTimeout(() => {
+          setLine2(currentSlide.line2.slice(0, line2.length + 1));
+        }, 80);
+      } else {
+        setTypingPhase('done');
+      }
+    }
+  }, [typingPhase, line1, line2, currentSlide]);
+
+  // Auto-advance slides every 6 seconds (REVERTED TO 6000)
+  useEffect(() => {
+    const interval = setInterval(nextSlide, 6000);
+    return () => clearInterval(interval);
+  }, [nextSlide]);
+
   return (
-    <section className="bg-white">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
-        <div className="mb-8 sm:mb-10 text-center" ref={headingRef}>
-
-          {/* MODERN BOLD HEADING + ANIMATED UNDERLINE */}
-          <div className="group inline-block mb-6">
-            {/* UPDATED: font-playfair (Google Font) + font-bold */}
-            <h2 className="text-[32px] sm:text-[42px] font-bold text-slate-900 leading-tight font-playfair tracking-tight">
-              Your guide to discovering Cape Coast
-            </h2>
-
-            {/* ANIMATED UNDERLINE: Non-stop loop, opens, closes to 30%, stops */}
-            <div
-              className={`
-                mx-auto mt-4 h-[4px] 
-                bg-amber-500 rounded-full
-                ${isInView ? 'animate-reveal-stop' : 'w-0 opacity-0'}
-              `}
-            ></div>
-          </div>
-
-          <p className="text-xs font-semibold tracking-[0.22em] text-slate-500 uppercase mt-2 font-sans">
-            Plan your Cape Coast trip
-          </p>
-          <h3 className="text-xl sm:text-2xl font-medium text-slate-900 mt-2 font-outfit">
-            Start with the essentials.
-          </h3>
+    <section className="relative w-full min-h-[400px] md:h-[600px] flex items-end overflow-hidden font-sans bg-slate-900 group">
+      {/* Background Image Carousel */}
+      {slides.map((slide, index) => (
+        <div
+          key={slide.image}
+          className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out ${
+            index === currentImageIndex ? 'opacity-100' : 'opacity-0'
+          }`}
+        >
+          <div
+            className="absolute inset-0 w-full h-full transform scale-105 transition-transform duration-[20s] ease-out"
+            style={{
+              backgroundImage: `url(${slide.image})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center center',
+              backgroundRepeat: 'no-repeat',
+            }}
+          />
+          
+          {/* GRADIENT OVERLAYS */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-90" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/30 to-transparent opacity-80" />
         </div>
+      ))}
 
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-3 sm:gap-6">
-          {gridItems.map((item) => (
-            <Link
-              key={item.title}
-              to={item.href}
-              aria-label={item.title}
-              className={`group relative flex flex-col items-center justify-center rounded-2xl px-4 py-6 sm:px-6 sm:py-8 ${item.color} transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-[1.02] hover:shadow-[0_18px_40px_rgba(15,23,42,0.12)]`}
-            >
-              <div className="flex h-16 w-16 sm:h-20 sm:w-20 items-center justify-center rounded-full border-2 border-slate-900 bg-white/80 transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-3 animate-pulse sm:animate-none">
-                <item.icon
-                  className="h-8 w-8 sm:h-9 sm:w-9 text-slate-900"
-                  strokeWidth={1.7}
-                />
-              </div>
-              <p className="mt-4 text-center text-sm sm:text-lg font-bold tracking-tight text-slate-900 font-playfair">
-                {item.title}
-              </p>
-              <p className="mt-1.5 text-center text-[11px] sm:text-sm leading-snug text-slate-700/90 max-w-xs font-sans">
-                {item.description}
-              </p>
-            </Link>
-          ))}
+      {/* --- CONTENT CONTAINER --- */}
+      <div className="relative z-10 w-full mx-auto px-6 md:px-12 pb-20 md:pb-12 pt-24 pointer-events-none">
+        <div className="w-full">
+          
+          {/* Headline - TYPEWRITER EFFECT */}
+          <h1 key={currentImageIndex} className="font-bold text-white mb-2 leading-none tracking-tight drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)] pointer-events-auto">
+            
+            {/* Line 1 */}
+            <span className="block text-xl sm:text-2xl md:text-[4vw] font-medium tracking-normal mb-0 whitespace-nowrap min-h-[1.2em]">
+              {line1}
+              {typingPhase === 'line1' && (
+                <span className="inline-block w-[2px] h-[0.8em] bg-white ml-1 animate-pulse align-middle" />
+              )}
+            </span>
+
+            {/* Line 2 (Golden Gradient + Blur Animation) */}
+            <span className={`block font-outfit font-extrabold tracking-tight leading-none text-3xl sm:text-5xl md:text-[9vw] text-transparent bg-clip-text bg-gradient-to-r from-white via-amber-300 to-yellow-500 drop-shadow-sm whitespace-nowrap min-h-[1.2em] ${
+                typingPhase !== 'line1' ? 'animate-blur-in animate-text-shimmer' : ''
+            }`}>
+              {line2}
+              
+              {(typingPhase === 'line2' || typingPhase === 'done') && (
+                <span className="inline-block w-[3px] md:w-[6px] h-[0.8em] bg-amber-400 ml-1 md:ml-2 animate-pulse align-baseline" />
+              )}
+            </span>
+          </h1>
+
+          {/* Subtitle - Fades Up */}
+          <p 
+            className={`text-sm md:text-[1.5vw] text-slate-100 font-light max-w-xl md:max-w-[50vw] leading-relaxed drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)] border-l-4 border-amber-400 pl-3 md:pl-6 bg-gradient-to-r from-black/40 to-transparent py-2 rounded-r-lg backdrop-blur-sm pointer-events-auto transition-all duration-1000 ${
+              typingPhase === 'done' ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+            }`}
+          >
+            {currentSlide.subtitle}
+          </p>
         </div>
       </div>
-    </section>
-  );
-};
 
-export default function HomePage() {
-  return (
-    <div className="bg-white pb-20">
-      <Hero />
-      <EssentialExplorerGrid />
-      <WhyVisit />
-      <Heritage />
-      <Experiences />
-      <Events />
-      <CallToAction />
-      <BottomNav />
-    </div>
+      {/* --- NAVIGATION ARROWS --- */}
+      <button 
+        onClick={prevSlide}
+        className="absolute left-2 md:left-6 top-1/2 -translate-y-1/2 z-30 p-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 text-white/70 hover:bg-white/20 hover:text-white hover:scale-110 transition-all active:scale-95 hidden sm:flex pointer-events-auto"
+        aria-label="Previous slide"
+      >
+        <ChevronLeft className="w-6 h-6" />
+      </button>
+
+      <button 
+        onClick={nextSlide}
+        className="absolute right-2 md:right-6 top-1/2 -translate-y-1/2 z-30 p-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 text-white/70 hover:bg-white/20 hover:text-white hover:scale-110 transition-all active:scale-95 hidden sm:flex pointer-events-auto"
+        aria-label="Next slide"
+      >
+        <ChevronRight className="w-6 h-6" />
+      </button>
+
+      {/* --- COMPACT LOADING BARS --- */}
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex gap-2 w-32 md:w-48 pointer-events-auto">
+        {slides.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => setCurrentImageIndex(index)}
+            className="relative h-1 md:h-1.5 flex-1 rounded-full bg-white/20 overflow-hidden transition-all hover:bg-white/30"
+            aria-label={`Go to slide ${index + 1}`}
+          >
+            <div 
+              className={`absolute top-0 left-0 h-full bg-amber-400 rounded-full transition-all duration-300 ${
+                index === currentImageIndex 
+                  ? 'animate-[load_6s_linear_forwards] w-full' // UPDATED: load_6s matches the interval
+                  : index < currentImageIndex 
+                    ? 'w-full opacity-100' 
+                    : 'w-0 opacity-0'
+              }`}
+            />
+          </button>
+        ))} 
+      </div>
+
+      {/* Animation Keyframes */}
+      <style>{`
+        @keyframes load {
+          0% { width: 0%; }
+          100% { width: 100%; }
+        }
+      `}</style>
+    </section>
   );
 }
