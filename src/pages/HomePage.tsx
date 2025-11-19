@@ -1,84 +1,20 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
-import {
-  Landmark,
-  ChefHat,
-  Car,
-  Bed,
-  HelpCircle,
-  Compass,
-} from 'lucide-react';
+import { Castle, Waves, Heart, Users } from 'lucide-react';
 
-import Hero from '../components/Hero';
-import WhyVisit from '../components/WhyVisit';
-import Heritage from '../components/Heritage';
-import Experiences from '../components/Experiences';
-import Events from '../components/Events';
-import CallToAction from '../components/CallToAction';
-import BottomNav from '../components/BottomNav';
-
-const gridItems = [
-  {
-    title: 'Attractions',
-    description: 'Castles, beaches, museums and other must-see places.',
-    icon: Landmark,
-    href: '/see-do',
-    color: 'bg-amber-100',
-  },
-  {
-    title: 'Accommodation',
-    description: 'Hotels, guesthouses and unique local stays.',
-    icon: Bed,
-    href: '/accommodation',
-    color: 'bg-teal-100',
-  },
-  {
-    title: 'Food & Drinks',
-    description: 'Local favourites, seafood spots, cafés and bars.',
-    icon: ChefHat,
-    href: '/eat-drink',
-    color: 'bg-sky-100',
-  },
-  {
-    title: 'Tours & Experiences',
-    description: 'Guided tours, day trips and activities you can book.',
-    icon: Compass,
-    href: '/see-do',
-    color: 'bg-amber-100',
-  },
-  {
-    title: 'Transportation',
-    description: 'How to get around Cape Coast with ease.',
-    icon: Car,
-    href: '/tourist-info',
-    color: 'bg-teal-100',
-  },
-  {
-    title: 'Ask the Expert',
-    description: 'Get local help, tips and answers in one place.',
-    icon: HelpCircle,
-    href: '/tourist-info',
-    color: 'bg-sky-100',
-  },
-];
-
-const EssentialExplorerGrid = () => {
-  // State to track if the element is in the viewport
+export default function WhyVisit() {
   const [isInView, setIsInView] = useState(false);
-  const headingRef = useRef<HTMLDivElement>(null);
+  const headingRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        // Only trigger if it hasn't been triggered yet (or toggle this line to replay every time)
         if (entry.isIntersecting) {
           setIsInView(true);
         } else {
-           // Optional: Set to false if you want it to stop when scrolling away
-           setIsInView(false);
+          setIsInView(false);
         }
       },
-      { threshold: 0.5 } // Trigger when 50% visible
+      { threshold: 0.5 }
     );
 
     if (headingRef.current) {
@@ -92,21 +28,46 @@ const EssentialExplorerGrid = () => {
     };
   }, []);
 
-  return (
-    <section className="bg-white">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
-        <div className="mb-8 sm:mb-10 text-center" ref={headingRef}>
+  const reasons = [
+    {
+      icon: Castle,
+      title: 'Rich heritage',
+      description:
+        'Walk through Cape Coast and Elmina castles with local guides who share real stories about the transatlantic slave trade and the people who lived through it.',
+    },
+    {
+      icon: Waves,
+      title: 'Life on the coastline',
+      description:
+        'Watch fishermen launch their boats at sunrise, relax on quiet beaches, and take boat rides along a shoreline that has carried centuries of journeys.',
+    },
+    {
+      icon: Heart,
+      title: 'A homecoming for the diaspora',
+      description:
+        'Many in the African diaspora come here to stand where their ancestors last stood, walk through the Door of No Return, and quietly say, “I am back.”',
+    },
+    {
+      icon: Users,
+      title: 'Living culture and everyday life',
+      description:
+        'Join festivals, hear drums and hymns in the same streets, taste home-cooked food, and meet the families who keep Cape Coast’s traditions alive.',
+    },
+  ];
 
-          {/* MODERN, BOLD HEADING + ANIMATED UNDERLINE */}
+  return (
+    <section className="py-20 bg-gray-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* HEADING MATCHING "Your guide to discovering Cape Coast" */}
+        <div className="text-center mb-16" ref={headingRef}>
           <div className="group inline-block mb-6">
-            <h2 className="text-[28px] sm:text-[38px] font-normal text-slate-900 leading-tight font-playwrite">
-              Your guide to discovering Cape Coast
+            <h2 className="text-[26px] sm:text-[34px] font-extrabold text-slate-900 leading-tight tracking-[-0.02em] font-sans">
+              Why Visit Cape Coast?
             </h2>
 
-            {/* Animated underline - "Opens and Closes" when in view */}
             <div
               className={`
-                mx-auto mt-3 h-[3px] 
+                mx-auto mt-3 h-[3px]
                 bg-amber-500 rounded-full
                 transition-all duration-700 ease-out
                 ${isInView ? 'animate-[breath_4s_ease-in-out_infinite]' : 'w-0 opacity-0'}
@@ -114,7 +75,6 @@ const EssentialExplorerGrid = () => {
             ></div>
           </div>
 
-          {/* Animation Keyframes for "Open and Close" effect */}
           <style>
             {`
               @keyframes breath {
@@ -125,53 +85,31 @@ const EssentialExplorerGrid = () => {
             `}
           </style>
 
-          <p className="text-xs font-semibold tracking-[0.22em] text-slate-500 uppercase mt-2">
-            Plan your Cape Coast trip
+          <p className="text-xl text-gray-700 max-w-3xl mx-auto">
+            Because families still live beside the castles, the ocean still carries the stories,
+            and visitors come to stand where their ancestors once stood.
           </p>
-          <h3 className="text-xl sm:text-2xl font-medium text-slate-900 mt-2">
-            Start with the essentials.
-          </h3>
         </div>
 
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-3 sm:gap-6">
-          {gridItems.map((item) => (
-            <Link
-              key={item.title}
-              to={item.href}
-              aria-label={item.title}
-              className={`group relative flex flex-col items-center justify-center rounded-2xl px-4 py-6 sm:px-6 sm:py-8 ${item.color} transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-[1.02] hover:shadow-[0_18px_40px_rgba(15,23,42,0.12)]`}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {reasons.map((reason, index) => (
+            <div
+              key={index}
+              className="bg-white rounded-xl p-8 shadow-lg hover:shadow-xl transition text-center"
             >
-              <div className="flex h-16 w-16 sm:h-20 sm:w-20 items-center justify-center rounded-full border-2 border-slate-900 bg-white/80 transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-3 animate-pulse sm:animate-none">
-                <item.icon
-                  className="h-8 w-8 sm:h-9 sm:w-9 text-slate-900"
-                  strokeWidth={1.7}
-                />
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-6">
+                <reason.icon className="text-blue-900" size={32} />
               </div>
-              <p className="mt-4 text-center text-sm sm:text-lg font-semibold tracking-tight text-slate-900">
-                {item.title}
+              <h3 className="text-xl font-bold text-gray-900 mb-3">
+                {reason.title}
+              </h3>
+              <p className="text-gray-600">
+                {reason.description}
               </p>
-              <p className="mt-1.5 text-center text-[11px] sm:text-sm leading-snug text-slate-700/90 max-w-xs">
-                {item.description}
-              </p>
-            </Link>
+            </div>
           ))}
         </div>
       </div>
     </section>
-  );
-};
-
-export default function HomePage() {
-  return (
-    <div className="bg-white pb-20">
-      <Hero />
-      <EssentialExplorerGrid />
-      <WhyVisit />
-      <Heritage />
-      <Experiences />
-      <Events />
-      <CallToAction />
-      <BottomNav />
-    </div>
   );
 }
