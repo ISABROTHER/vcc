@@ -12,8 +12,9 @@ const slides = [
   {
     image: 'https://content.r9cdn.net/rimg/dimg/dd/30/25eecbb5-city-5989-174dc0226d1.jpg?crop=true&width=1366&height=768&xhint=1359&yhint=918', // Castle
     line1: 'Walk through history at',
-    line2: 'Elmina Castle',
-    subtitle: 'Experience the profound legacy and timeless stories of the past.',
+    line2: 'Cape Coast Castle', // UPDATED: Changed from Elmina to Cape Coast
+    // UPDATED SUBTITLE: Hyper-emotional, specific ("Door of No Return"), and high-end.
+    subtitle: 'Stand at the Door of No Return, where the silence of the walls speaks of a resilience that oceans could never extinguish.',
   },
   {
     image: 'https://www.adomonline.com/wp-content/uploads/2024/09/DSCF3019.jpg', // Festival
@@ -150,8 +151,6 @@ export default function Hero() {
             <span className={`block font-outfit font-extrabold tracking-tight text-5xl md:text-[9vw] text-transparent bg-clip-text bg-gradient-to-r from-white via-amber-300 to-yellow-500 drop-shadow-sm min-h-[1.4em] ${
                 typingPhase !== 'line1' ? 'animate-blur-in animate-text-shimmer' : ''
             }`}>
-              {/* We render line2 directly if typing, or full text if we want the blur effect to apply to the whole word at once. 
-                  To mix Typewriter + Blur, we type it out. */}
               {line2}
               
               {/* Cursor Line 2 */}
