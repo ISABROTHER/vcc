@@ -85,41 +85,46 @@ export default function WhyVisit() {
           </p>
         </div>
 
-        {/* GRID — 2 CARDS PER ROW ON MOBILE */}
+        {/* GRID — BEST MODERN DESIGN, 2 CARDS PER ROW ON MOBILE, 4 ON LARGE */}
         <div className="grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-4">
           {reasons.map((reason, index) => (
-            <div
+            <article
               key={index}
-              className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow border border-slate-100"
+              className="group relative flex flex-col rounded-3xl overflow-hidden bg-white shadow-sm hover:shadow-xl transition-shadow duration-300 border border-slate-100"
             >
-              {/* IMAGE */}
-              <div className="h-32 sm:h-40 w-full overflow-hidden bg-slate-100">
+              {/* IMAGE WITH OVERLAY + ICON + TITLE */}
+              <div className="relative h-32 sm:h-44 w-full overflow-hidden">
                 <img
                   src={reason.image}
                   alt={reason.title}
-                  className="w-full h-full object-cover"
+                  loading="lazy"
+                  className="h-full w-full object-cover transform transition-transform duration-500 group-hover:scale-105"
                   onError={(e) => {
-                    // fallback if image path is wrong
-                    (e.currentTarget as HTMLImageElement).style.display = 'none';
+                    (e.currentTarget as HTMLImageElement).style.opacity = '0';
                   }}
                 />
+
+                {/* Gradient overlay */}
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-950/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-300" />
+
+                {/* Icon + title over image */}
+                <div className="absolute inset-x-3 bottom-3 flex items-center gap-2">
+                  <div className="flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-white/90 backdrop-blur">
+                    <reason.icon className="h-4 w-4 sm:h-5 sm:w-5 text-slate-900" />
+                  </div>
+                  <h3 className="text-[11px] sm:text-sm font-semibold tracking-tight text-white">
+                    {reason.title}
+                  </h3>
+                </div>
               </div>
 
-              {/* CONTENT */}
-              <div className="p-4 sm:p-5 text-center">
-                <div className="inline-flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 bg-blue-50 rounded-full mb-3 sm:mb-4 mx-auto">
-                  <reason.icon className="text-blue-900" size={26} />
-                </div>
-
-                <h3 className="text-[13px] sm:text-lg font-semibold text-gray-900 mb-1">
-                  {reason.title}
-                </h3>
-
-                <p className="text-[10px] sm:text-sm text-gray-700 leading-snug">
+              {/* DESCRIPTION */}
+              <div className="p-3 sm:p-4">
+                <p className="text-[10px] sm:text-sm text-slate-700 leading-snug">
                   {reason.description}
                 </p>
               </div>
-            </div>
+            </article>
           ))}
         </div>
       </div>
