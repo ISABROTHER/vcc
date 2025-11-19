@@ -5,8 +5,8 @@ export default {
     extend: {
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
-        // REGISTER CUSTOM FONT
-        playwrite: ['"Playwrite CZ"', 'cursive'],
+        // REGISTER MODERN FONT
+        outfit: ['Outfit', 'sans-serif'],
       },
       animation: {
         'fade-in': 'fadeIn 0.5s ease-out',
