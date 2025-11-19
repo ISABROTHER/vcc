@@ -211,6 +211,6 @@ export default function Hero() {
           100% { width: 100%; }
         }
       `}</style>
-    </section>
+    </section> 
   );
 }
