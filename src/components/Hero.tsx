@@ -12,9 +12,7 @@ const slides = [
   {
     image: 'https://content.r9cdn.net/rimg/dimg/dd/30/25eecbb5-city-5989-174dc0226d1.jpg?crop=true&width=1366&height=768&xhint=1359&yhint=918', // Castle
     line1: 'Walk through history at',
-    // UPDATED: Used \u00A0 (non-breaking space) between Cape and Coast. 
-    // This treats "Cape Coast" as one unit, forcing "Castle" to wrap to the next line on mobile.
-    line2: 'Cape\u00A0Coast Castle', 
+    line2: 'Cape Coast Castle',
     subtitle: 'Stand at the Door of No Return, where the silence of the walls speaks of a resilience that oceans could never extinguish.',
   },
   {
@@ -92,9 +90,9 @@ export default function Hero() {
     }
   }, [typingPhase, line1, line2, currentSlide]);
 
-  // Auto-advance slides every 4 seconds (UPDATED)
+  // Auto-advance slides every 6 seconds (REVERTED TO 6000)
   useEffect(() => {
-    const interval = setInterval(nextSlide, 4000);
+    const interval = setInterval(nextSlide, 6000);
     return () => clearInterval(interval);
   }, [nextSlide]);
 
@@ -129,11 +127,10 @@ export default function Hero() {
         <div className="w-full">
           
           {/* Headline - TYPEWRITER EFFECT */}
-          {/* UPDATED: Removed bottom margin (mb-0) to bring lines closer together */}
-          <h1 key={currentImageIndex} className="font-bold text-white mb-0 leading-none tracking-tight drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)] pointer-events-auto">
+          <h1 key={currentImageIndex} className="font-bold text-white mb-2 leading-none tracking-tight drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)] pointer-events-auto">
             
             {/* Line 1 */}
-            <span className="block text-xl sm:text-2xl md:text-[4vw] font-medium tracking-normal mb-0 md:whitespace-nowrap min-h-[1.2em]">
+            <span className="block text-xl sm:text-2xl md:text-[4vw] font-medium tracking-normal mb-0 whitespace-nowrap min-h-[1.2em]">
               {line1}
               {typingPhase === 'line1' && (
                 <span className="inline-block w-[2px] h-[0.8em] bg-white ml-1 animate-pulse align-middle" />
@@ -141,8 +138,7 @@ export default function Hero() {
             </span>
 
             {/* Line 2 (Golden Gradient + Blur Animation) */}
-            {/* md:whitespace-nowrap ensures it stays 1 line on desktop. Normal wrapping on mobile allows "Castle" to drop. */}
-            <span className={`block font-outfit font-extrabold tracking-tight leading-none text-5xl md:text-[9vw] text-transparent bg-clip-text bg-gradient-to-r from-white via-amber-300 to-yellow-500 drop-shadow-sm md:whitespace-nowrap min-h-[1.2em] ${
+            <span className={`block font-outfit font-extrabold tracking-tight leading-none text-3xl sm:text-5xl md:text-[9vw] text-transparent bg-clip-text bg-gradient-to-r from-white via-amber-300 to-yellow-500 drop-shadow-sm whitespace-nowrap min-h-[1.2em] ${
                 typingPhase !== 'line1' ? 'animate-blur-in animate-text-shimmer' : ''
             }`}>
               {line2}
@@ -154,9 +150,8 @@ export default function Hero() {
           </h1>
 
           {/* Subtitle - Fades Up */}
-          {/* Added mt-4 to give some breathing room after the tight headline */}
           <p 
-            className={`mt-4 text-sm md:text-[1.5vw] text-slate-100 font-light max-w-xl md:max-w-[50vw] leading-relaxed drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)] border-l-4 border-amber-400 pl-3 md:pl-6 bg-gradient-to-r from-black/40 to-transparent py-2 rounded-r-lg backdrop-blur-sm pointer-events-auto transition-all duration-1000 ${
+            className={`text-sm md:text-[1.5vw] text-slate-100 font-light max-w-xl md:max-w-[50vw] leading-relaxed drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)] border-l-4 border-amber-400 pl-3 md:pl-6 bg-gradient-to-r from-black/40 to-transparent py-2 rounded-r-lg backdrop-blur-sm pointer-events-auto transition-all duration-1000 ${
               typingPhase === 'done' ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
             }`}
           >
@@ -194,7 +189,7 @@ export default function Hero() {
             <div 
               className={`absolute top-0 left-0 h-full bg-amber-400 rounded-full transition-all duration-300 ${
                 index === currentImageIndex 
-                  ? 'animate-[load_4s_linear_forwards] w-full' // UPDATED to 4s
+                  ? 'animate-[load_6s_linear_forwards] w-full' // UPDATED: load_6s matches the interval
                   : index < currentImageIndex 
                     ? 'w-full opacity-100' 
                     : 'w-0 opacity-0'
@@ -211,6 +206,6 @@ export default function Hero() {
           100% { width: 100%; }
         }
       `}</style>
-    </section> 
+    </section>
   );
 }
