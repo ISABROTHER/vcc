@@ -56,12 +56,12 @@ export default function WhyVisit() {
   ];
 
   return (
-    <section className="py-16 sm:py-20 bg-gray-50">
+    <section className="py-20 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* HEADING MATCHING "Your guide to discovering Cape Coast" */}
-        <div className="text-center mb-12 sm:mb-16" ref={headingRef}>
+        <div className="text-center mb-14" ref={headingRef}>
           <div className="group inline-block mb-5">
-            <h2 className="text-[28px] sm:text-[38px] font-normal text-slate-900 leading-tight font-playwrite">
+            <h2 className="text-[28px] sm:text-[34px] font-normal text-slate-900 leading-tight font-playwrite">
               Why Visit Cape Coast?
             </h2>
 
@@ -85,5 +85,33 @@ export default function WhyVisit() {
             `}
           </style>
 
-          {/* Smaller, traditional, readable sub text */}
-          <p className="mt-2 text-sm sm:text-base text-gray-700 max-w-3xl mx
+          {/* Smaller, traditional, readable sub font */}
+          <p className="mt-1 text-sm sm:text-base text-gray-700 max-w-3xl mx-auto leading-relaxed">
+            Because families still live beside the castles, the ocean still carries the stories,
+            and visitors come to stand where their ancestors once stood.
+          </p>
+        </div>
+
+        {/* GRID: 2 cards per row on mobile, then up to 4 on large screens */}
+        <div className="grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-4">
+          {reasons.map((reason, index) => (
+            <div
+              key={index}
+              className="bg-white rounded-2xl p-5 sm:p-6 shadow-sm hover:shadow-lg transition-shadow text-center border border-slate-100"
+            >
+              <div className="inline-flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 bg-blue-50 rounded-full mb-4 sm:mb-5">
+                <reason.icon className="text-blue-900" size={28} />
+              </div>
+              <h3 className="text-sm sm:text-lg font-semibold text-gray-900 mb-2">
+                {reason.title}
+              </h3>
+              <p className="text-[11px] sm:text-sm text-gray-700 leading-snug">
+                {reason.description}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
