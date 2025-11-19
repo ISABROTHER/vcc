@@ -106,11 +106,9 @@ export default function Hero() {
         <div className="w-full">
           
           {/* Headline - TYPEWRITER EFFECT */}
-          {/* Fixed height and space reservation to prevent jumping */}
           <h1 className="font-bold text-white mb-4 leading-[1.1] md:leading-[0.9] tracking-tight drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)] pointer-events-auto">
             
             {/* Line 1: "Christmas is coming to" */}
-            {/* Added min-h-[1.5em] to reserve space immediately */}
             <span className="block text-xl sm:text-2xl md:text-[4vw] font-medium tracking-normal mb-1 whitespace-nowrap min-h-[1.5em]">
               {line1}
               {/* Blinking Cursor for Line 1 */}
@@ -119,15 +117,27 @@ export default function Hero() {
               )}
             </span>
 
-            {/* Line 2: "Cape Coast" (Golden Gradient) */}
-            {/* APPLIED FONT: font-outfit with tight tracking for modern look */}
-            <span className="block font-outfit font-extrabold tracking-tight text-5xl md:text-[9vw] text-transparent bg-clip-text bg-gradient-to-r from-white via-amber-200 to-amber-500 drop-shadow-sm min-h-[1.4em]">
-              {line2}
-              {/* Blinking Cursor for Line 2 (Visible during typing or when done) */}
-              {(typingPhase === 'line2' || typingPhase === 'done') && (
-                <span className="inline-block w-[3px] md:w-[6px] h-[0.8em] bg-amber-400 ml-1 md:ml-2 animate-pulse align-baseline" />
-              )}
-            </span>
+            {/* Line 2: "Cape Coast" (Top 1% Animation) */}
+            {/* UPDATES:
+                1. animate-blur-in: Text starts blurry and snaps to focus.
+                2. animate-text-shimmer: The gradient continuously shifts like liquid gold.
+                3. bg-gradient-to-r: Enhanced rich gold colors.
+            */}
+            {typingPhase !== 'line1' && (
+               <span className="block font-outfit font-extrabold tracking-tight text-5xl md:text-[9vw] text-transparent bg-clip-text bg-gradient-to-r from-white via-amber-300 to-yellow-500 animate-blur-in animate-text-shimmer drop-shadow-sm min-h-[1.4em]">
+                {line2}
+                {/* Blinking Cursor for Line 2 */}
+                {(typingPhase === 'line2' || typingPhase === 'done') && (
+                  <span className="inline-block w-[3px] md:w-[6px] h-[0.8em] bg-amber-400 ml-1 md:ml-2 animate-pulse align-baseline" />
+                )}
+              </span>
+            )}
+            {/* Placeholder to prevent layout shift before Line 2 starts */}
+            {typingPhase === 'line1' && (
+               <span className="block font-outfit font-extrabold tracking-tight text-5xl md:text-[9vw] opacity-0 min-h-[1.4em]">
+                 &nbsp;
+               </span>
+            )}
           </h1>
 
           {/* Subtitle - Fades Up After Typing */}
