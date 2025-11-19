@@ -70,6 +70,7 @@ const EssentialExplorerGrid = () => {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
+        // Only trigger if it hasn't been triggered yet (or toggle this line to replay every time)
         if (entry.isIntersecting) {
           setIsInView(true);
         } else {
@@ -96,27 +97,38 @@ const EssentialExplorerGrid = () => {
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
         <div className="mb-8 sm:mb-10 text-center" ref={headingRef}>
 
-          {/* MODERN BOLD HEADING + ANIMATED UNDERLINE */}
+          {/* MODERN, BOLD HEADING + ANIMATED UNDERLINE */}
           <div className="group inline-block mb-6">
-            {/* UPDATED: font-playfair (Google Font) + font-bold */}
-            <h2 className="text-[32px] sm:text-[42px] font-bold text-slate-900 leading-tight font-playfair tracking-tight">
+            <h2 className="text-[28px] sm:text-[38px] font-normal text-slate-900 leading-tight font-playwrite">
               Your guide to discovering Cape Coast
             </h2>
 
-            {/* ANIMATED UNDERLINE: Non-stop loop, opens, closes to 30%, stops */}
+            {/* Animated underline - "Opens and Closes" when in view */}
             <div
               className={`
-                mx-auto mt-4 h-[4px] 
+                mx-auto mt-3 h-[3px] 
                 bg-amber-500 rounded-full
-                ${isInView ? 'animate-reveal-stop' : 'w-0 opacity-0'}
+                transition-all duration-700 ease-out
+                ${isInView ? 'animate-[breath_4s_ease-in-out_infinite]' : 'w-0 opacity-0'}
               `}
             ></div>
           </div>
 
-          <p className="text-xs font-semibold tracking-[0.22em] text-slate-500 uppercase mt-2 font-sans">
+          {/* Animation Keyframes for "Open and Close" effect */}
+          <style>
+            {`
+              @keyframes breath {
+                0% { width: 10%; opacity: 0.6; }
+                50% { width: 75%; opacity: 1; }
+                100% { width: 10%; opacity: 0.6; }
+              }
+            `}
+          </style>
+
+          <p className="text-xs font-semibold tracking-[0.22em] text-slate-500 uppercase mt-2">
             Plan your Cape Coast trip
           </p>
-          <h3 className="text-xl sm:text-2xl font-medium text-slate-900 mt-2 font-outfit">
+          <h3 className="text-xl sm:text-2xl font-medium text-slate-900 mt-2">
             Start with the essentials.
           </h3>
         </div>
@@ -135,10 +147,10 @@ const EssentialExplorerGrid = () => {
                   strokeWidth={1.7}
                 />
               </div>
-              <p className="mt-4 text-center text-sm sm:text-lg font-bold tracking-tight text-slate-900 font-playfair">
+              <p className="mt-4 text-center text-sm sm:text-lg font-semibold tracking-tight text-slate-900">
                 {item.title}
               </p>
-              <p className="mt-1.5 text-center text-[11px] sm:text-sm leading-snug text-slate-700/90 max-w-xs font-sans">
+              <p className="mt-1.5 text-center text-[11px] sm:text-sm leading-snug text-slate-700/90 max-w-xs">
                 {item.description}
               </p>
             </Link>
