@@ -56,11 +56,11 @@ export default function WhyVisit() {
   ];
 
   return (
-    <section className="py-20 bg-gray-50">
+    <section className="py-16 sm:py-20 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* HEADING MATCHING "Your guide to discovering Cape Coast" */}
-        <div className="text-center mb-16" ref={headingRef}>
-          <div className="group inline-block mb-6">
+        <div className="text-center mb-12 sm:mb-16" ref={headingRef}>
+          <div className="group inline-block mb-5">
             <h2 className="text-[28px] sm:text-[38px] font-normal text-slate-900 leading-tight font-playwrite">
               Why Visit Cape Coast?
             </h2>
@@ -85,31 +85,5 @@ export default function WhyVisit() {
             `}
           </style>
 
-          <p className="text-xl text-gray-700 max-w-3xl mx-auto">
-            Because families still live beside the castles, the ocean still carries the stories,
-            and visitors come to stand where their ancestors once stood.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {reasons.map((reason, index) => (
-            <div
-              key={index}
-              className="bg-white rounded-xl p-8 shadow-lg hover:shadow-xl transition text-center"
-            >
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-6">
-                <reason.icon className="text-blue-900" size={32} />
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">
-                {reason.title}
-              </h3>
-              <p className="text-gray-600">
-                {reason.description}
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
+          {/* Smaller, traditional, readable sub text */}
+          <p className="mt-2 text-sm sm:text-base text-gray-700 max-w-3xl mx
