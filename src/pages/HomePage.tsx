@@ -68,27 +68,30 @@ const EssentialExplorerGrid = () => {
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
         <div className="mb-8 sm:mb-10 text-center">
 
-          {/* MAIN HEADING WITH ANIMATED UNDERLINE */}
+          {/* MODERN, BOLD HEADING + ANIMATED UNDERLINE */}
           <div className="group inline-block">
-            <h2 className="text-[28px] sm:text-[36px] font-light text-slate-900 tracking-[-0.015em] leading-snug font-playwrite">
+            <h2 className="text-[26px] sm:text-[34px] font-extrabold text-slate-900 leading-tight tracking-[-0.02em] font-sans">
               Your guide to discovering Cape Coast
             </h2>
+
+            {/* Animated underline */}
             <div
               className="
-                mx-auto mt-2 h-[2px] w-0 
-                bg-slate-900 
+                mx-auto mt-2 h-[3px] w-0 
+                bg-slate-900 rounded-full
                 transition-all duration-700 ease-out 
-                group-hover:w-[70%] 
-                animate-[reveal_1.2s_ease-out_forwards]
+                group-hover:w-[70%]
+                animate-[reveal_1.1s_ease-out_forwards]
               "
             ></div>
           </div>
 
+          {/* Animation Keyframes */}
           <style>
             {`
               @keyframes reveal {
                 0% { width: 0; opacity: 0.4; }
-                40% { width: 40%; opacity: 1; }
+                50% { width: 35%; opacity: 1; }
                 100% { width: 60%; opacity: 1; }
               }
             `}
