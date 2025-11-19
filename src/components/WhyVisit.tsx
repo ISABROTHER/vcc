@@ -19,32 +19,28 @@ export default function WhyVisit() {
     {
       icon: Castle,
       title: 'Rich heritage',
-      image:
-        'https://upload.wikimedia.org/wikipedia/commons/7/79/Cape_Coast_Castle_-_Ghana.jpg',
+      image: '/images/why-visit/heritage.jpg', // Cape Coast / Elmina castle
       description:
         'Walk through Cape Coast and Elmina castles with local guides who share real stories about the transatlantic slave trade and the people who lived through it.',
     },
     {
       icon: Waves,
       title: 'Life on the coastline',
-      image:
-        'https://upload.wikimedia.org/wikipedia/commons/9/9d/Cape_Coast_fishing_boats_Ghana.jpg',
+      image: '/images/why-visit/coastline.jpg', // Fishing boats / beach
       description:
         'Watch fishermen launch their boats at sunrise, relax on quiet beaches, and take boat rides along a shoreline that has carried centuries of journeys.',
     },
     {
       icon: Heart,
       title: 'A homecoming for the diaspora',
-      image:
-        'https://upload.wikimedia.org/wikipedia/commons/0/0e/%22Door_of_no_return%22_Cape_Coast_castle%2C_Ghana.jpg',
+      image: '/images/why-visit/diaspora.jpg', // Door of No Return / visitors
       description:
         'Many in the African diaspora come here to stand where their ancestors last stood, walk through the Door of No Return, and quietly say, “I am back.”',
     },
     {
       icon: Users,
       title: 'Living culture and everyday life',
-      image:
-        'https://www.got2globe.com/wp-content/uploads/2018/09/0030b7e9-0600-4dfa-9a23-3bf039693251.jpg',
+      image: '/images/why-visit/culture.jpg', // Festival / everyday life
       description:
         'Join festivals, hear drums and hymns in the same streets, taste home-cooked food, and meet the families who keep Cape Coast’s traditions alive.',
     },
@@ -53,7 +49,6 @@ export default function WhyVisit() {
   return (
     <section className="py-20 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
         {/* HEADING — SAME STYLE AS "Your guide to discovering Cape Coast" */}
         <div className="text-center mb-14" ref={headingRef}>
           <div className="group inline-block mb-5">
@@ -72,7 +67,7 @@ export default function WhyVisit() {
             ></div>
           </div>
 
-          {/* Keyframes */}
+          {/* Keyframes for underline */}
           <style>
             {`
               @keyframes breath {
@@ -83,7 +78,7 @@ export default function WhyVisit() {
             `}
           </style>
 
-          {/* Subtext — readable traditional font */}
+          {/* Subtext — smaller, readable */}
           <p className="mt-1 text-sm sm:text-base text-gray-700 max-w-3xl mx-auto leading-relaxed">
             Because families still live beside the castles, the ocean still carries the stories,
             and visitors come to stand where their ancestors once stood.
@@ -98,11 +93,15 @@ export default function WhyVisit() {
               className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow border border-slate-100"
             >
               {/* IMAGE */}
-              <div className="h-32 sm:h-40 w-full overflow-hidden">
+              <div className="h-32 sm:h-40 w-full overflow-hidden bg-slate-100">
                 <img
                   src={reason.image}
                   alt={reason.title}
                   className="w-full h-full object-cover"
+                  onError={(e) => {
+                    // fallback if image path is wrong
+                    (e.currentTarget as HTMLImageElement).style.display = 'none';
+                  }}
                 />
               </div>
 
@@ -123,7 +122,6 @@ export default function WhyVisit() {
             </div>
           ))}
         </div>
-
       </div>
     </section>
   );
