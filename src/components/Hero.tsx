@@ -1,238 +1,211 @@
-import { useState, useEffect } from 'react';
-import { Search, ChevronDown, MapPin, Calendar, Sparkles } from 'lucide-react';
+import { useState, useEffect, useCallback, useRef } from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-const allCategories = {
-  activities: [
-    'Kakum Canopy Walk',
-    'Beach Tours',
-    'Lagoon/Boat Rides',
-    'Nature Trails',
-    'Cultural Immersion',
-    'Cooking Classes (Local)',
-    'Fishing Community Tours',
-    'Photography Tours', 
-  ],
-  attractions: [
-    'Cape Coast Castle',
-    'Elmina Castle',
-    'Kakum National Park',
-    'Hans Cottage Crocodile Pond',
-    'Assin Manso Slave River',
-    'Fort Victoria',
-    'Fort William (Lighthouse)',
-    'Elmina Fishing Harbor',
-    'Brenu Beach',
-    'Monkey Forest Resort',
-  ],
-  culture: [
-    'Oguaa Fetu Afahye',
-    'PANAFEST & Emancipation',
-    'Bakatue Festival (Elmina)',
-    'Cultural Drumming & Dance',
-    'Local Artisan Markets',
-  ],
-  shopping: [
-    'Cape Coast Cultural Centre',
-    'Kotokuraba Market',
-    'Art & Wood Carving Shops',
-  ],
-  food: [
-    'Eat at: Akoo House',
-    'Eat at: Hans Cottage',
-    'Eat at: Oasis Beach',
-    'Eat at: Local Chop Bars',
-    'Drink at: Castle Café',
-    'Nightlife: Oasis Nightlife',
-    'Nightlife: Beach Bars',
-  ],
-};
-
-const backgroundImages = [
-  'https://images.pexels.com/photos/7412067/pexels-photo-7412067.jpeg?auto=compress&cs=tinysrgb&w=1920',
-  'https://images.pexels.com/photos/3155726/pexels-photo-3155726.jpeg?auto=compress&cs=tinysrgb&w=1920',
-  'https://images.pexels.com/photos/3889742/pexels-photo-3889742.jpeg?auto=compress&cs=tinysrgb&w=1920',
-];
-
-const featuredExperiences = [
-  { icon: MapPin, text: '50+ Unique Destinations' },
-  { icon: Calendar, text: 'Year-Round Adventures' },
-  { icon: Sparkles, text: 'Authentic Experiences' },
+// Define the content for each slide
+const slides = [
+  {
+    image: 'https://v.imgi.no/eplj24ump5', // Cinematic Banner
+    line1: 'Christmas is coming to',
+    line2: 'Cape Coast',
+    subtitle: 'Find markets, food and concerts that will get you in the right Christmas spirit.',
+  },
+  {
+    image: 'https://content.r9cdn.net/rimg/dimg/dd/30/25eecbb5-city-5989-174dc0226d1.jpg?crop=true&width=1366&height=768&xhint=1359&yhint=918', // Castle
+    line1: 'Walk through history at',
+    line2: 'Cape Coast Castle',
+    subtitle: 'Stand at the Door of No Return, where the silence of the walls speaks of a resilience that oceans could never extinguish.',
+  },
+  {
+    image: 'https://www.adomonline.com/wp-content/uploads/2024/09/DSCF3019.jpg', // Festival
+    line1: 'Feel the rhythm of',
+    line2: 'Fetu Afahye',
+    subtitle: 'Join the vibrant celebration of culture, drumming, and dance.',
+  },
 ];
 
 export default function Hero() {
-  const [selectedCategory, setSelectedCategory] = useState('');
-  const [specificOptions, setSpecificOptions] = useState<string[]>([]);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [isVisible, setIsVisible] = useState(false);
+  
+  // Typewriter State
+  const [line1, setLine1] = useState('');
+  const [line2, setLine2] = useState('');
+  const [typingPhase, setTypingPhase] = useState<'idle' | 'line1' | 'line2' | 'done'>('idle');
 
-  useEffect(() => {
-    setIsVisible(true);
-    const interval = setInterval(() => {
-      setCurrentImageIndex((prev) => (prev + 1) % backgroundImages.length);
-    }, 6000);
-    return () => clearInterval(interval);
-  }, []);
+  // Refs to manage timeouts for cleanup
+  const timeoutsRef = useRef<number[]>([]);
 
-  const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const category = e.target.value;
-    setSelectedCategory(category);
+  const currentSlide = slides[currentImageIndex];
 
-    if (category && allCategories[category as keyof typeof allCategories]) {
-      setSpecificOptions(allCategories[category as keyof typeof allCategories]);
-    } else {
-      setSpecificOptions([]);
-    }
+  // Function to safely add timeouts
+  const addTimeout = (callback: () => void, delay: number) => {
+    const id = setTimeout(callback, delay);
+    timeoutsRef.current.push(id);
+    return id;
   };
 
+  // Function to clear all running timeouts
+  const clearTimeouts = () => {
+    timeoutsRef.current.forEach((id) => clearTimeout(id));
+    timeoutsRef.current = [];
+  };
+
+  // Function to go to the next slide
+  const nextSlide = useCallback(() => {
+    setCurrentImageIndex((prev) => (prev + 1) % slides.length);
+  }, []);
+
+  // Function to go to the previous slide
+  const prevSlide = () => {
+    setCurrentImageIndex((prev) => (prev - 1 + slides.length) % slides.length);
+  };
+
+  // Handle Slide Changes & Reset Animations
+  useEffect(() => {
+    clearTimeouts();
+    setLine1('');
+    setLine2('');
+    setTypingPhase('idle');
+    addTimeout(() => setTypingPhase('line1'), 300);
+    return () => clearTimeouts();
+  }, [currentImageIndex]);
+
+  // Handle Typing Logic
+  useEffect(() => {
+    if (typingPhase === 'line1') {
+      if (line1.length < currentSlide.line1.length) {
+        addTimeout(() => {
+          setLine1(currentSlide.line1.slice(0, line1.length + 1));
+        }, 40);
+      } else {
+        addTimeout(() => setTypingPhase('line2'), 200);
+      }
+    } else if (typingPhase === 'line2') {
+      if (line2.length < currentSlide.line2.length) {
+        addTimeout(() => {
+          setLine2(currentSlide.line2.slice(0, line2.length + 1));
+        }, 80);
+      } else {
+        setTypingPhase('done');
+      }
+    }
+  }, [typingPhase, line1, line2, currentSlide]);
+
+  // Auto-advance slides every 6 seconds (REVERTED TO 6000)
+  useEffect(() => {
+    const interval = setInterval(nextSlide, 6000);
+    return () => clearInterval(interval);
+  }, [nextSlide]);
+
   return (
-    <section className="relative h-screen flex items-center justify-center overflow-hidden">
-      {backgroundImages.map((image, index) => (
+    <section className="relative w-full min-h-[400px] md:h-[600px] flex items-end overflow-hidden font-sans bg-slate-900 group">
+      {/* Background Image Carousel */}
+      {slides.map((slide, index) => (
         <div
-          key={image}
-          className={`absolute inset-0 transition-opacity duration-2000 ${
+          key={slide.image}
+          className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out ${
             index === currentImageIndex ? 'opacity-100' : 'opacity-0'
           }`}
-          style={{
-            backgroundImage: `url(${image})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }}
         >
-          <div className="absolute inset-0 bg-gradient-to-b from-slate-900/60 via-slate-900/50 to-slate-900/70"></div>
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-900/40 to-transparent"></div>
+          <div
+            className="absolute inset-0 w-full h-full transform scale-105 transition-transform duration-[20s] ease-out"
+            style={{
+              backgroundImage: `url(${slide.image})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center center',
+              backgroundRepeat: 'no-repeat',
+            }}
+          />
+          
+          {/* GRADIENT OVERLAYS */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-90" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/30 to-transparent opacity-80" />
         </div>
       ))}
 
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-20">
-        {backgroundImages.map((_, index) => (
+      {/* --- CONTENT CONTAINER --- */}
+      <div className="relative z-10 w-full mx-auto px-6 md:px-12 pb-20 md:pb-12 pt-24 pointer-events-none">
+        <div className="w-full">
+          
+          {/* Headline - TYPEWRITER EFFECT */}
+          <h1 key={currentImageIndex} className="font-bold text-white mb-2 leading-none tracking-tight drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)] pointer-events-auto">
+            
+            {/* Line 1 */}
+            <span className="block text-xl sm:text-2xl md:text-[4vw] font-medium tracking-normal mb-0 whitespace-nowrap min-h-[1.2em]">
+              {line1}
+              {typingPhase === 'line1' && (
+                <span className="inline-block w-[2px] h-[0.8em] bg-white ml-1 animate-pulse align-middle" />
+              )}
+            </span>
+
+            {/* Line 2 (Golden Gradient + Blur Animation) */}
+            <span className={`block font-outfit font-extrabold tracking-tight leading-none text-3xl sm:text-5xl md:text-[9vw] text-transparent bg-clip-text bg-gradient-to-r from-white via-amber-300 to-yellow-500 drop-shadow-sm whitespace-nowrap min-h-[1.2em] ${
+                typingPhase !== 'line1' ? 'animate-blur-in animate-text-shimmer' : ''
+            }`}>
+              {line2}
+              
+              {(typingPhase === 'line2' || typingPhase === 'done') && (
+                <span className="inline-block w-[3px] md:w-[6px] h-[0.8em] bg-amber-400 ml-1 md:ml-2 animate-pulse align-baseline" />
+              )}
+            </span>
+          </h1>
+
+          {/* Subtitle - Fades Up */}
+          <p 
+            className={`text-sm md:text-[1.5vw] text-slate-100 font-light max-w-xl md:max-w-[50vw] leading-relaxed drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)] border-l-4 border-amber-400 pl-3 md:pl-6 bg-gradient-to-r from-black/40 to-transparent py-2 rounded-r-lg backdrop-blur-sm pointer-events-auto transition-all duration-1000 ${
+              typingPhase === 'done' ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+            }`}
+          >
+            {currentSlide.subtitle}
+          </p>
+        </div>
+      </div>
+
+      {/* --- NAVIGATION ARROWS --- */}
+      <button 
+        onClick={prevSlide}
+        className="absolute left-2 md:left-6 top-1/2 -translate-y-1/2 z-30 p-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 text-white/70 hover:bg-white/20 hover:text-white hover:scale-110 transition-all active:scale-95 hidden sm:flex pointer-events-auto"
+        aria-label="Previous slide"
+      >
+        <ChevronLeft className="w-6 h-6" />
+      </button>
+
+      <button 
+        onClick={nextSlide}
+        className="absolute right-2 md:right-6 top-1/2 -translate-y-1/2 z-30 p-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 text-white/70 hover:bg-white/20 hover:text-white hover:scale-110 transition-all active:scale-95 hidden sm:flex pointer-events-auto"
+        aria-label="Next slide"
+      >
+        <ChevronRight className="w-6 h-6" />
+      </button>
+
+      {/* --- COMPACT LOADING BARS --- */}
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex gap-2 w-32 md:w-48 pointer-events-auto">
+        {slides.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrentImageIndex(index)}
-            className={`w-2 h-2 rounded-full transition-all duration-300 ${
-              index === currentImageIndex
-                ? 'bg-white w-8'
-                : 'bg-white/50 hover:bg-white/75'
-            }`}
-            aria-label={`View image ${index + 1}`}
-          />
+            className="relative h-1 md:h-1.5 flex-1 rounded-full bg-white/20 overflow-hidden transition-all hover:bg-white/30"
+            aria-label={`Go to slide ${index + 1}`}
+          >
+            <div 
+              className={`absolute top-0 left-0 h-full bg-amber-400 rounded-full transition-all duration-300 ${
+                index === currentImageIndex 
+                  ? 'animate-[load_6s_linear_forwards] w-full' // UPDATED: load_6s matches the interval
+                  : index < currentImageIndex 
+                    ? 'w-full opacity-100' 
+                    : 'w-0 opacity-0'
+              }`}
+            />
+          </button>
         ))}
       </div>
 
-      <div className={`relative z-10 text-center text-white px-4 max-w-5xl mx-auto transition-all duration-1000 ${
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-      }`}>
-        <div className="mb-6 inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-md rounded-full border border-white/20">
-          <Sparkles className="w-4 h-4 text-amber-400" />
-          <span className="text-sm font-medium">Discover Ghana's Coastal Treasure</span>
-        </div>
-
-        <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight">
-          <span className="block">Discover</span>
-          <span className="block bg-gradient-to-r from-amber-400 via-amber-300 to-amber-400 bg-clip-text text-transparent">
-            Cape Coast
-          </span>
-        </h1>
-
-        <p className="text-xl md:text-2xl lg:text-3xl mb-8 text-slate-100 font-light max-w-3xl mx-auto leading-relaxed">
-          Where heritage meets the ocean. Experience Ghana's coastal gem through authentic culture, pristine beaches, and unforgettable adventures.
-        </p>
-
-        <div className="flex flex-wrap justify-center gap-6 mb-12">
-          {featuredExperiences.map((item, index) => (
-            <div
-              key={index}
-              className={`flex items-center gap-2 text-slate-200 transition-all duration-500 delay-${index * 100}`}
-              style={{ transitionDelay: `${index * 100}ms` }}
-            >
-              <div className="p-2 bg-white/10 backdrop-blur-sm rounded-lg border border-white/20">
-                <item.icon className="w-5 h-5" />
-              </div>
-              <span className="text-sm md:text-base font-medium">{item.text}</span>
-            </div>
-          ))}
-        </div>
-
-        <div className="bg-white/10 backdrop-blur-xl rounded-2xl shadow-2xl p-3 max-w-5xl mx-auto border border-white/20 hover:border-white/30 transition-all duration-300">
-          <div className="flex flex-col lg:flex-row items-center gap-3">
-            <div className="flex-1 flex flex-col md:flex-row w-full rounded-xl bg-white shadow-lg overflow-hidden">
-              <div className="relative flex-1 group">
-                <select className="w-full bg-white text-slate-900 font-semibold focus:outline-none focus:ring-2 focus:ring-amber-400 appearance-none cursor-pointer px-4 py-4 md:py-5 transition-all hover:bg-slate-50">
-                  <option value="">Any Month</option>
-                  <option value="jan">January</option>
-                  <option value="feb">February</option>
-                  <option value="mar">March</option>
-                  <option value="apr">April</option>
-                  <option value="may">May</option>
-                  <option value="jun">June</option>
-                  <option value="jul">July</option>
-                  <option value="aug">August</option>
-                  <option value="sep">September</option>
-                  <option value="oct">October</option>
-                  <option value="nov">November</option>
-                  <option value="dec">December</option>
-                </select>
-                <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none transition-transform group-hover:translate-y-[-40%]" size={18} />
-              </div>
-
-              <div className="w-full md:w-px h-px md:h-auto bg-slate-200"></div>
-
-              <div className="relative flex-1 group">
-                <select
-                  className={`w-full text-slate-900 font-semibold focus:outline-none focus:ring-2 focus:ring-amber-400 appearance-none cursor-pointer px-4 py-4 md:py-5 transition-all hover:bg-slate-50 ${
-                    selectedCategory ? 'bg-amber-50' : 'bg-white'
-                  }`}
-                  value={selectedCategory}
-                  onChange={handleCategoryChange}
-                >
-                  <option value="">All Categories</option>
-                  <option value="activities">Activities</option>
-                  <option value="attractions">Attractions</option>
-                  <option value="culture">Culture & Events</option>
-                  <option value="shopping">Shopping</option>
-                  <option value="food">Food & Drink</option>
-                </select>
-                <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none transition-transform group-hover:translate-y-[-40%]" size={18} />
-              </div>
-
-              <div className="w-full md:w-px h-px md:h-auto bg-slate-200"></div>
-
-              <div className="relative flex-1 group">
-                <select
-                  className={`w-full font-semibold focus:outline-none focus:ring-2 focus:ring-amber-400 appearance-none px-4 py-4 md:py-5 transition-all ${
-                    !selectedCategory
-                      ? 'bg-slate-50 text-slate-400 cursor-not-allowed'
-                      : 'bg-white text-slate-900 cursor-pointer hover:bg-slate-50'
-                  }`}
-                  disabled={!selectedCategory || specificOptions.length === 0}
-                >
-                  <option value="">Any Item</option>
-                  {specificOptions.map((option) => (
-                    <option key={option} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </select>
-                <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none transition-transform group-hover:translate-y-[-40%]" size={18} />
-              </div>
-            </div>
-
-            <button className="bg-gradient-to-r from-amber-500 to-amber-600 text-white px-8 py-4 md:py-5 rounded-xl hover:from-amber-600 hover:to-amber-700 transition-all duration-300 flex items-center justify-center gap-3 font-bold text-base w-full lg:w-auto shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95 group">
-              <Search className="transition-transform group-hover:scale-110" size={22} />
-              <span className="lg:hidden">Search</span>
-              <span className="hidden lg:inline whitespace-nowrap">Find Experiences</span>
-            </button>
-          </div>
-        </div>
-
-        <p className="mt-6 text-sm text-slate-300">
-          Join thousands of travelers discovering authentic Cape Coast
-        </p>
-      </div>
-
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
-      </div>
+      {/* Animation Keyframes */}
+      <style>{`
+        @keyframes load {
+          0% { width: 0%; }
+          100% { width: 100%; }
+        }
+      `}</style>
     </section>
   );
 }
