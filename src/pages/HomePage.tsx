@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Landmark,
@@ -18,7 +18,7 @@ import CallToAction from '../components/CallToAction';
 import BottomNav from '../components/BottomNav';
 
 const gridItems = [
-  { 
+  {
     title: 'Attractions',
     description: 'Castles, beaches, museums and other must-see places.',
     icon: Landmark,
@@ -63,14 +63,62 @@ const gridItems = [
 ];
 
 const EssentialExplorerGrid = () => {
+  // State to track if the element is in the viewport
+  const [isInView, setIsInView] = useState(false);
+  const headingRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true);
+        } else {
+           // Optional: Set to false if you want it to stop when scrolling away
+           setIsInView(false);
+        }
+      },
+      { threshold: 0.5 } // Trigger when 50% visible
+    );
+
+    if (headingRef.current) {
+      observer.observe(headingRef.current);
+    }
+
+    return () => {
+      if (headingRef.current) {
+        observer.unobserve(headingRef.current);
+      }
+    };
+  }, []);
+
   return (
     <section className="bg-white">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
-        <div className="mb-8 sm:mb-10 text-center">
-          <p className="text-xs font-semibold tracking-[0.22em] text-slate-500 uppercase">
+        <div className="mb-8 sm:mb-10 text-center" ref={headingRef}>
+
+          {/* MODERN BOLD HEADING + ANIMATED UNDERLINE */}
+          <div className="group inline-block mb-6">
+            {/* UPDATED: font-playfair (Google Font) + font-bold */}
+            <h2 className="text-[32px] sm:text-[42px] font-bold text-slate-900 leading-tight font-playfair tracking-tight">
+              Your guide to discovering Cape Coast
+            </h2>
+
+            {/* ANIMATED UNDERLINE: Non-stop loop, opens, closes to 30%, stops */}
+            <div
+              className={`
+                mx-auto mt-4 h-[4px] 
+                bg-amber-500 rounded-full
+                ${isInView ? 'animate-reveal-stop' : 'w-0 opacity-0'}
+              `}
+            ></div>
+          </div>
+
+          <p className="text-xs font-semibold tracking-[0.22em] text-slate-500 uppercase mt-2 font-sans">
             Plan your Cape Coast trip
           </p>
-          <h2 className="main-heading">Start with the essentials.</h2>
+          <h3 className="text-xl sm:text-2xl font-medium text-slate-900 mt-2 font-outfit">
+            Start with the essentials.
+          </h3>
         </div>
 
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-3 sm:gap-6">
@@ -87,10 +135,10 @@ const EssentialExplorerGrid = () => {
                   strokeWidth={1.7}
                 />
               </div>
-              <p className="mt-4 text-center text-sm sm:text-lg font-semibold tracking-tight text-slate-900">
+              <p className="mt-4 text-center text-sm sm:text-lg font-bold tracking-tight text-slate-900 font-playfair">
                 {item.title}
               </p>
-              <p className="mt-1.5 text-center text-[11px] sm:text-sm leading-snug text-slate-700/90 max-w-xs">
+              <p className="mt-1.5 text-center text-[11px] sm:text-sm leading-snug text-slate-700/90 max-w-xs font-sans">
                 {item.description}
               </p>
             </Link>
