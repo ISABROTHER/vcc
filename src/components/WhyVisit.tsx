@@ -19,23 +19,23 @@ export default function WhyVisit() {
     {
       icon: Castle,
       title: 'Rich heritage',
-      // Cape Coast / Elmina Castle vibe
-      image: 'https://images.pexels.com/photos/13372449/pexels-photo-13372449.jpeg?auto=compress&cs=tinysrgb&w=800', 
+      // UPDATED: Your specific Cape Coast Castle image
+      image: 'https://trueculturetravel.com/wp-content/uploads/2025/07/CAPE-COAST-scaled.jpg', 
       description:
         'Walk through Cape Coast and Elmina castles with local guides who share real stories about the transatlantic slave trade and the people who lived through it.',
     },
     {
       icon: Waves,
       title: 'Life on the coastline',
-      // Fishing boats on the shore
-      image: 'https://images.pexels.com/photos/2899707/pexels-photo-2899707.jpeg?auto=compress&cs=tinysrgb&w=800', 
+      // UPDATED: Your specific Coastline image
+      image: 'https://rp-cms.imgix.net/wp-content/uploads/GHOFFMAP_JKC_2011_3683.jpeg?auto=format&fit=crop&crop=entropy&ar=180%3A120', 
       description:
         'Watch fishermen launch their boats at sunrise, relax on quiet beaches, and take boat rides along a shoreline that has carried centuries of journeys.',
     },
     {
       icon: Heart,
       title: 'A homecoming for the diaspora',
-      // Emotional/Connection vibe (Looking out to sea)
+      // Kept Pexels image for Diaspora (Emotional connection)
       image: 'https://images.pexels.com/photos/12356376/pexels-photo-12356376.jpeg?auto=compress&cs=tinysrgb&w=800', 
       description:
         'Many in the African diaspora come here to stand where their ancestors last stood, walk through the Door of No Return, and quietly say, “I am back.”',
@@ -43,7 +43,7 @@ export default function WhyVisit() {
     {
       icon: Users,
       title: 'Living culture and everyday life',
-      // Vibrant local culture/people
+      // Kept Pexels image for Culture (Vibrant daily life)
       image: 'https://images.pexels.com/photos/3155726/pexels-photo-3155726.jpeg?auto=compress&cs=tinysrgb&w=800', 
       description:
         'Join festivals, hear drums and hymns in the same streets, taste home-cooked food, and meet the families who keep Cape Coast’s traditions alive.',
@@ -136,4 +136,4 @@ export default function WhyVisit() {
       </div>
     </section>
   );
-} 
+}
