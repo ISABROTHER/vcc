@@ -20,7 +20,7 @@ export default function WhyVisit() {
       icon: Castle,
       title: 'Rich heritage',
       image:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Cape_Coast_Castle_Courtyard.jpg/1280px-Cape_Coast_Castle_Courtyard.jpg',
+        'https://upload.wikimedia.org/wikipedia/commons/7/79/Cape_Coast_Castle_-_Ghana.jpg',
       description:
         'Walk through Cape Coast and Elmina castles with local guides who share real stories about the transatlantic slave trade and the people who lived through it.',
     },
@@ -28,7 +28,7 @@ export default function WhyVisit() {
       icon: Waves,
       title: 'Life on the coastline',
       image:
-        'https://upload.wikimedia.org/wikipedia/commons/7/79/Cape_Coast_Fishing.jpg',
+        'https://upload.wikimedia.org/wikipedia/commons/9/9d/Cape_Coast_fishing_boats_Ghana.jpg',
       description:
         'Watch fishermen launch their boats at sunrise, relax on quiet beaches, and take boat rides along a shoreline that has carried centuries of journeys.',
     },
@@ -36,7 +36,7 @@ export default function WhyVisit() {
       icon: Heart,
       title: 'A homecoming for the diaspora',
       image:
-        'https://upload.wikimedia.org/wikipedia/commons/9/9c/Door_of_No_Return_Cape_Coast.jpg',
+        'https://upload.wikimedia.org/wikipedia/commons/0/0e/%22Door_of_no_return%22_Cape_Coast_castle%2C_Ghana.jpg',
       description:
         'Many in the African diaspora come here to stand where their ancestors last stood, walk through the Door of No Return, and quietly say, “I am back.”',
     },
@@ -44,7 +44,7 @@ export default function WhyVisit() {
       icon: Users,
       title: 'Living culture and everyday life',
       image:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Oguaa_Fetu_Afahye_2014.jpg/1280px-Oguaa_Fetu_Afahye_2014.jpg',
+        'https://www.got2globe.com/wp-content/uploads/2018/09/0030b7e9-0600-4dfa-9a23-3bf039693251.jpg',
       description:
         'Join festivals, hear drums and hymns in the same streets, taste home-cooked food, and meet the families who keep Cape Coast’s traditions alive.',
     },
@@ -53,13 +53,15 @@ export default function WhyVisit() {
   return (
     <section className="py-20 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* HEADING — MATCHES MAIN HERO HEADING STYLE */}
+        
+        {/* HEADING — SAME STYLE AS "Your guide to discovering Cape Coast" */}
         <div className="text-center mb-14" ref={headingRef}>
           <div className="group inline-block mb-5">
             <h2 className="text-[28px] sm:text-[34px] font-normal text-slate-900 leading-tight font-playwrite">
               Why Visit Cape Coast?
             </h2>
 
+            {/* Underline animation */}
             <div
               className={`
                 mx-auto mt-3 h-[3px]
@@ -70,6 +72,7 @@ export default function WhyVisit() {
             ></div>
           </div>
 
+          {/* Keyframes */}
           <style>
             {`
               @keyframes breath {
@@ -80,13 +83,14 @@ export default function WhyVisit() {
             `}
           </style>
 
+          {/* Subtext — readable traditional font */}
           <p className="mt-1 text-sm sm:text-base text-gray-700 max-w-3xl mx-auto leading-relaxed">
             Because families still live beside the castles, the ocean still carries the stories,
             and visitors come to stand where their ancestors once stood.
           </p>
         </div>
 
-        {/* GRID: 2 per row on mobile */}
+        {/* GRID — 2 CARDS PER ROW ON MOBILE */}
         <div className="grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-4">
           {reasons.map((reason, index) => (
             <div
@@ -119,6 +123,7 @@ export default function WhyVisit() {
             </div>
           ))}
         </div>
+
       </div>
     </section>
   );
