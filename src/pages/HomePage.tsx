@@ -67,10 +67,17 @@ const EssentialExplorerGrid = () => {
     <section className="bg-white">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
         <div className="mb-8 sm:mb-10 text-center">
+          {/* NEW MAIN HEADING ADDED HERE */}
+          <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">
+            Your guide to discovering Cape Coast
+          </h2>
+          
           <p className="text-xs font-semibold tracking-[0.22em] text-slate-500 uppercase">
             Plan your Cape Coast trip
           </p>
-          <h2 className="main-heading">Start with the essentials.</h2>
+          <h3 className="text-xl sm:text-2xl font-medium text-slate-900 mt-2">
+            Start with the essentials.
+          </h3>
         </div>
 
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-3 sm:gap-6">
