@@ -222,7 +222,7 @@ export default function Hero() {
               <span className="hidden lg:inline whitespace-nowrap">Find Experiences</span>
             </button>
           </div>
-        </div> 
+        </div>
 
         <p className="mt-6 text-sm text-slate-300">
           Join thousands of travelers discovering authentic Cape Coast
