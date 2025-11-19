@@ -4,24 +4,28 @@ export default function WhyVisit() {
   const reasons = [
     {
       icon: Castle,
-      title: 'Rich Heritage',
-      description: 'Explore historic castles and learn about the transatlantic slave trade'
+      title: 'Rich heritage',
+      description:
+        'Walk through Cape Coast and Elmina castles with local guides who share real stories about the transatlantic slave trade and the people who lived through it.',
     },
     {
       icon: Waves,
-      title: 'Stunning Coastline',
-      description: 'Beautiful beaches and coastal adventures await you'
+      title: 'Life on the coastline',
+      description:
+        'Watch fishermen launch their boats at sunrise, relax on quiet beaches, and take boat rides along a shoreline that has carried centuries of journeys.',
     },
     {
       icon: Heart,
-      title: 'Diaspora Connection',
-      description: 'Trace your roots and connect with your ancestral homeland'
+      title: 'A homecoming for the diaspora',
+      description:
+        'Many in the African diaspora come here to stand where their ancestors last stood, walk through the Door of No Return, and quietly say, “I am back.”',
     },
     {
       icon: Users,
-      title: 'Vibrant Culture',
-      description: 'Experience festivals, traditions, and warm Ghanaian hospitality'
-    }
+      title: 'Living culture and everyday life',
+      description:
+        'Join festivals, hear drums and hymns in the same streets, taste home-cooked food, and meet the families who keep Cape Coast’s traditions alive.',
+    },
   ];
 
   return (
@@ -32,7 +36,8 @@ export default function WhyVisit() {
             Why Visit Cape Coast?
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            A destination where history, culture, and natural beauty create unforgettable experiences
+            Because families still live beside the castles, the ocean still carries the stories,
+            and visitors come to stand where their ancestors once stood.
           </p>
         </div>
 
@@ -45,8 +50,12 @@ export default function WhyVisit() {
               <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-6">
                 <reason.icon className="text-blue-900" size={32} />
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">{reason.title}</h3>
-              <p className="text-gray-600">{reason.description}</p>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">
+                {reason.title}
+              </h3>
+              <p className="text-gray-600">
+                {reason.description}
+              </p>
             </div>
           ))}
         </div>
