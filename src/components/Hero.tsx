@@ -106,11 +106,12 @@ export default function Hero() {
         <div className="w-full">
           
           {/* Headline - TYPEWRITER EFFECT */}
-          <h1 className="font-bold text-white mb-4 leading-[1.1] md:leading-[0.9] tracking-tight drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)] pointer-events-auto min-h-[3em] md:min-h-[2.5em]">
+          {/* Fixed height and space reservation to prevent jumping */}
+          <h1 className="font-bold text-white mb-4 leading-[1.1] md:leading-[0.9] tracking-tight drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)] pointer-events-auto">
             
             {/* Line 1: "Christmas is coming to" */}
-            {/* UPDATED: Added whitespace-nowrap and adjusted text size to text-xl/2xl to ensure single line on mobile */}
-            <span className="block text-xl sm:text-2xl md:text-[4vw] font-medium tracking-normal mb-1 whitespace-nowrap">
+            {/* Added min-h-[1.5em] to reserve space immediately */}
+            <span className="block text-xl sm:text-2xl md:text-[4vw] font-medium tracking-normal mb-1 whitespace-nowrap min-h-[1.5em]">
               {line1}
               {/* Blinking Cursor for Line 1 */}
               {typingPhase === 'line1' && (
@@ -119,7 +120,8 @@ export default function Hero() {
             </span>
 
             {/* Line 2: "Cape Coast" (Golden Gradient) */}
-            <span className="block text-5xl md:text-[9vw] text-transparent bg-clip-text bg-gradient-to-r from-white via-amber-200 to-amber-500 drop-shadow-sm">
+            {/* Added min-h-[1.1em] to reserve space immediately */}
+            <span className="block text-5xl md:text-[9vw] text-transparent bg-clip-text bg-gradient-to-r from-white via-amber-200 to-amber-500 drop-shadow-sm min-h-[1.1em]">
               {line2}
               {/* Blinking Cursor for Line 2 (Visible during typing or when done) */}
               {(typingPhase === 'line2' || typingPhase === 'done') && (
