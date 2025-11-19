@@ -69,16 +69,16 @@ const EssentialExplorerGrid = () => {
         <div className="mb-8 sm:mb-10 text-center">
 
           {/* MODERN, BOLD HEADING + ANIMATED UNDERLINE */}
-          <div className="group inline-block">
-            <h2 className="text-[26px] sm:text-[34px] font-extrabold text-slate-900 leading-tight tracking-[-0.02em] font-sans">
+          <div className="group inline-block mb-6">
+            <h2 className="text-[28px] sm:text-[38px] font-normal text-slate-900 leading-tight font-playwrite">
               Your guide to discovering Cape Coast
             </h2>
 
             {/* Animated underline */}
             <div
               className="
-                mx-auto mt-2 h-[3px] w-0 
-                bg-slate-900 rounded-full
+                mx-auto mt-3 h-[3px] w-0 
+                bg-amber-500 rounded-full
                 transition-all duration-700 ease-out 
                 group-hover:w-[70%]
                 animate-[reveal_1.1s_ease-out_forwards]
@@ -97,10 +97,9 @@ const EssentialExplorerGrid = () => {
             `}
           </style>
 
-          <p className="text-xs font-semibold tracking-[0.22em] text-slate-500 uppercase mt-4">
+          <p className="text-xs font-semibold tracking-[0.22em] text-slate-500 uppercase mt-2">
             Plan your Cape Coast trip
           </p>
-
           <h3 className="text-xl sm:text-2xl font-medium text-slate-900 mt-2">
             Start with the essentials.
           </h3>
