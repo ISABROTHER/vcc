@@ -12,8 +12,7 @@ const slides = [
   {
     image: 'https://content.r9cdn.net/rimg/dimg/dd/30/25eecbb5-city-5989-174dc0226d1.jpg?crop=true&width=1366&height=768&xhint=1359&yhint=918', // Castle
     line1: 'Walk through history at',
-    line2: 'Cape Coast Castle', // UPDATED: Changed from Elmina to Cape Coast
-    // UPDATED SUBTITLE: Hyper-emotional, specific ("Door of No Return"), and high-end.
+    line2: 'Cape Coast Castle',
     subtitle: 'Stand at the Door of No Return, where the silence of the walls speaks of a resilience that oceans could never extinguish.',
   },
   {
@@ -62,17 +61,11 @@ export default function Hero() {
 
   // Handle Slide Changes & Reset Animations
   useEffect(() => {
-    // 1. Cleanup previous typing
     clearTimeouts();
-    
-    // 2. Reset State
     setLine1('');
     setLine2('');
     setTypingPhase('idle');
-
-    // 3. Start New Sequence
-    addTimeout(() => setTypingPhase('line1'), 300); // Slight delay after slide change
-
+    addTimeout(() => setTypingPhase('line1'), 300);
     return () => clearTimeouts();
   }, [currentImageIndex]);
 
@@ -82,7 +75,7 @@ export default function Hero() {
       if (line1.length < currentSlide.line1.length) {
         addTimeout(() => {
           setLine1(currentSlide.line1.slice(0, line1.length + 1));
-        }, 40); // Faster speed for smoother slide transitions
+        }, 40);
       } else {
         addTimeout(() => setTypingPhase('line2'), 200);
       }
@@ -90,14 +83,14 @@ export default function Hero() {
       if (line2.length < currentSlide.line2.length) {
         addTimeout(() => {
           setLine2(currentSlide.line2.slice(0, line2.length + 1));
-        }, 80); // Slower for impact
+        }, 80);
       } else {
         setTypingPhase('done');
       }
     }
   }, [typingPhase, line1, line2, currentSlide]);
 
-  // Auto-advance slides every 8 seconds (increased time to read text)
+  // Auto-advance slides every 8 seconds
   useEffect(() => {
     const interval = setInterval(nextSlide, 8000);
     return () => clearInterval(interval);
@@ -134,26 +127,25 @@ export default function Hero() {
         <div className="w-full">
           
           {/* Headline - TYPEWRITER EFFECT */}
-          {/* Using key={currentImageIndex} forces React to treat this as a fresh element on slide change, ensuring animations restart */}
-          <h1 key={currentImageIndex} className="font-bold text-white mb-4 leading-[1.1] md:leading-[0.9] tracking-tight drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)] pointer-events-auto">
+          {/* UPDATED: Removed mb-4, changed to mb-2. Tightened leading. */}
+          <h1 key={currentImageIndex} className="font-bold text-white mb-2 leading-none tracking-tight drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)] pointer-events-auto">
             
             {/* Line 1 */}
-            <span className="block text-xl sm:text-2xl md:text-[4vw] font-medium tracking-normal mb-1 whitespace-nowrap min-h-[1.5em]">
+            {/* UPDATED: Removed min-h-[1.5em] (was creating gaps), added min-h-[1.2em]. Removed whitespace-nowrap so it's safer on tiny screens, but added md:whitespace-nowrap. */}
+            <span className="block text-xl sm:text-2xl md:text-[4vw] font-medium tracking-normal mb-0 md:whitespace-nowrap min-h-[1.2em]">
               {line1}
-              {/* Cursor Line 1 */}
               {typingPhase === 'line1' && (
                 <span className="inline-block w-[2px] h-[0.8em] bg-white ml-1 animate-pulse align-middle" />
               )}
             </span>
 
             {/* Line 2 (Golden Gradient + Blur Animation) */}
-            {/* Only show text container when phase moves past line 1 to prevent jumping */}
-            <span className={`block font-outfit font-extrabold tracking-tight text-5xl md:text-[9vw] text-transparent bg-clip-text bg-gradient-to-r from-white via-amber-300 to-yellow-500 drop-shadow-sm min-h-[1.4em] ${
+            {/* UPDATED: Added `md:whitespace-nowrap`. This allows wrapping on mobile (so "Castle" goes to next line) but keeps one line on desktop. Tightened leading-tight to leading-none. */}
+            <span className={`block font-outfit font-extrabold tracking-tight leading-none text-5xl md:text-[9vw] text-transparent bg-clip-text bg-gradient-to-r from-white via-amber-300 to-yellow-500 drop-shadow-sm md:whitespace-nowrap min-h-[1.2em] ${
                 typingPhase !== 'line1' ? 'animate-blur-in animate-text-shimmer' : ''
             }`}>
               {line2}
               
-              {/* Cursor Line 2 */}
               {(typingPhase === 'line2' || typingPhase === 'done') && (
                 <span className="inline-block w-[3px] md:w-[6px] h-[0.8em] bg-amber-400 ml-1 md:ml-2 animate-pulse align-baseline" />
               )}
