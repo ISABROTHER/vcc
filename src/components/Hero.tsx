@@ -117,7 +117,7 @@ export default function Hero() {
               )}
             </span>
 
-            {/* Line 2: "Cape Coast" (Top 1% Animation) */}
+            {/* Line 2: "Cape Coast!" (Top 1% Animation) */}
             {/* UPDATES:
                 1. animate-blur-in: Text starts blurry and snaps to focus.
                 2. animate-text-shimmer: The gradient continuously shifts like liquid gold.
