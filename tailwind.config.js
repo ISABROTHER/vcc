@@ -5,7 +5,7 @@ export default {
     extend: {
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
-        // Added custom font
+        // REGISTER CUSTOM FONT
         playwrite: ['"Playwrite CZ"', 'cursive'],
       },
       animation: {
