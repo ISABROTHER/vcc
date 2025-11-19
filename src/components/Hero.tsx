@@ -11,6 +11,14 @@ const backgroundImages = [
 export default function Hero() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
+  
+  // Typewriter State
+  const [line1, setLine1] = useState('');
+  const [line2, setLine2] = useState('');
+  const [typingPhase, setTypingPhase] = useState<'idle' | 'line1' | 'line2' | 'done'>('idle');
+
+  const fullLine1 = "Christmas is coming to";
+  const fullLine2 = "Cape Coast";
 
   // Function to go to the next slide
   const nextSlide = useCallback(() => {
@@ -25,7 +33,41 @@ export default function Hero() {
   // Initialize animation on mount
   useEffect(() => {
     setIsVisible(true);
+    
+    // Start Typewriter Sequence
+    const startTyping = setTimeout(() => {
+      setTypingPhase('line1');
+    }, 500); // Short delay before typing starts
+
+    return () => clearTimeout(startTyping);
   }, []);
+
+  // Handle Typing Logic
+  useEffect(() => {
+    if (typingPhase === 'line1') {
+      if (line1.length < fullLine1.length) {
+        const timeout = setTimeout(() => {
+          setLine1(fullLine1.slice(0, line1.length + 1));
+        }, 50); // Speed for Line 1
+        return () => clearTimeout(timeout);
+      } else {
+        // Line 1 finished, move to Line 2
+        const timeout = setTimeout(() => {
+          setTypingPhase('line2');
+        }, 300); // Pause before starting next line
+        return () => clearTimeout(timeout);
+      }
+    } else if (typingPhase === 'line2') {
+      if (line2.length < fullLine2.length) {
+        const timeout = setTimeout(() => {
+          setLine2(fullLine2.slice(0, line2.length + 1));
+        }, 100); // Speed for Line 2 (Slower for impact)
+        return () => clearTimeout(timeout);
+      } else {
+        setTypingPhase('done');
+      }
+    }
+  }, [typingPhase, line1, line2]);
 
   // Auto-advance slides every 6 seconds
   useEffect(() => {
@@ -53,7 +95,7 @@ export default function Hero() {
             }}
           />
           
-          {/* GRADIENT OVERLAYS - Darkened for readability */}
+          {/* GRADIENT OVERLAYS */}
           <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-90" />
           <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/30 to-transparent opacity-80" />
         </div>
@@ -63,32 +105,32 @@ export default function Hero() {
       <div className="relative z-10 w-full mx-auto px-6 md:px-12 pb-20 md:pb-12 pt-24 pointer-events-none">
         <div className="w-full">
           
-          {/* Headline - STAGGERED ANIMATION */}
-          <h1 className="font-bold text-white mb-4 leading-[1.1] md:leading-[0.9] tracking-tight drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)] pointer-events-auto">
+          {/* Headline - TYPEWRITER EFFECT */}
+          <h1 className="font-bold text-white mb-4 leading-[1.1] md:leading-[0.9] tracking-tight drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)] pointer-events-auto min-h-[3em] md:min-h-[2.5em]">
             
-            {/* Top Line: Slides Down */}
-            <span 
-              className={`block text-3xl md:text-[4vw] font-medium tracking-normal mb-1 transition-all duration-1000 delay-300 ${
-                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'
-              }`}
-            >
-              Christmas is coming to
+            {/* Line 1: "Christmas is coming to" */}
+            <span className="block text-3xl md:text-[4vw] font-medium tracking-normal mb-1">
+              {line1}
+              {/* Blinking Cursor for Line 1 */}
+              {typingPhase === 'line1' && (
+                <span className="inline-block w-[2px] h-[0.8em] bg-white ml-1 animate-pulse align-middle" />
+              )}
             </span>
 
-            {/* Main Text: GOLDEN GRADIENT + ZOOM/POP ANIMATION */}
-            <span 
-              className={`block text-5xl md:text-[9vw] text-transparent bg-clip-text bg-gradient-to-r from-white via-amber-200 to-amber-500 drop-shadow-sm transition-all duration-1000 delay-500 ${
-                isVisible ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-8'
-              }`}
-            >
-              Cape Coast
+            {/* Line 2: "Cape Coast" (Golden Gradient) */}
+            <span className="block text-5xl md:text-[9vw] text-transparent bg-clip-text bg-gradient-to-r from-white via-amber-200 to-amber-500 drop-shadow-sm">
+              {line2}
+              {/* Blinking Cursor for Line 2 (Visible during typing or when done) */}
+              {(typingPhase === 'line2' || typingPhase === 'done') && (
+                <span className="inline-block w-[3px] md:w-[6px] h-[0.8em] bg-amber-400 ml-1 md:ml-2 animate-pulse align-baseline" />
+              )}
             </span>
           </h1>
 
-          {/* Subtitle - Fades Up Last */}
+          {/* Subtitle - Fades Up After Typing */}
           <p 
-            className={`text-sm md:text-[1.5vw] text-slate-100 font-light max-w-xl md:max-w-[50vw] leading-relaxed drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)] border-l-4 border-amber-400 pl-3 md:pl-6 bg-gradient-to-r from-black/40 to-transparent py-2 rounded-r-lg backdrop-blur-sm pointer-events-auto transition-all duration-1000 delay-700 ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+            className={`text-sm md:text-[1.5vw] text-slate-100 font-light max-w-xl md:max-w-[50vw] leading-relaxed drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)] border-l-4 border-amber-400 pl-3 md:pl-6 bg-gradient-to-r from-black/40 to-transparent py-2 rounded-r-lg backdrop-blur-sm pointer-events-auto transition-all duration-1000 ${
+              typingPhase === 'done' ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
             }`}
           >
             Find markets, food and concerts that will get you in the right Christmas spirit.
