@@ -6,13 +6,16 @@ export default {
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
         outfit: ['Outfit', 'sans-serif'],
+        // NEW: Best font for headings
+        playfair: ['"Playfair Display"', 'serif'],
       },
       animation: {
         'fade-in': 'fadeIn 0.5s ease-out',
         'slide-up': 'slideUp 0.5s ease-out',
-        // TOP 1% ANIMATIONS
-        'blur-in': 'blurIn 1s cubic-bezier(0.22, 1, 0.36, 1) forwards', // Cinematic focus
-        'text-shimmer': 'textShimmer 3s ease-in-out infinite', // Living gold effect
+        'blur-in': 'blurIn 1s cubic-bezier(0.22, 1, 0.36, 1) forwards',
+        'text-shimmer': 'textShimmer 3s ease-in-out infinite',
+        // NEW: Non-stop loop that pauses at 30%
+        'reveal-stop': 'revealStop 4s ease-in-out infinite',
       },
       keyframes: {
         fadeIn: {
@@ -23,28 +26,21 @@ export default {
           '0%': { transform: 'translateY(20px)', opacity: '0' },
           '100%': { transform: 'translateY(0)', opacity: '1' },
         },
-        // The "Cinematic" Keyframes
         blurIn: {
-          '0%': { 
-            opacity: '0', 
-            filter: 'blur(12px)', 
-            transform: 'scale(1.05) translateY(10px)' 
-          },
-          '100%': { 
-            opacity: '1', 
-            filter: 'blur(0)', 
-            transform: 'scale(1) translateY(0)' 
-          },
+          '0%': { opacity: '0', filter: 'blur(12px)', transform: 'scale(1.05) translateY(10px)' },
+          '100%': { opacity: '1', filter: 'blur(0)', transform: 'scale(1) translateY(0)' },
         },
         textShimmer: {
-          '0%, 100%': {
-            'background-size': '200% 200%',
-            'background-position': 'left center',
-          },
-          '50%': {
-            'background-size': '200% 200%',
-            'background-position': 'right center',
-          },
+          '0%, 100%': { 'background-size': '200% 200%', 'background-position': 'left center' },
+          '50%': { 'background-size': '200% 200%', 'background-position': 'right center' },
+        },
+        // THE LOGIC: Open (100%) -> Close to 30% -> Stop/Wait -> Reset
+        revealStop: {
+          '0%': { width: '0%', opacity: '0' },
+          '20%': { width: '100%', opacity: '1' }, // Opens fully
+          '40%': { width: '30%', opacity: '1' },  // Closes to 30%
+          '80%': { width: '30%', opacity: '1' },  // STOPS/HOLDS at 30%
+          '100%': { width: '0%', opacity: '0' },  // Fades out to restart
         },
       },
     },
