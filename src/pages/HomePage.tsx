@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Landmark,
@@ -63,10 +63,39 @@ const gridItems = [
 ];
 
 const EssentialExplorerGrid = () => {
+  // State to track if the element is in the viewport
+  const [isInView, setIsInView] = useState(false);
+  const headingRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        // Only trigger if it hasn't been triggered yet (or toggle this line to replay every time)
+        if (entry.isIntersecting) {
+          setIsInView(true);
+        } else {
+           // Optional: Set to false if you want it to stop when scrolling away
+           setIsInView(false);
+        }
+      },
+      { threshold: 0.5 } // Trigger when 50% visible
+    );
+
+    if (headingRef.current) {
+      observer.observe(headingRef.current);
+    }
+
+    return () => {
+      if (headingRef.current) {
+        observer.unobserve(headingRef.current);
+      }
+    };
+  }, []);
+
   return (
     <section className="bg-white">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
-        <div className="mb-8 sm:mb-10 text-center">
+        <div className="mb-8 sm:mb-10 text-center" ref={headingRef}>
 
           {/* MODERN, BOLD HEADING + ANIMATED UNDERLINE */}
           <div className="group inline-block mb-6">
@@ -74,25 +103,24 @@ const EssentialExplorerGrid = () => {
               Your guide to discovering Cape Coast
             </h2>
 
-            {/* Animated underline */}
+            {/* Animated underline - "Opens and Closes" when in view */}
             <div
-              className="
-                mx-auto mt-3 h-[3px] w-0 
+              className={`
+                mx-auto mt-3 h-[3px] 
                 bg-amber-500 rounded-full
-                transition-all duration-700 ease-out 
-                group-hover:w-[70%]
-                animate-[reveal_1.1s_ease-out_forwards]
-              "
+                transition-all duration-700 ease-out
+                ${isInView ? 'animate-[breath_4s_ease-in-out_infinite]' : 'w-0 opacity-0'}
+              `}
             ></div>
           </div>
 
-          {/* Animation Keyframes */}
+          {/* Animation Keyframes for "Open and Close" effect */}
           <style>
             {`
-              @keyframes reveal {
-                0% { width: 0; opacity: 0.4; }
-                50% { width: 35%; opacity: 1; }
-                100% { width: 60%; opacity: 1; }
+              @keyframes breath {
+                0% { width: 10%; opacity: 0.6; }
+                50% { width: 75%; opacity: 1; }
+                100% { width: 10%; opacity: 0.6; }
               }
             `}
           </style>
