@@ -19,28 +19,32 @@ export default function WhyVisit() {
     {
       icon: Castle,
       title: 'Rich heritage',
-      image: '/images/why-visit/heritage.jpg', // Cape Coast / Elmina castle
+      // Updated with a Castle/Fort image
+      image: 'https://images.unsplash.com/photo-1599576838376-44f8cb81e30d?q=80&w=1000&auto=format&fit=crop', 
       description:
         'Walk through Cape Coast and Elmina castles with local guides who share real stories about the transatlantic slave trade and the people who lived through it.',
     },
     {
       icon: Waves,
       title: 'Life on the coastline',
-      image: '/images/why-visit/coastline.jpg', // Fishing boats / beach
+      // Updated with a Coastline/Fishing Boats image
+      image: 'https://images.unsplash.com/photo-1518837695005-2083093ee35b?q=80&w=1000&auto=format&fit=crop', 
       description:
         'Watch fishermen launch their boats at sunrise, relax on quiet beaches, and take boat rides along a shoreline that has carried centuries of journeys.',
     },
     {
       icon: Heart,
       title: 'A homecoming for the diaspora',
-      image: '/images/why-visit/diaspora.jpg', // Door of No Return / visitors
+      // Updated with an image evoking connection/return (hands/people)
+      image: 'https://images.unsplash.com/photo-1531206715517-5c0ba140b2b8?q=80&w=1000&auto=format&fit=crop', 
       description:
         'Many in the African diaspora come here to stand where their ancestors last stood, walk through the Door of No Return, and quietly say, “I am back.”',
     },
     {
       icon: Users,
       title: 'Living culture and everyday life',
-      image: '/images/why-visit/culture.jpg', // Festival / everyday life
+      // Updated with a Culture/Drumming/Festival image
+      image: 'https://images.unsplash.com/photo-1545259742-b4fd8fea67e4?q=80&w=1000&auto=format&fit=crop', 
       description:
         'Join festivals, hear drums and hymns in the same streets, taste home-cooked food, and meet the families who keep Cape Coast’s traditions alive.',
     },
