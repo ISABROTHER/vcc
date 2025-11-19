@@ -68,12 +68,33 @@ const EssentialExplorerGrid = () => {
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
         <div className="mb-8 sm:mb-10 text-center">
 
-          {/* MAIN HEADING — Balanced Traditional Size */}
-          <h2 className="text-[28px] sm:text-[36px] font-light text-slate-900 tracking-[-0.015em] leading-snug font-playwrite mb-4">
-            Your guide to discovering Cape Coast
-          </h2>
+          {/* MAIN HEADING WITH ANIMATED UNDERLINE */}
+          <div className="group inline-block">
+            <h2 className="text-[28px] sm:text-[36px] font-light text-slate-900 tracking-[-0.015em] leading-snug font-playwrite">
+              Your guide to discovering Cape Coast
+            </h2>
+            <div
+              className="
+                mx-auto mt-2 h-[2px] w-0 
+                bg-slate-900 
+                transition-all duration-700 ease-out 
+                group-hover:w-[70%] 
+                animate-[reveal_1.2s_ease-out_forwards]
+              "
+            ></div>
+          </div>
 
-          <p className="text-xs font-semibold tracking-[0.22em] text-slate-500 uppercase">
+          <style>
+            {`
+              @keyframes reveal {
+                0% { width: 0; opacity: 0.4; }
+                40% { width: 40%; opacity: 1; }
+                100% { width: 60%; opacity: 1; }
+              }
+            `}
+          </style>
+
+          <p className="text-xs font-semibold tracking-[0.22em] text-slate-500 uppercase mt-4">
             Plan your Cape Coast trip
           </p>
 
@@ -119,7 +140,7 @@ export default function HomePage() {
       <Heritage />
       <Experiences />
       <Events />
-      <CallToAction /> 
+      <CallToAction />
       <BottomNav />
     </div>
   );
