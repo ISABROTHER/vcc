@@ -90,9 +90,9 @@ export default function Hero() {
     }
   }, [typingPhase, line1, line2, currentSlide]);
 
-  // Auto-advance slides every 8 seconds
+  // Auto-advance slides every 4 seconds (UPDATED FROM 8000)
   useEffect(() => {
-    const interval = setInterval(nextSlide, 8000);
+    const interval = setInterval(nextSlide, 4000);
     return () => clearInterval(interval);
   }, [nextSlide]);
 
@@ -127,11 +127,9 @@ export default function Hero() {
         <div className="w-full">
           
           {/* Headline - TYPEWRITER EFFECT */}
-          {/* UPDATED: Removed mb-4, changed to mb-2. Tightened leading. */}
           <h1 key={currentImageIndex} className="font-bold text-white mb-2 leading-none tracking-tight drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)] pointer-events-auto">
             
             {/* Line 1 */}
-            {/* UPDATED: Removed min-h-[1.5em] (was creating gaps), added min-h-[1.2em]. Removed whitespace-nowrap so it's safer on tiny screens, but added md:whitespace-nowrap. */}
             <span className="block text-xl sm:text-2xl md:text-[4vw] font-medium tracking-normal mb-0 md:whitespace-nowrap min-h-[1.2em]">
               {line1}
               {typingPhase === 'line1' && (
@@ -140,7 +138,6 @@ export default function Hero() {
             </span>
 
             {/* Line 2 (Golden Gradient + Blur Animation) */}
-            {/* UPDATED: Added `md:whitespace-nowrap`. This allows wrapping on mobile (so "Castle" goes to next line) but keeps one line on desktop. Tightened leading-tight to leading-none. */}
             <span className={`block font-outfit font-extrabold tracking-tight leading-none text-5xl md:text-[9vw] text-transparent bg-clip-text bg-gradient-to-r from-white via-amber-300 to-yellow-500 drop-shadow-sm md:whitespace-nowrap min-h-[1.2em] ${
                 typingPhase !== 'line1' ? 'animate-blur-in animate-text-shimmer' : ''
             }`}>
@@ -192,7 +189,7 @@ export default function Hero() {
             <div 
               className={`absolute top-0 left-0 h-full bg-amber-400 rounded-full transition-all duration-300 ${
                 index === currentImageIndex 
-                  ? 'animate-[load_8s_linear_forwards] w-full' 
+                  ? 'animate-[load_4s_linear_forwards] w-full' // UPDATED: load_4s matches the interval
                   : index < currentImageIndex 
                     ? 'w-full opacity-100' 
                     : 'w-0 opacity-0'
