@@ -1,6 +1,33 @@
+import React, { useState, useEffect, useRef } from 'react';
 import { Castle, Waves, Heart, Users } from 'lucide-react';
 
 export default function WhyVisit() {
+  const [isInView, setIsInView] = useState(false);
+  const headingRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true);
+        } else {
+          setIsInView(false);
+        }
+      },
+      { threshold: 0.5 }
+    );
+
+    if (headingRef.current) {
+      observer.observe(headingRef.current);
+    }
+
+    return () => {
+      if (headingRef.current) {
+        observer.unobserve(headingRef.current);
+      }
+    };
+  }, []);
+
   const reasons = [
     {
       icon: Castle,
@@ -31,11 +58,34 @@ export default function WhyVisit() {
   return (
     <section className="py-20 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-blue-900 mb-4">
-            Why Visit Cape Coast?
-          </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+        {/* HEADING MATCHING "Your guide to discovering Cape Coast" */}
+        <div className="text-center mb-16" ref={headingRef}>
+          <div className="group inline-block mb-6">
+            <h2 className="text-[28px] sm:text-[38px] font-normal text-slate-900 leading-tight font-playwrite">
+              Why Visit Cape Coast?
+            </h2>
+
+            <div
+              className={`
+                mx-auto mt-3 h-[3px]
+                bg-amber-500 rounded-full
+                transition-all duration-700 ease-out
+                ${isInView ? 'animate-[breath_4s_ease-in-out_infinite]' : 'w-0 opacity-0'}
+              `}
+            ></div>
+          </div>
+
+          <style>
+            {`
+              @keyframes breath {
+                0% { width: 10%; opacity: 0.6; }
+                50% { width: 75%; opacity: 1; }
+                100% { width: 10%; opacity: 0.6; }
+              }
+            `}
+          </style>
+
+          <p className="text-xl text-gray-700 max-w-3xl mx-auto">
             Because families still live beside the castles, the ocean still carries the stories,
             and visitors come to stand where their ancestors once stood.
           </p>
