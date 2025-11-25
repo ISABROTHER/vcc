@@ -6,7 +6,7 @@ import {
   Landmark, 
   CreditCard, 
   Building2, 
-  Banknote,
+  ChevronRight,
   Info
 } from 'lucide-react';
 
@@ -134,46 +134,47 @@ const bankData: BankLocation[] = [
 ];
 
 const BankIcon = ({ type }: { type: string }) => {
-  if (type === 'atm') return <CreditCard className="text-emerald-600" size={24} />;
-  if (type === 'rural') return <Building2 className="text-amber-600" size={24} />;
-  return <Landmark className="text-blue-700" size={24} />;
+  if (type === 'atm') return <CreditCard className="text-emerald-600" size={20} />;
+  if (type === 'rural') return <Building2 className="text-amber-600" size={20} />;
+  return <Landmark className="text-blue-700" size={20} />;
 };
 
-const BankCard = ({ bank }: { bank: BankLocation }) => {
-  // Construct Google Maps Query
+// Compact List Item Component
+const CompactBankItem = ({ bank }: { bank: BankLocation }) => {
   const mapQuery = encodeURIComponent(`${bank.name} ${bank.location} Cape Coast Ghana`);
   const mapUrl = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
 
   return (
-    <div className="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 flex flex-col gap-3 transition-all hover:shadow-md active:scale-[0.99]">
-      <div className="flex items-start justify-between gap-4">
-        <div className="flex items-start gap-4">
-          <div className={`w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 ${
-            bank.type === 'atm' ? 'bg-emerald-100' : 
-            bank.type === 'rural' ? 'bg-amber-100' : 'bg-blue-100'
-          }`}>
-            <BankIcon type={bank.type} />
-          </div>
-          <div>
-            <h3 className="font-bold text-slate-900 text-lg leading-tight">{bank.name}</h3>
-            <div className="flex items-start gap-1.5 mt-1.5 text-slate-600 text-sm leading-snug">
-              <MapPin size={14} className="mt-0.5 flex-shrink-0 text-slate-400" />
-              <span>{bank.location}</span>
-            </div>
-          </div>
-        </div>
+    <a 
+      href={mapUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group flex items-center gap-4 p-4 hover:bg-slate-50 active:bg-slate-100 transition-colors border-b border-slate-100 last:border-0"
+    >
+      {/* Icon Box */}
+      <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm ${
+        bank.type === 'atm' ? 'bg-emerald-50' : 
+        bank.type === 'rural' ? 'bg-amber-50' : 'bg-blue-50'
+      }`}>
+        <BankIcon type={bank.type} />
       </div>
 
-      <a 
-        href={mapUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="mt-2 flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-slate-50 text-slate-700 font-semibold text-sm border border-slate-200 hover:bg-blue-50 hover:text-blue-700 hover:border-blue-200 transition-colors"
-      >
-        <Navigation size={16} />
-        Get Directions
-      </a>
-    </div>
+      {/* Text Content */}
+      <div className="flex-grow min-w-0">
+        <h3 className="text-[15px] font-semibold text-slate-900 truncate">
+          {bank.name}
+        </h3>
+        <p className="text-[13px] text-slate-500 truncate flex items-center gap-1">
+          <MapPin size={12} />
+          {bank.location}
+        </p>
+      </div>
+
+      {/* Direction Arrow */}
+      <div className="flex-shrink-0 text-slate-300 group-hover:text-amber-500 transition-colors">
+        <Navigation size={20} />
+      </div>
+    </a>
   );
 };
 
@@ -190,56 +191,52 @@ export default function BanksPage() {
   }, [searchTerm]);
 
   return (
-    <div className="min-h-screen bg-slate-50 pt-24 pb-24 px-4 sm:px-6">
+    <div className="min-h-screen bg-slate-50 pt-20 pb-24">
       <div className="max-w-xl mx-auto">
-        {/* Header */}
-        <div className="mb-6">
-          <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight mb-2">
-            Banks & ATMs
-          </h1>
-          <p className="text-slate-600 text-base">
-            Find cash and services near you. Most major banks accept international Visa & Mastercard.
-          </p>
-        </div>
+        
+        {/* Header & Search Container */}
+        <div className="px-4 sm:px-6 pb-4 pt-4 bg-slate-50 sticky top-16 z-30 backdrop-blur-xl bg-opacity-90">
+          <h1 className="text-2xl font-bold text-slate-900 mb-1">Banks & ATMs</h1>
+          <p className="text-sm text-slate-500 mb-4">Find cash & services nearby</p>
 
-        {/* Sticky Search */}
-        <div className="sticky top-20 z-30 mb-6">
-          <div className="relative shadow-lg rounded-2xl">
-            <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
-              <Search className="h-5 w-5 text-slate-400" />
+          {/* Compact Search Bar */}
+          <div className="relative">
+            <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
+              <Search className="h-4 w-4 text-slate-400" />
             </div>
             <input
               type="text"
-              placeholder="Search 'UCC', 'Market', 'ATM'..."
+              placeholder="Search 'UCC', 'Market'..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="block w-full pl-12 pr-4 py-4 bg-white border-0 rounded-2xl text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-amber-500 text-base font-medium"
+              className="block w-full pl-10 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 text-sm shadow-sm"
             />
           </div>
         </div>
 
-        {/* Tips Banner */}
-        <div className="bg-blue-600 rounded-2xl p-4 text-white mb-8 flex items-start gap-3 shadow-md">
-          <Info className="flex-shrink-0 mt-0.5 text-blue-200" size={20} />
-          <div className="text-sm leading-relaxed">
-            <span className="font-bold block mb-0.5">Traveler Tip</span>
-            Markets and taxis usually require cash (Ghana Cedis). ATMs are reliable, but it's good to carry small bills.
-          </div>
-        </div>
-
-        {/* List */}
-        <div className="space-y-4">
+        {/* Main List Container */}
+        <div className="mx-4 sm:mx-6 bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
           {filteredBanks.length > 0 ? (
-            filteredBanks.map((bank) => (
-              <BankCard key={bank.id} bank={bank} />
-            ))
+            <div className="divide-y divide-slate-100">
+              {filteredBanks.map((bank) => (
+                <CompactBankItem key={bank.id} bank={bank} />
+              ))}
+            </div>
           ) : (
-            <div className="text-center py-10 text-slate-500">
-              <Banknote className="mx-auto mb-3 opacity-30" size={48} />
-              <p>No banks found matching "{searchTerm}"</p>
+            <div className="text-center py-12 px-4">
+              <p className="text-slate-500 text-sm">No results found for "{searchTerm}"</p>
             </div>
           )}
         </div>
+
+        {/* Footer Tip */}
+        <div className="mt-6 px-6 text-center">
+          <div className="inline-flex items-center gap-2 bg-blue-50 text-blue-700 px-3 py-1.5 rounded-full text-xs font-medium">
+            <Info size={14} />
+            Most banks open Mon-Fri 8:30am - 4pm
+          </div>
+        </div>
+
       </div>
     </div>
   );
