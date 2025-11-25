@@ -7,6 +7,7 @@ import {
   Bed,
   HelpCircle,
   Compass,
+  Banknote,
 } from 'lucide-react';
 
 import Hero from '../components/Hero';
@@ -19,8 +20,8 @@ import BottomNav from '../components/BottomNav';
 
 const gridItems = [
   {
-    title: 'Attractions',
-    description: 'Castles, beaches, museums and other must-see places.',
+    title: 'Attractions & Tours',
+    description: 'Castles, beaches, museums, and guided experiences.',
     icon: Landmark,
     href: '/see-do',
     color: 'bg-amber-100',
@@ -40,10 +41,10 @@ const gridItems = [
     color: 'bg-sky-100',
   },
   {
-    title: 'Tours & Experiences',
-    description: 'Guided tours, day trips and activities you can book.',
-    icon: Compass,
-    href: '/see-do',
+    title: 'Banks & ATMs',
+    description: 'Find local banks, ATMs and currency exchange.',
+    icon: Banknote,
+    href: '/tourist-info',
     color: 'bg-amber-100',
   },
   {
