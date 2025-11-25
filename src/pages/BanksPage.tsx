@@ -10,7 +10,8 @@ import {
   Share2,
   Copy,
   Clock,
-  ChevronRight
+  ChevronRight,
+  Info
 } from 'lucide-react';
 
 // --- Types & Data ---
@@ -55,9 +56,9 @@ const getStatusColor = (status?: string) => {
 
 const getIcon = (type: BankType) => {
   switch (type) {
-    case 'atm': return <CreditCard size={20} className="text-emerald-600" />;
-    case 'rural': return <Building2 size={20} className="text-amber-600" />;
-    default: return <Landmark size={20} className="text-blue-600" />;
+    case 'atm': return <CreditCard size={24} className="text-emerald-600" />;
+    case 'rural': return <Building2 size={24} className="text-amber-600" />;
+    default: return <Landmark size={24} className="text-blue-600" />;
   }
 };
 
@@ -94,13 +95,13 @@ const DetailSheet = ({
   return (
     <>
       <div 
-        className={`fixed inset-0 bg-black/60 backdrop-blur-sm z-[90] transition-opacity duration-300 ${
+        className={`fixed inset-0 bg-black/60 backdrop-blur-md z-[90] transition-opacity duration-300 ${
           isOpen && !isClosing ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}
         onClick={handleClose}
       />
       <div 
-        className={`fixed inset-x-0 bottom-0 z-[100] bg-white rounded-t-[2rem] shadow-2xl transform transition-transform duration-300 cubic-bezier(0.2, 0.9, 0.3, 1) md:inset-x-auto md:left-1/2 md:top-1/2 md:bottom-auto md:-translate-x-1/2 md:-translate-y-1/2 md:w-full md:max-w-md md:rounded-3xl ${
+        className={`fixed inset-x-0 bottom-0 z-[100] bg-white rounded-t-[2.5rem] shadow-2xl transform transition-transform duration-300 cubic-bezier(0.2, 0.9, 0.3, 1) md:inset-x-auto md:left-1/2 md:top-1/2 md:bottom-auto md:-translate-x-1/2 md:-translate-y-1/2 md:w-full md:max-w-md md:rounded-3xl ${
           isOpen && !isClosing 
             ? 'translate-y-0 md:-translate-y-1/2' 
             : 'translate-y-full md:translate-y-10'
@@ -108,45 +109,54 @@ const DetailSheet = ({
       >
         {bank && (
           <div className="p-6 pb-10 md:pb-6 relative">
-            <div className="w-12 h-1.5 bg-slate-200 rounded-full mx-auto mb-6 md:hidden" />
+            {/* Drag Handle */}
+            <div className="w-12 h-1.5 bg-slate-200/80 rounded-full mx-auto mb-8 md:hidden" />
             
-            <div className="flex items-start justify-between mb-6">
-              <div className="flex gap-4 pr-8">
-                <div className={`w-14 h-14 rounded-2xl flex items-center justify-center shadow-sm flex-shrink-0 ${
-                  bank.type === 'atm' ? 'bg-emerald-50' : 
-                  bank.type === 'rural' ? 'bg-amber-50' : 'bg-blue-50'
-                }`}>
-                  {getIcon(bank.type)}
-                </div>
-                <div>
-                  <h2 className="text-xl font-bold text-slate-900 leading-tight">{bank.name}</h2>
-                  <div className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 mt-2 rounded-full text-xs font-semibold border ${getStatusColor(bank.status)}`}>
-                    <Clock size={12} />
-                    {bank.status === '24/7' ? 'Open 24/7' : 'Standard Hours'}
-                  </div>
-                </div>
+            {/* Close Button */}
+            <button 
+              onClick={handleClose} 
+              className="absolute top-6 right-6 p-2 bg-slate-50 rounded-full text-slate-400 hover:bg-slate-100 hover:text-slate-600 transition"
+            >
+              <X size={24} />
+            </button>
+
+            {/* Header Info */}
+            <div className="flex flex-col items-center text-center mb-8">
+              <div className={`w-20 h-20 rounded-3xl flex items-center justify-center shadow-sm mb-4 ${
+                bank.type === 'atm' ? 'bg-emerald-50' : 
+                bank.type === 'rural' ? 'bg-amber-50' : 'bg-blue-50'
+              }`}>
+                {getIcon(bank.type)}
               </div>
-              <button onClick={handleClose} className="absolute top-6 right-6 p-2 bg-slate-100 rounded-full hover:bg-slate-200 transition">
-                <X size={20} className="text-slate-500" />
-              </button>
+              
+              <h2 className="text-2xl font-bold text-slate-900 leading-tight px-4 mb-2">
+                {bank.name}
+              </h2>
+              
+              <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border ${getStatusColor(bank.status)}`}>
+                <Clock size={12} />
+                {bank.status === '24/7' ? 'Open 24/7' : 'Standard Banking Hours'}
+              </div>
             </div>
 
-            <div className="bg-slate-50 rounded-2xl p-4 border border-slate-100 mb-6 flex gap-3">
-               <MapPin className="text-slate-400 flex-shrink-0 mt-0.5" size={20} />
+            {/* Location Card */}
+            <div className="bg-slate-50 rounded-2xl p-4 border border-slate-100 mb-8 flex gap-3 items-start">
+               <MapPin className="text-slate-400 flex-shrink-0 mt-1" size={20} />
                <div className="text-sm text-slate-700 font-medium leading-relaxed">
                  {bank.location}
                </div>
             </div>
 
+            {/* Action Buttons */}
             <div className="grid grid-cols-2 gap-3">
               <a 
                 href={googleMapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="col-span-2 flex items-center justify-center gap-2 bg-blue-600 text-white font-semibold py-3.5 rounded-xl active:scale-[0.98] transition hover:bg-blue-700 shadow-lg shadow-blue-200"
+                className="col-span-2 flex items-center justify-center gap-2 bg-slate-900 text-white font-semibold text-lg py-4 rounded-2xl active:scale-[0.98] transition hover:bg-black shadow-xl shadow-slate-200"
               >
-                <Navigation size={18} />
-                Navigate Now
+                <Navigation size={20} />
+                Navigate
               </a>
               <button 
                 onClick={() => navigator.clipboard.writeText(`${bank.name}, ${bank.location}`)}
@@ -201,95 +211,100 @@ export default function BanksPage() {
   }, [searchTerm, activeTab]);
 
   return (
-    <div className="min-h-screen bg-slate-50 relative pb-28 overflow-x-hidden">
+    <div className="min-h-screen bg-slate-50 relative pb-32">
       
-      {/* Header Space - Padded to clear the sticky site header */}
-      <div className="pt-32 px-4 sm:px-6 pb-2 bg-gradient-to-b from-white to-slate-50">
-        <div className="max-w-2xl mx-auto">
-          <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">
-            Finance
-          </h1>
-          <p className="text-slate-500 font-medium">Find ATMs & branches nearby</p>
-        </div>
-      </div>
+      {/* TOP SECTION - Fixed Header 
+        Ensures search and title are always visible but don't overlap site nav
+      */}
+      <div className="sticky top-0 z-30 bg-slate-50/95 backdrop-blur-xl border-b border-slate-200/50 shadow-sm">
+        {/* Spacer to push content below the main site navigation */}
+        <div className="h-20 md:h-24 w-full bg-transparent pointer-events-none"></div>
 
-      {/* Sticky Controls */}
-      <div className="sticky top-16 z-30 bg-slate-50/95 backdrop-blur-md px-4 sm:px-6 py-4 border-b border-slate-200/50">
-        <div className="max-w-2xl mx-auto space-y-4">
-          
-          {/* Search */}
-          <div className="relative group w-full">
-            <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
-              <Search className="h-5 w-5 text-slate-400 group-focus-within:text-blue-500 transition-colors" />
+        <div className="px-5 pb-5 max-w-2xl mx-auto space-y-4">
+          <div className="flex items-end justify-between">
+            <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">
+              Finance
+            </h1>
+            <div className="bg-white px-3 py-1 rounded-full text-xs font-bold text-slate-500 border border-slate-200 shadow-sm flex items-center gap-1">
+              <Info size={12} />
+              {filteredBanks.length} Locations
             </div>
-            <input
-              type="text"
-              placeholder="Search 'UCC', 'Kotokuraba'..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="block w-full pl-12 pr-4 py-3 bg-white border border-slate-200 rounded-2xl text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm font-medium"
-            />
           </div>
+          
+          {/* Search & Filter Container */}
+          <div className="space-y-3">
+            <div className="relative group w-full">
+              <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+                <Search className="h-5 w-5 text-slate-400 group-focus-within:text-slate-900 transition-colors" />
+              </div>
+              <input
+                type="text"
+                placeholder="Search banks, ATMs, areas..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="block w-full pl-12 pr-4 py-3.5 bg-white border-0 rounded-2xl text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-slate-900/10 shadow-sm font-medium text-base"
+              />
+            </div>
 
-          {/* Filter Tabs - FIT TO SCREEN (Grid Layout) */}
-          <div className="grid grid-cols-3 gap-2 w-full">
-            {['All', 'Bank', 'ATM'].map((tab) => (
-              <button
-                key={tab}
-                onClick={() => setActiveTab(tab as any)}
-                className={`w-full py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all border shadow-sm ${
-                  activeTab === tab 
-                    ? 'bg-slate-900 text-white border-slate-900 ring-2 ring-slate-200' 
-                    : 'bg-white text-slate-500 border-slate-200 hover:bg-slate-50'
-                }`}
-              >
-                {tab === 'Bank' ? 'Banks' : tab}
-              </button>
-            ))}
+            {/* Full Width Grid Tabs */}
+            <div className="grid grid-cols-3 gap-2 p-1 bg-slate-200/50 rounded-xl">
+              {['All', 'Bank', 'ATM'].map((tab) => (
+                <button
+                  key={tab}
+                  onClick={() => setActiveTab(tab as any)}
+                  className={`py-2 rounded-lg text-xs sm:text-sm font-bold transition-all ${
+                    activeTab === tab 
+                      ? 'bg-white text-slate-900 shadow-sm scale-[1.02]' 
+                      : 'text-slate-500 hover:text-slate-700'
+                  }`}
+                >
+                  {tab === 'Bank' ? 'Banks' : tab}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       </div>
 
-      {/* List Content */}
-      <div className="max-w-2xl mx-auto px-4 sm:px-6 py-6">
+      {/* LIST CONTENT */}
+      <div className="max-w-2xl mx-auto px-4 sm:px-5 py-6 space-y-3">
         {filteredBanks.length > 0 ? (
-          <div className="grid gap-3">
-            {filteredBanks.map((bank) => (
-              <div 
-                key={bank.id}
-                onClick={() => setSelectedBank(bank)}
-                className="group bg-white p-4 rounded-2xl border border-slate-200/60 shadow-[0_2px_8px_rgba(0,0,0,0.02)] flex items-center gap-4 transition-all active:scale-[0.98] hover:shadow-md hover:border-blue-200 cursor-pointer w-full"
-              >
-                <div className={`w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0 transition-colors ${
-                  bank.type === 'atm' ? 'bg-emerald-50 text-emerald-600' : 
-                  bank.type === 'rural' ? 'bg-amber-50 text-amber-600' : 'bg-blue-50 text-blue-600'
-                }`}>
-                  {bank.type === 'atm' ? <CreditCard size={20} /> : <Landmark size={20} />}
-                </div>
-
-                <div className="flex-grow min-w-0">
-                  <div className="flex justify-between items-start">
-                     <h3 className="font-bold text-slate-900 text-[15px] truncate pr-2">
-                      {bank.name}
-                    </h3>
-                  </div>
-                  <p className="text-sm text-slate-500 truncate mt-0.5">
-                    {bank.location}
-                  </p>
-                </div>
-
-                <ChevronRight size={18} className="text-slate-300 group-hover:text-blue-500 transition-colors flex-shrink-0" />
+          filteredBanks.map((bank) => (
+            <div 
+              key={bank.id}
+              onClick={() => setSelectedBank(bank)}
+              className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm flex items-center gap-4 active:scale-[0.97] active:bg-slate-50 transition-all cursor-pointer"
+            >
+              <div className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 ${
+                bank.type === 'atm' ? 'bg-emerald-50 text-emerald-600' : 
+                bank.type === 'rural' ? 'bg-amber-50 text-amber-600' : 'bg-blue-50 text-blue-600'
+              }`}>
+                {bank.type === 'atm' ? <CreditCard size={22} /> : <Landmark size={22} />}
               </div>
-            ))}
-          </div>
+
+              <div className="flex-grow min-w-0">
+                <h3 className="font-bold text-slate-900 text-[15px] leading-snug mb-0.5 truncate">
+                  {bank.name}
+                </h3>
+                <p className="text-sm text-slate-500 truncate">
+                  {bank.location}
+                </p>
+              </div>
+
+              <div className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center flex-shrink-0">
+                <ChevronRight size={16} className="text-slate-400" />
+              </div>
+            </div>
+          ))
         ) : (
           <div className="text-center py-20 opacity-50">
             <Building2 className="mx-auto mb-4 text-slate-400" size={48} />
-            <p className="text-slate-500 font-medium">No results found.</p>
+            <p className="text-slate-500 font-medium">No locations found</p>
           </div>
         )}
       </div>
 
+      {/* Detail Overlay */}
       <DetailSheet 
         bank={selectedBank} 
         isOpen={!!selectedBank} 
