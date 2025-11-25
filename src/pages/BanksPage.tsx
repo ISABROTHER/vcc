@@ -8,15 +8,12 @@ import {
   Copy,
   Clock,
   ChevronRight,
-  Info,
   CreditCard,
-  Building2,
   Landmark,
   LocateFixed,
   Sparkles,
-  Globe,
-  Car,
-  Accessibility
+  ArrowUpRight,
+  ShieldCheck
 } from 'lucide-react';
 
 // --- Types & Data ---
@@ -31,7 +28,6 @@ interface BankLocation {
   tags: string[];
   status?: 'open' | 'closed' | '24/7';
   image: string;
-  brandColor: string; 
   coordinates: { lat: number; lng: number };
   services: string[];
   crowdLevel?: 'Quiet' | 'Moderate' | 'Busy';
@@ -40,84 +36,68 @@ interface BankLocation {
 
 const bankData: BankLocation[] = [
   { 
-    id: 1, name: 'GCB Bank (Main)', location: 'Chapel Square / Castle Area', type: 'bank', 
+    id: 1, name: 'GCB Bank', location: 'Chapel Square, Castle Area', type: 'bank', 
     tags: ['commercial', 'castle'], status: 'open',
-    image: 'https://images.unsplash.com/photo-1621981386829-9b788a817929?auto=format&fit=crop&w=200&q=80',
-    brandColor: 'bg-red-600',
+    image: 'https://images.unsplash.com/photo-1621981386829-9b788a817929?auto=format&fit=crop&w=100&q=80',
     coordinates: { lat: 5.1064, lng: -1.2466 },
     services: ['Forex', 'Parking', 'ATM'],
-    crowdLevel: 'Moderate',
-    waitTime: '10 min'
+    crowdLevel: 'Moderate', waitTime: '10 min'
   },
   { 
-    id: 2, name: 'GCB Bank (UCC)', location: 'UCC Science Area', type: 'bank', 
+    id: 2, name: 'GCB Bank', location: 'UCC Science Area', type: 'bank', 
     tags: ['commercial', 'ucc'], status: 'open',
-    image: 'https://images.unsplash.com/photo-1541354329998-f4d9a9f9297f?auto=format&fit=crop&w=200&q=80',
-    brandColor: 'bg-red-600',
+    image: 'https://images.unsplash.com/photo-1541354329998-f4d9a9f9297f?auto=format&fit=crop&w=100&q=80',
     coordinates: { lat: 5.1160, lng: -1.2920 },
     services: ['ATM', 'Student Services'],
-    crowdLevel: 'Busy',
-    waitTime: '25 min'
+    crowdLevel: 'Busy', waitTime: '25 min'
   },
   { 
     id: 3, name: 'Fidelity Bank', location: 'Inner Ring Road', type: 'bank', 
     tags: ['commercial', 'market'], status: 'open',
-    image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=200&q=80',
-    brandColor: 'bg-orange-500',
+    image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=100&q=80',
     coordinates: { lat: 5.1130, lng: -1.2500 },
     services: ['Forex', 'Instant Card'],
-    crowdLevel: 'Quiet',
-    waitTime: '5 min'
+    crowdLevel: 'Quiet', waitTime: '5 min'
   },
   { 
     id: 4, name: 'Absa Bank', location: 'Commercial Street', type: 'bank', 
     tags: ['commercial', 'market'], status: 'open',
-    image: 'https://images.unsplash.com/photo-1554469384-e58fac16e23a?auto=format&fit=crop&w=200&q=80',
-    brandColor: 'bg-red-700',
+    image: 'https://images.unsplash.com/photo-1554469384-e58fac16e23a?auto=format&fit=crop&w=100&q=80',
     coordinates: { lat: 5.1110, lng: -1.2480 },
     services: ['Forex', 'Prestige Banking'],
-    crowdLevel: 'Moderate',
-    waitTime: '15 min'
+    crowdLevel: 'Moderate', waitTime: '15 min'
   },
   { 
     id: 5, name: 'CalBank', location: 'Pedu Junction', type: 'bank', 
     tags: ['commercial', 'pedu'], status: 'open',
-    image: 'https://images.unsplash.com/photo-1565514020176-892eb1036e67?auto=format&fit=crop&w=200&q=80',
-    brandColor: 'bg-yellow-500',
+    image: 'https://images.unsplash.com/photo-1565514020176-892eb1036e67?auto=format&fit=crop&w=100&q=80',
     coordinates: { lat: 5.1250, lng: -1.2600 },
     services: ['ATM', 'Parking'],
-    crowdLevel: 'Quiet',
-    waitTime: '2 min'
+    crowdLevel: 'Quiet', waitTime: '2 min'
   },
   { 
     id: 6, name: 'ADB Bank', location: 'Commercial Street', type: 'bank', 
     tags: ['commercial', 'town'], status: 'open',
-    image: 'https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?auto=format&fit=crop&w=200&q=80',
-    brandColor: 'bg-green-600',
+    image: 'https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?auto=format&fit=crop&w=100&q=80',
     coordinates: { lat: 5.1070, lng: -1.2470 },
     services: ['Agri-Finance', 'ATM'],
-    crowdLevel: 'Moderate',
-    waitTime: '12 min'
+    crowdLevel: 'Moderate', waitTime: '12 min'
   },
   { 
     id: 12, name: 'Ecobank ATM', location: 'Kotokraba Road', type: 'atm', 
     tags: ['atm', 'market'], status: '24/7',
-    image: 'https://images.unsplash.com/photo-1601597111158-2fceff292cdc?auto=format&fit=crop&w=200&q=80',
-    brandColor: 'bg-blue-600',
+    image: 'https://images.unsplash.com/photo-1601597111158-2fceff292cdc?auto=format&fit=crop&w=100&q=80',
     coordinates: { lat: 5.1140, lng: -1.2490 },
     services: ['24/7 Access', 'Cash Deposit'],
-    crowdLevel: 'Quiet',
-    waitTime: '0 min'
+    crowdLevel: 'Quiet', waitTime: '0 min'
   },
   { 
     id: 16, name: 'GTBank ATM', location: 'Kotokuraba Market', type: 'atm', 
     tags: ['atm', 'market'], status: '24/7',
-    image: 'https://images.unsplash.com/photo-1621360841012-3f829f271783?auto=format&fit=crop&w=200&q=80',
-    brandColor: 'bg-orange-600',
+    image: 'https://images.unsplash.com/photo-1621360841012-3f829f271783?auto=format&fit=crop&w=100&q=80',
     coordinates: { lat: 5.1135, lng: -1.2495 },
     services: ['24/7 Access'],
-    crowdLevel: 'Moderate',
-    waitTime: '2 min'
+    crowdLevel: 'Moderate', waitTime: '2 min'
   },
 ];
 
@@ -135,19 +115,12 @@ function calculateDistance(lat1: number, lon1: number, lat2: number, lon2: numbe
   return R * c; 
 }
 
-// Logic for "Smart Insight"
+// "Wealth Concierge" Insight Logic
 const getSmartInsight = (count: number, hasUserLoc: boolean) => {
   const hour = new Date().getHours();
-  if (hour > 17 || hour < 6) return { text: "It's late. Use 24/7 ATMs for safety.", icon: Sparkles, color: 'text-indigo-600', bg: 'bg-indigo-50 border-indigo-100' };
-  if (hasUserLoc) return { text: `Found ${count} locations near you.`, icon: MapPin, color: 'text-emerald-600', bg: 'bg-emerald-50 border-emerald-100' };
-  return { text: "Commercial St. has the most banks.", icon: Info, color: 'text-blue-600', bg: 'bg-blue-50 border-blue-100' };
-};
-
-const getServiceIcon = (service: string) => {
-  if (service === 'Forex') return <Globe size={10} />;
-  if (service === 'Parking') return <Car size={10} />;
-  if (service.includes('ATM')) return <CreditCard size={10} />;
-  return <Building2 size={10} />;
+  if (hour > 17 || hour < 6) return { text: "It's after hours. Showing safe, 24/7 ATM locations.", icon: ShieldCheck };
+  if (hasUserLoc) return { text: `${count} locations sorted by proximity to you.`, icon: MapPin };
+  return { text: "Commercial Street has the highest concentration of banks.", icon: Sparkles };
 };
 
 // --- Detail Sheet Component ---
@@ -185,21 +158,21 @@ const DetailSheet = ({
   return (
     <>
       <div 
-        className={`fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[90] transition-opacity duration-300 ${
+        className={`fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[90] transition-opacity duration-300 ${
           isOpen && !isClosing ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}
         onClick={handleClose}
       />
       <div 
-        className={`fixed inset-x-0 bottom-0 z-[100] bg-white rounded-t-[2rem] shadow-[0_-10px_40px_rgba(0,0,0,0.1)] transform transition-transform duration-300 cubic-bezier(0.2, 0.9, 0.3, 1) md:inset-x-auto md:left-1/2 md:top-1/2 md:bottom-auto md:-translate-x-1/2 md:-translate-y-1/2 md:w-full md:max-w-md md:rounded-3xl ${
+        className={`fixed inset-x-0 bottom-0 z-[100] bg-white rounded-t-[2.5rem] shadow-2xl transform transition-transform duration-300 cubic-bezier(0.2, 0.9, 0.3, 1) md:inset-x-auto md:left-1/2 md:top-1/2 md:bottom-auto md:-translate-x-1/2 md:-translate-y-1/2 md:w-full md:max-w-md md:rounded-3xl ${
           isOpen && !isClosing 
             ? 'translate-y-0 md:-translate-y-1/2' 
             : 'translate-y-full md:translate-y-10'
         }`}
       >
         {bank && (
-          <div className="p-6 pb-10 md:pb-6 relative">
-            <div className="w-12 h-1.5 bg-slate-200/80 rounded-full mx-auto mb-6 md:hidden" />
+          <div className="p-8 pb-10 md:pb-8 relative">
+            <div className="w-12 h-1 bg-slate-200 rounded-full mx-auto mb-8 md:hidden" />
             
             <button 
               onClick={handleClose} 
@@ -209,87 +182,78 @@ const DetailSheet = ({
             </button>
 
             {/* Header */}
-            <div className="flex items-start gap-5 mb-6">
-              <div className={`w-16 h-16 rounded-2xl flex items-center justify-center shadow-sm flex-shrink-0 text-white ${bank.brandColor}`}>
-                {bank.type === 'atm' ? <CreditCard size={28} /> : <Landmark size={28} />}
+            <div className="flex items-start gap-6 mb-8">
+              <div className="w-20 h-20 rounded-2xl overflow-hidden shadow-sm flex-shrink-0 bg-slate-100 border border-slate-100">
+                 <img src={bank.image} alt={bank.name} className="w-full h-full object-cover" />
               </div>
               <div>
-                <h2 className="text-xl font-bold text-slate-900 leading-tight mb-1">
+                <h2 className="text-2xl font-bold text-slate-900 leading-tight mb-2">
                   {bank.name}
                 </h2>
-                <div className="flex items-center gap-2">
-                   <div className={`w-2 h-2 rounded-full ${bank.status === 'closed' ? 'bg-rose-500' : 'bg-emerald-500 animate-pulse'}`} />
-                   <p className="text-sm text-slate-500 font-medium">
-                     {bank.status === '24/7' ? 'Open 24/7' : bank.status === 'open' ? 'Open Now' : 'Closed'}
-                   </p>
+                <div className="flex flex-wrap gap-2">
+                   {bank.services.slice(0, 2).map(s => (
+                     <span key={s} className="px-2 py-1 bg-slate-100 text-slate-600 text-xs font-semibold rounded-md">
+                       {s}
+                     </span>
+                   ))}
                 </div>
               </div>
             </div>
 
-            {/* Stats Grid */}
-            <div className="grid grid-cols-3 gap-3 mb-6">
-               <div className="bg-slate-50 rounded-2xl p-3 text-center border border-slate-100">
-                 <Clock className="w-5 h-5 mx-auto mb-1 text-slate-400" />
-                 <p className="text-[10px] uppercase tracking-wider text-slate-400 font-bold mb-0.5">Wait Time</p>
-                 <p className="text-sm font-bold text-slate-900">{bank.waitTime}</p>
+            {/* Key Information Grid */}
+            <div className="grid grid-cols-3 gap-4 mb-8">
+              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-100 text-center">
+                <Clock className="w-5 h-5 mx-auto mb-2 text-slate-400" />
+                <p className="text-xs font-bold text-slate-900 uppercase tracking-wide mb-1">Status</p>
+                <p className={`text-sm font-semibold ${bank.status === 'open' ? 'text-emerald-600' : 'text-slate-500'}`}>
+                  {bank.status === '24/7' ? '24/7' : bank.status === 'open' ? 'Open' : 'Closed'}
+                </p>
               </div>
-              <div className="bg-slate-50 rounded-2xl p-3 text-center border border-slate-100">
-                 <Users className="w-5 h-5 mx-auto mb-1 text-slate-400" />
-                 <p className="text-[10px] uppercase tracking-wider text-slate-400 font-bold mb-0.5">Crowd</p>
-                 <p className="text-sm font-bold text-slate-900">{bank.crowdLevel}</p>
+              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-100 text-center">
+                <Navigation className="w-5 h-5 mx-auto mb-2 text-slate-400" />
+                <p className="text-xs font-bold text-slate-900 uppercase tracking-wide mb-1">Distance</p>
+                <p className="text-sm font-semibold text-slate-900">
+                  {distance ? `${distance.toFixed(1)} km` : '--'}
+                </p>
               </div>
-               <div className="bg-slate-50 rounded-2xl p-3 text-center border border-slate-100">
-                 <Zap className="w-5 h-5 mx-auto mb-1 text-slate-400" />
-                 <p className="text-[10px] uppercase tracking-wider text-slate-400 font-bold mb-0.5">Service</p>
-                 <p className="text-sm font-bold text-slate-900">{bank.type === 'atm' ? 'Fast' : 'Full'}</p>
+              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-100 text-center">
+                <Clock className="w-5 h-5 mx-auto mb-2 text-slate-400" />
+                <p className="text-xs font-bold text-slate-900 uppercase tracking-wide mb-1">Wait</p>
+                <p className="text-sm font-semibold text-slate-900">{bank.waitTime}</p>
               </div>
             </div>
 
-            {/* Location */}
-            <div className="flex items-start gap-3 p-4 rounded-2xl bg-slate-50 border border-slate-100 mb-6">
-              <MapPin className="text-slate-400 mt-0.5" size={18} />
-              <div className="text-sm text-slate-600 leading-relaxed font-medium">
+            {/* Address */}
+            <div className="mb-8">
+              <p className="text-xs font-bold text-slate-400 uppercase tracking-wide mb-2">Location</p>
+              <p className="text-lg font-medium text-slate-900 leading-relaxed">
                 {bank.location}
-              </div>
+              </p>
             </div>
 
-            {/* Main Action */}
-            <div className="grid grid-cols-1 gap-3">
-              <a 
-                href={googleMapsUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-3 bg-slate-900 text-white font-bold text-base py-4 rounded-2xl active:scale-[0.98] transition hover:bg-black shadow-lg shadow-slate-200"
-              >
-                <Navigation size={18} />
-                Get Directions
-                {distance && <span className="opacity-60 text-sm font-normal">({distance.toFixed(1)} km)</span>}
-              </a>
-              
-              <div className="grid grid-cols-2 gap-3">
-                <button 
+            {/* Primary Action */}
+            <a 
+              href={googleMapsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-3 w-full bg-slate-900 text-white font-bold text-lg py-4 rounded-2xl hover:bg-black transition-all shadow-xl shadow-slate-200 active:scale-[0.98]"
+            >
+              <Navigation size={20} />
+              Navigate Now
+            </a>
+            
+            <div className="grid grid-cols-2 gap-4 mt-4">
+               <button 
                   onClick={() => navigator.clipboard.writeText(`${bank.name}, ${bank.location}`)}
-                  className="flex items-center justify-center gap-2 bg-white border border-slate-200 text-slate-700 font-semibold py-3 rounded-xl active:scale-[0.98] transition hover:bg-slate-50 text-sm"
+                  className="py-3 text-sm font-semibold text-slate-600 hover:text-slate-900 transition flex items-center justify-center gap-2"
                 >
-                  <Copy size={16} />
-                  Copy Address
-                </button>
-                <button 
-                   onClick={() => {
-                     if (navigator.share) {
-                       navigator.share({
-                         title: bank.name,
-                         text: `Check out ${bank.name} at ${bank.location}`,
-                         url: googleMapsUrl
-                       }).catch(() => {});
-                     }
-                   }}
-                  className="flex items-center justify-center gap-2 bg-white border border-slate-200 text-slate-700 font-semibold py-3 rounded-xl active:scale-[0.98] transition hover:bg-slate-50 text-sm"
+                  <Copy size={16} /> Copy Address
+               </button>
+               <button 
+                  className="py-3 text-sm font-semibold text-slate-600 hover:text-slate-900 transition flex items-center justify-center gap-2"
                 >
-                  <Share2 size={16} />
-                  Share
-                </button>
-              </div>
+                  <Share2 size={16} /> Share Location
+               </button>
             </div>
           </div>
         )}
@@ -347,7 +311,7 @@ export default function BanksPage() {
           setIsLocating(false);
         },
         () => {
-          alert('Location access denied. Using default sort.');
+          alert('Location access denied.');
           setIsLocating(false);
         }
       );
@@ -357,41 +321,48 @@ export default function BanksPage() {
   const insight = getSmartInsight(processedBanks.length, !!userLocation);
 
   return (
-    <div className="min-h-screen bg-[#FDFDFD] relative pb-32">
+    <div className="min-h-screen bg-white relative pb-32">
       
-      {/* --- FIXED HEADER --- */}
-      <div className="fixed top-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-xl border-b border-slate-200/50 shadow-sm transition-all">
-        {/* Spacer for Site Nav */}
-        <div className="h-16 md:h-20 w-full bg-transparent pointer-events-none" />
+      {/* HEADER SECTION 
+        Generous top padding to 'distance the header' from content
+      */}
+      <div className="sticky top-0 z-30 bg-white/95 backdrop-blur-xl border-b border-slate-100 transition-all">
+        {/* Spacer for Site Navigation */}
+        <div className="h-20 w-full bg-transparent pointer-events-none"></div>
 
-        <div className="px-5 pb-4 max-w-2xl mx-auto space-y-4 pt-4">
-          
-          {/* Top Row: Title + Locate */}
-          <div className="flex items-center justify-between">
+        <div className="px-6 pb-6 max-w-2xl mx-auto space-y-6">
+          {/* Top Row: Title + Locate Action */}
+          <div className="flex items-end justify-between pt-4">
             <div>
-              <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight">
+              <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">
                 Finance
               </h1>
+              <p className="text-slate-400 font-medium text-sm mt-1">
+                Cape Coast Directory
+              </p>
             </div>
+            
             <button 
               onClick={handleLocateMe}
-              className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold transition-all border ${
+              className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold transition-all border ${
                 userLocation 
-                  ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
-                  : 'bg-slate-900 text-white shadow-lg active:scale-95 border-transparent'
+                  ? 'bg-slate-900 text-white border-slate-900'
+                  : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300'
               }`}
             >
               <LocateFixed size={14} className={isLocating ? 'animate-spin' : ''} />
-              {userLocation ? 'Sorted by Distance' : 'Find Nearest'}
+              {userLocation ? 'Sorted by Distance' : 'Nearest to Me'}
             </button>
           </div>
 
-          {/* Smart Insight Card */}
-          <div className={`rounded-xl p-3 flex items-start gap-3 border ${insight.bg} transition-colors`}>
-            <insight.icon size={18} className={`mt-0.5 ${insight.color}`} />
-            <p className="text-sm text-slate-700 font-medium leading-snug">
-              {insight.text}
-            </p>
+          {/* Concierge Insight */}
+          <div className="bg-slate-50 rounded-xl p-4 flex items-center gap-3 border border-slate-100">
+             <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center border border-slate-100 text-slate-900 shadow-sm">
+               <insight.icon size={14} />
+             </div>
+             <p className="text-sm text-slate-600 font-medium leading-tight">
+               {insight.text}
+             </p>
           </div>
           
           {/* Search Bar */}
@@ -404,81 +375,90 @@ export default function BanksPage() {
               placeholder="Search banks, ATMs, areas..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="block w-full pl-10 pr-4 py-3 bg-slate-100 border-0 rounded-xl text-slate-900 placeholder:text-slate-400 focus:bg-white focus:ring-2 focus:ring-slate-900/5 transition-all font-medium text-sm"
+              className="block w-full pl-11 pr-4 py-3.5 bg-white border border-slate-200 rounded-xl text-slate-900 placeholder:text-slate-400 focus:border-slate-400 focus:ring-4 focus:ring-slate-100 transition-all font-medium text-base shadow-sm"
             />
           </div>
 
-          {/* Filter Tabs */}
-          <div className="flex gap-1 bg-slate-100 p-1 rounded-lg">
+          {/* Minimalist Tabs */}
+          <div className="flex gap-6 border-b border-slate-100">
             {['All', 'Bank', 'ATM'].map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab as any)}
-                className={`flex-1 py-1.5 rounded-md text-xs font-bold transition-all ${
+                className={`pb-3 text-sm font-bold transition-all relative ${
                   activeTab === tab 
-                    ? 'bg-white text-slate-900 shadow-sm' 
-                    : 'text-slate-500 hover:text-slate-700'
+                    ? 'text-slate-900' 
+                    : 'text-slate-400 hover:text-slate-600'
                 }`}
               >
                 {tab === 'Bank' ? 'Banks' : tab}
+                {activeTab === tab && (
+                  <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-slate-900 rounded-t-full" />
+                )}
               </button>
             ))}
           </div>
         </div>
       </div>
 
-      {/* --- SCROLLABLE CONTENT --- 
-          Padding Top = approx height of fixed header (approx 340px) 
+      {/* LIST CONTENT 
+        Clean, spacious list items
       */}
-      <div className="pt-[340px] max-w-2xl mx-auto px-4 sm:px-5 pb-10 space-y-3">
+      <div className="max-w-2xl mx-auto px-6 py-8 space-y-4">
         {processedBanks.length > 0 ? (
           processedBanks.map((bank: any) => (
             <div 
               key={bank.id}
               onClick={() => setSelectedBank(bank)}
-              className="group bg-white p-3 pr-4 rounded-2xl border border-slate-100 shadow-[0_2px_12px_rgba(0,0,0,0.03)] flex items-center gap-4 active:scale-[0.98] transition-all cursor-pointer hover:shadow-md hover:border-slate-200"
+              className="group bg-white p-4 rounded-3xl border border-slate-100 shadow-sm flex items-center gap-5 active:scale-[0.99] transition-all cursor-pointer hover:shadow-md hover:border-slate-200"
             >
-              {/* Brand Logo / Icon */}
-              <div className={`w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0 text-white shadow-sm ${bank.brandColor}`}>
-                 {bank.type === 'atm' ? <CreditCard size={24} /> : <Landmark size={24} />}
+              {/* Bank Image/Logo */}
+              <div className="w-16 h-16 rounded-2xl overflow-hidden shadow-sm flex-shrink-0 bg-slate-50 border border-slate-100 relative">
+                 <img src={bank.image} alt={bank.name} className="w-full h-full object-cover" />
+                 {bank.status === 'open' && (
+                    <div className="absolute bottom-1 right-1 w-2.5 h-2.5 bg-emerald-500 border-2 border-white rounded-full"></div>
+                 )}
               </div>
 
               <div className="flex-grow min-w-0 py-1">
-                <div className="flex justify-between items-center mb-1">
-                  <h3 className="font-bold text-slate-900 text-[15px] truncate pr-2">
+                <div className="flex justify-between items-start mb-1">
+                  <h3 className="font-bold text-slate-900 text-lg leading-none truncate pr-2">
                     {bank.name}
                   </h3>
-                  {/* Status Indicator */}
-                  <div className="flex items-center gap-1.5 bg-slate-50 px-2 py-0.5 rounded-md border border-slate-100">
-                    <div className={`w-1.5 h-1.5 rounded-full ${bank.status === 'closed' ? 'bg-rose-500' : 'bg-emerald-500 animate-pulse'}`} />
-                    <span className="text-[10px] font-bold text-slate-600">
-                      {bank.status === '24/7' ? '24/7' : bank.status === 'open' ? 'Open' : 'Closed'}
-                    </span>
-                  </div>
                 </div>
                 
-                <p className="text-[13px] text-slate-500 truncate mb-2">
+                <p className="text-sm text-slate-500 font-medium truncate mb-2">
                   {bank.location}
                 </p>
 
-                {/* Relevant Feature Tags */}
-                <div className="flex items-center gap-2 overflow-hidden">
-                   {bank.services.slice(0, 3).map((service: string) => (
-                     <span key={service} className="inline-flex items-center gap-1 text-[10px] font-semibold text-slate-500 bg-slate-50 px-1.5 py-0.5 rounded border border-slate-100 whitespace-nowrap">
-                       {getServiceIcon(service)}
-                       {service}
-                     </span>
-                   ))}
+                {/* Relevance Tags */}
+                <div className="flex items-center gap-2">
+                   {bank.distance !== undefined && (
+                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-slate-900 text-white">
+                        {bank.distance.toFixed(1)} km
+                      </span>
+                   )}
+                   <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 uppercase tracking-wide">
+                     {bank.type === 'atm' ? 'ATM' : 'Branch'}
+                   </span>
+                   {bank.status === '24/7' && (
+                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700 uppercase tracking-wide">
+                        24/7
+                      </span>
+                   )}
                 </div>
               </div>
 
-              <ChevronRight size={18} className="text-slate-300 group-hover:text-slate-900 transition-colors" />
+              <div className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center flex-shrink-0 group-hover:bg-slate-100 transition-colors">
+                <ArrowUpRight size={20} className="text-slate-400 group-hover:text-slate-900" />
+              </div>
             </div>
           ))
         ) : (
-          <div className="text-center py-20 opacity-50">
-            <Building2 className="mx-auto mb-4 text-slate-400" size={48} />
-            <p className="text-slate-500 font-medium">No locations found</p>
+          <div className="text-center py-24 opacity-40">
+            <Building2 className="mx-auto mb-6 text-slate-400" size={64} />
+            <p className="text-slate-900 font-bold text-lg">No banks found</p>
+            <p className="text-slate-500">Try adjusting your search</p>
           </div>
         )}
       </div>
