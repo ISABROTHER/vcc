@@ -201,10 +201,10 @@ export default function BanksPage() {
   }, [searchTerm, activeTab]);
 
   return (
-    <div className="min-h-screen bg-slate-50 relative pb-28">
+    <div className="min-h-screen bg-slate-50 relative pb-28 overflow-x-hidden">
       
-      {/* Header Space - Pushes content down so it doesn't overlap Site Header */}
-      <div className="pt-28 px-4 sm:px-6 pb-2 bg-gradient-to-b from-white to-slate-50">
+      {/* Header Space - Padded to clear the sticky site header */}
+      <div className="pt-32 px-4 sm:px-6 pb-2 bg-gradient-to-b from-white to-slate-50">
         <div className="max-w-2xl mx-auto">
           <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">
             Finance
@@ -213,12 +213,12 @@ export default function BanksPage() {
         </div>
       </div>
 
-      {/* Sticky Controls - Stays visible when scrolling */}
+      {/* Sticky Controls */}
       <div className="sticky top-16 z-30 bg-slate-50/95 backdrop-blur-md px-4 sm:px-6 py-4 border-b border-slate-200/50">
         <div className="max-w-2xl mx-auto space-y-4">
           
           {/* Search */}
-          <div className="relative group">
+          <div className="relative group w-full">
             <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
               <Search className="h-5 w-5 text-slate-400 group-focus-within:text-blue-500 transition-colors" />
             </div>
@@ -231,19 +231,19 @@ export default function BanksPage() {
             />
           </div>
 
-          {/* Filter Tabs */}
-          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
+          {/* Filter Tabs - FIT TO SCREEN (Grid Layout) */}
+          <div className="grid grid-cols-3 gap-2 w-full">
             {['All', 'Bank', 'ATM'].map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab as any)}
-                className={`px-5 py-2 rounded-full text-sm font-bold whitespace-nowrap transition-all border ${
+                className={`w-full py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all border shadow-sm ${
                   activeTab === tab 
-                    ? 'bg-slate-900 text-white border-slate-900 shadow-md transform scale-105' 
+                    ? 'bg-slate-900 text-white border-slate-900 ring-2 ring-slate-200' 
                     : 'bg-white text-slate-500 border-slate-200 hover:bg-slate-50'
                 }`}
               >
-                {tab === 'Bank' ? 'Banks & Rural' : tab}
+                {tab === 'Bank' ? 'Banks' : tab}
               </button>
             ))}
           </div>
@@ -258,7 +258,7 @@ export default function BanksPage() {
               <div 
                 key={bank.id}
                 onClick={() => setSelectedBank(bank)}
-                className="group bg-white p-4 rounded-2xl border border-slate-200/60 shadow-[0_2px_8px_rgba(0,0,0,0.02)] flex items-center gap-4 transition-all active:scale-[0.98] hover:shadow-md hover:border-blue-200 cursor-pointer"
+                className="group bg-white p-4 rounded-2xl border border-slate-200/60 shadow-[0_2px_8px_rgba(0,0,0,0.02)] flex items-center gap-4 transition-all active:scale-[0.98] hover:shadow-md hover:border-blue-200 cursor-pointer w-full"
               >
                 <div className={`w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0 transition-colors ${
                   bank.type === 'atm' ? 'bg-emerald-50 text-emerald-600' : 
@@ -278,7 +278,7 @@ export default function BanksPage() {
                   </p>
                 </div>
 
-                <ChevronRight size={18} className="text-slate-300 group-hover:text-blue-500 transition-colors" />
+                <ChevronRight size={18} className="text-slate-300 group-hover:text-blue-500 transition-colors flex-shrink-0" />
               </div>
             ))}
           </div>
