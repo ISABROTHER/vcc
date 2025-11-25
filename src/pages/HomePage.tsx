@@ -50,7 +50,7 @@ const gridItems = [
     title: 'Transportation',
     description: 'How to get around Cape Coast with ease.',
     icon: Car,
-    href: '/tourist-info',
+    href: '/transportation',
     color: 'bg-teal-100',
   },
   {
