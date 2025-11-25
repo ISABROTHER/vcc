@@ -11,7 +11,8 @@ import {
   Landmark,
   LocateFixed,
   ArrowUpRight,
-  Filter
+  Filter,
+  CheckCircle2
 } from 'lucide-react';
 
 // --- Types & Data ---
@@ -299,15 +300,12 @@ export default function BanksPage() {
   return (
     <div className="min-h-screen bg-white relative pb-32">
       
-      {/* COMPACT STICKY HEADER 
-          Reduced height and integrated controls to save screen space
-      */}
+      {/* COMPACT HEADER */}
       <div className="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-100 shadow-[0_4px_20px_rgba(0,0,0,0.02)]">
-        {/* Spacer for Site Navigation (Reduced) */}
         <div className="h-16 w-full bg-transparent pointer-events-none"></div>
 
         <div className="px-4 pb-3 pt-2 max-w-2xl mx-auto">
-          {/* Row 1: Title + Tabs (Inline to save space) */}
+          {/* Row 1: Title + Tabs */}
           <div className="flex items-center justify-between mb-3">
             <h1 className="text-xl font-extrabold text-slate-900 tracking-tight flex items-center gap-2">
               Finance 
@@ -316,7 +314,6 @@ export default function BanksPage() {
               </span>
             </h1>
             
-            {/* Inline Tabs */}
             <div className="flex bg-slate-100/80 p-1 rounded-lg">
                {['All', 'Bank', 'ATM'].map((tab) => (
                 <button
@@ -353,7 +350,7 @@ export default function BanksPage() {
               onClick={handleLocateMe}
               className={`flex-shrink-0 w-11 h-11 flex items-center justify-center rounded-xl border transition-all ${
                 userLocation 
-                  ? 'bg-emerald-50 text-emerald-600 border-emerald-200'
+                  ? 'bg-emerald-50 text-emerald-600 border-emerald-200 shadow-inner'
                   : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
               }`}
             >
@@ -361,9 +358,9 @@ export default function BanksPage() {
             </button>
           </div>
           
-          {/* Subtle Insight Line (replaces large card) */}
+          {/* Subtle Insight Line */}
           <div className="flex items-center gap-2 mt-2 px-1">
-             <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></div>
+             <div className={`w-1.5 h-1.5 rounded-full animate-pulse ${userLocation ? 'bg-emerald-500' : 'bg-slate-400'}`}></div>
              <p className="text-[11px] font-medium text-slate-500">
                {userLocation ? 'Sorted by distance from you' : 'Most banks are currently open'}
              </p>
@@ -374,51 +371,68 @@ export default function BanksPage() {
       {/* LIST CONTENT */}
       <div className="max-w-2xl mx-auto px-4 py-4 space-y-3">
         {processedBanks.length > 0 ? (
-          processedBanks.map((bank: any) => (
-            <div 
-              key={bank.id}
-              onClick={() => setSelectedBank(bank)}
-              className="group bg-white p-3 rounded-2xl border border-slate-100 shadow-[0_2px_8px_rgba(0,0,0,0.02)] flex items-center gap-4 active:scale-[0.98] transition-all cursor-pointer hover:border-slate-300"
-            >
-              {/* Image */}
-              <div className="w-14 h-14 rounded-xl overflow-hidden shadow-sm flex-shrink-0 bg-slate-50 border border-slate-100 relative">
-                 <img src={bank.image} alt={bank.name} className="w-full h-full object-cover" />
-                 {bank.status === 'open' && (
-                    <div className="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 border-2 border-white rounded-tl-md"></div>
-                 )}
-              </div>
+          processedBanks.map((bank: any, index: number) => {
+            // Check if this is the closest bank (Index 0 when userLocation is active)
+            const isClosest = userLocation && index === 0;
 
-              {/* Info */}
-              <div className="flex-grow min-w-0">
-                <div className="flex justify-between items-start mb-0.5">
-                  <h3 className="font-bold text-slate-900 text-[15px] truncate pr-2">
-                    {bank.name}
-                  </h3>
-                </div>
-                
-                <p className="text-[13px] text-slate-500 truncate mb-1.5">
-                  {bank.location}
-                </p>
-
-                {/* Tags */}
-                <div className="flex items-center gap-2">
-                   {bank.distance !== undefined && (
-                      <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-slate-900 text-white">
-                        {bank.distance.toFixed(1)} km
-                      </span>
+            return (
+              <div 
+                key={bank.id}
+                onClick={() => setSelectedBank(bank)}
+                className={`group bg-white p-3 rounded-2xl border shadow-[0_2px_8px_rgba(0,0,0,0.02)] flex items-center gap-4 active:scale-[0.98] transition-all cursor-pointer hover:border-slate-300 ${
+                  isClosest 
+                    ? 'border-emerald-500 ring-1 ring-emerald-500 shadow-md' 
+                    : 'border-slate-100'
+                }`}
+              >
+                {/* Image */}
+                <div className="w-14 h-14 rounded-xl overflow-hidden shadow-sm flex-shrink-0 bg-slate-50 border border-slate-100 relative">
+                   <img src={bank.image} alt={bank.name} className="w-full h-full object-cover" />
+                   {bank.status === 'open' && (
+                      <div className="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 border-2 border-white rounded-tl-md"></div>
                    )}
-                   <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-slate-100 text-slate-600 uppercase tracking-wide">
-                     {bank.type === 'atm' ? 'ATM' : 'Branch'}
-                   </span>
+                </div>
+
+                {/* Info */}
+                <div className="flex-grow min-w-0">
+                  <div className="flex justify-between items-start mb-0.5">
+                    <h3 className="font-bold text-slate-900 text-[15px] truncate pr-2">
+                      {bank.name}
+                    </h3>
+                  </div>
+                  
+                  <p className="text-[13px] text-slate-500 truncate mb-1.5">
+                    {bank.location}
+                  </p>
+
+                  {/* Tags */}
+                  <div className="flex items-center gap-2">
+                     {/* NEAREST BADGE */}
+                     {isClosest && (
+                        <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-700 flex items-center gap-1">
+                          <CheckCircle2 size={10} /> Nearest
+                        </span>
+                     )}
+                     
+                     {bank.distance !== undefined && (
+                        <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-slate-900 text-white">
+                          {bank.distance.toFixed(1)} km
+                        </span>
+                     )}
+                     
+                     <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-slate-100 text-slate-600 uppercase tracking-wide">
+                       {bank.type === 'atm' ? 'ATM' : 'Branch'}
+                     </span>
+                  </div>
+                </div>
+
+                {/* Arrow */}
+                <div className="flex-shrink-0 text-slate-300">
+                  <ArrowUpRight size={20} />
                 </div>
               </div>
-
-              {/* Arrow */}
-              <div className="flex-shrink-0 text-slate-300">
-                <ArrowUpRight size={20} />
-              </div>
-            </div>
-          ))
+            );
+          })
         ) : (
           <div className="text-center py-20 opacity-40">
             <Building2 className="mx-auto mb-4 text-slate-400" size={48} />
