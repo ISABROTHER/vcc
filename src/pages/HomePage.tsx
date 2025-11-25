@@ -6,7 +6,6 @@ import {
   Car,
   Bed,
   HelpCircle,
-  Compass,
   Banknote,
 } from 'lucide-react';
 
@@ -44,7 +43,7 @@ const gridItems = [
     title: 'Banks & ATMs',
     description: 'Find local banks, ATMs and currency exchange.',
     icon: Banknote,
-    href: '/tourist-info',
+    href: '/banks',
     color: 'bg-amber-100',
   },
   {
