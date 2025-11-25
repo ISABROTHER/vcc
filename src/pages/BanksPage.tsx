@@ -3,15 +3,15 @@ import {
   Search, 
   MapPin, 
   Navigation, 
-  Landmark, 
-  CreditCard, 
-  Building2, 
   X,
   Share2,
   Copy,
   Clock,
   ChevronRight,
-  Info
+  Info,
+  CreditCard,
+  Building2,
+  Landmark
 } from 'lucide-react';
 
 // --- Types & Data ---
@@ -25,25 +25,156 @@ interface BankLocation {
   type: BankType;
   tags: string[];
   status?: 'open' | 'closed' | '24/7';
+  image: string; // Added image field
 }
 
+// I've added placeholder images from Unsplash. 
+// You can replace these URLs with actual photos of the specific branches if you have them.
 const bankData: BankLocation[] = [
-  { id: 1, name: 'GCB Bank (Main Branch)', location: 'Chapel Square / Opposite Cape Coast Castle', type: 'bank', tags: ['commercial', 'castle'], status: 'open' },
-  { id: 2, name: 'GCB Bank (UCC Branch)', location: 'UCC Science Area, Near CALC Building', type: 'bank', tags: ['commercial', 'ucc'], status: 'open' },
-  { id: 3, name: 'Fidelity Bank', location: '107 Inner Ring Road, Near Kotokuraba', type: 'bank', tags: ['commercial', 'market'], status: 'open' },
-  { id: 4, name: 'Absa Bank', location: 'Commercial Street, Near Kotokuraba Market', type: 'bank', tags: ['commercial', 'market'], status: 'open' },
-  { id: 5, name: 'CalBank', location: 'Pedu Junction — Opposite Shell Filling Station', type: 'bank', tags: ['commercial', 'pedu'], status: 'open' },
-  { id: 6, name: 'ADB Bank (Main)', location: 'Commercial Street, Near Chapel Square', type: 'bank', tags: ['commercial', 'town'], status: 'open' },
-  { id: 7, name: 'ADB Bank (UCC Branch)', location: 'UCC Campus — Near Casely Hayford Hall', type: 'bank', tags: ['commercial', 'ucc'], status: 'open' },
-  { id: 8, name: 'Republic Bank', location: 'Tantri — Mancell Block A, Near Lorry Station', type: 'bank', tags: ['commercial', 'tantri'], status: 'open' },
-  { id: 9, name: 'Prudential Bank', location: 'Kotokraba Market Traffic Light', type: 'bank', tags: ['commercial', 'market'], status: 'open' },
-  { id: 10, name: 'Prudential Bank (UCC)', location: 'UCC Main Campus — Near Science Roundabout', type: 'bank', tags: ['commercial', 'ucc'], status: 'open' },
-  { id: 11, name: 'Zenith Bank', location: 'UCC New Site — Casford Street, Near Casford Hall', type: 'bank', tags: ['commercial', 'ucc'], status: 'open' },
-  { id: 12, name: 'Ecobank ATM', location: 'Kotokraba Road — Near Market Entrance', type: 'atm', tags: ['atm', 'market'], status: '24/7' },
-  { id: 13, name: 'Kakum Rural Bank', location: 'Kotokuraba Road — Opposite Market Stalls', type: 'rural', tags: ['rural', 'market'], status: 'open' },
-  { id: 14, name: 'Assinman Rural Bank', location: 'Pedu Junction / Kotokuraba Branches', type: 'rural', tags: ['rural', 'pedu'], status: 'open' },
-  { id: 15, name: 'Akatakyiman Rural Bank', location: 'Cape Coast Township (General area)', type: 'rural', tags: ['rural', 'town'], status: 'open' },
-  { id: 16, name: 'GTBank ATM', location: 'F87/3 Kotokuraba Road — Near the Market', type: 'atm', tags: ['atm', 'market'], status: '24/7' },
+  { 
+    id: 1, 
+    name: 'GCB Bank (Main Branch)', 
+    location: 'Chapel Square / Opposite Cape Coast Castle', 
+    type: 'bank', 
+    tags: ['commercial', 'castle'], 
+    status: 'open',
+    image: 'https://images.unsplash.com/photo-1621981386829-9b788a817929?auto=format&fit=crop&w=200&q=80'
+  },
+  { 
+    id: 2, 
+    name: 'GCB Bank (UCC Branch)', 
+    location: 'UCC Science Area, Near CALC Building', 
+    type: 'bank', 
+    tags: ['commercial', 'ucc'], 
+    status: 'open',
+    image: 'https://images.unsplash.com/photo-1541354329998-f4d9a9f9297f?auto=format&fit=crop&w=200&q=80'
+  },
+  { 
+    id: 3, 
+    name: 'Fidelity Bank', 
+    location: '107 Inner Ring Road, Near Kotokuraba', 
+    type: 'bank', 
+    tags: ['commercial', 'market'], 
+    status: 'open',
+    image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=200&q=80'
+  },
+  { 
+    id: 4, 
+    name: 'Absa Bank', 
+    location: 'Commercial Street, Near Kotokuraba Market', 
+    type: 'bank', 
+    tags: ['commercial', 'market'], 
+    status: 'open',
+    image: 'https://images.unsplash.com/photo-1554469384-e58fac16e23a?auto=format&fit=crop&w=200&q=80'
+  },
+  { 
+    id: 5, 
+    name: 'CalBank', 
+    location: 'Pedu Junction — Opposite Shell Filling Station', 
+    type: 'bank', 
+    tags: ['commercial', 'pedu'], 
+    status: 'open',
+    image: 'https://images.unsplash.com/photo-1565514020176-892eb1036e67?auto=format&fit=crop&w=200&q=80'
+  },
+  { 
+    id: 6, 
+    name: 'ADB Bank (Main)', 
+    location: 'Commercial Street, Near Chapel Square', 
+    type: 'bank', 
+    tags: ['commercial', 'town'], 
+    status: 'open',
+    image: 'https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?auto=format&fit=crop&w=200&q=80'
+  },
+  { 
+    id: 7, 
+    name: 'ADB Bank (UCC Branch)', 
+    location: 'UCC Campus — Near Casely Hayford Hall', 
+    type: 'bank', 
+    tags: ['commercial', 'ucc'], 
+    status: 'open',
+    image: 'https://images.unsplash.com/photo-1556742049-0cfed4f7a07d?auto=format&fit=crop&w=200&q=80'
+  },
+  { 
+    id: 8, 
+    name: 'Republic Bank', 
+    location: 'Tantri — Mancell Block A, Near Lorry Station', 
+    type: 'bank', 
+    tags: ['commercial', 'tantri'], 
+    status: 'open',
+    image: 'https://images.unsplash.com/photo-1577962917302-cd874c4e3169?auto=format&fit=crop&w=200&q=80'
+  },
+  { 
+    id: 9, 
+    name: 'Prudential Bank', 
+    location: 'Kotokraba Market Traffic Light', 
+    type: 'bank', 
+    tags: ['commercial', 'market'], 
+    status: 'open',
+    image: 'https://images.unsplash.com/photo-1604213410393-89f141ad7cfa?auto=format&fit=crop&w=200&q=80'
+  },
+  { 
+    id: 10, 
+    name: 'Prudential Bank (UCC)', 
+    location: 'UCC Main Campus — Near Science Roundabout', 
+    type: 'bank', 
+    tags: ['commercial', 'ucc'], 
+    status: 'open',
+    image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=200&q=80'
+  },
+  { 
+    id: 11, 
+    name: 'Zenith Bank', 
+    location: 'UCC New Site — Casford Street, Near Casford Hall', 
+    type: 'bank', 
+    tags: ['commercial', 'ucc'], 
+    status: 'open',
+    image: 'https://images.unsplash.com/photo-1554469384-e58fac16e23a?auto=format&fit=crop&w=200&q=80'
+  },
+  { 
+    id: 12, 
+    name: 'Ecobank ATM', 
+    location: 'Kotokraba Road — Near Market Entrance', 
+    type: 'atm', 
+    tags: ['atm', 'market'], 
+    status: '24/7',
+    image: 'https://images.unsplash.com/photo-1601597111158-2fceff292cdc?auto=format&fit=crop&w=200&q=80'
+  },
+  { 
+    id: 13, 
+    name: 'Kakum Rural Bank', 
+    location: 'Kotokuraba Road — Opposite Market Stalls', 
+    type: 'rural', 
+    tags: ['rural', 'market'], 
+    status: 'open',
+    image: 'https://images.unsplash.com/photo-1518458028785-8fbcd101ebb9?auto=format&fit=crop&w=200&q=80'
+  },
+  { 
+    id: 14, 
+    name: 'Assinman Rural Bank', 
+    location: 'Pedu Junction / Kotokuraba Branches', 
+    type: 'rural', 
+    tags: ['rural', 'pedu'], 
+    status: 'open',
+    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=200&q=80'
+  },
+  { 
+    id: 15, 
+    name: 'Akatakyiman Rural Bank', 
+    location: 'Cape Coast Township (General area)', 
+    type: 'rural', 
+    tags: ['rural', 'town'], 
+    status: 'open',
+    image: 'https://images.unsplash.com/photo-1528642474498-1af0c17fd8c3?auto=format&fit=crop&w=200&q=80'
+  },
+  { 
+    id: 16, 
+    name: 'GTBank ATM', 
+    location: 'F87/3 Kotokuraba Road — Near the Market', 
+    type: 'atm', 
+    tags: ['atm', 'market'], 
+    status: '24/7',
+    image: 'https://images.unsplash.com/photo-1621360841012-3f829f271783?auto=format&fit=crop&w=200&q=80'
+  },
 ];
 
 // --- Helpers ---
@@ -52,14 +183,6 @@ const getStatusColor = (status?: string) => {
   if (status === '24/7') return 'text-emerald-600 bg-emerald-50 border-emerald-100';
   if (status === 'closed') return 'text-rose-600 bg-rose-50 border-rose-100';
   return 'text-blue-600 bg-blue-50 border-blue-100';
-};
-
-const getIcon = (type: BankType) => {
-  switch (type) {
-    case 'atm': return <CreditCard size={24} className="text-emerald-600" />;
-    case 'rural': return <Building2 size={24} className="text-amber-600" />;
-    default: return <Landmark size={24} className="text-blue-600" />;
-  }
 };
 
 // --- Components ---
@@ -122,11 +245,12 @@ const DetailSheet = ({
 
             {/* Header Info */}
             <div className="flex flex-col items-center text-center mb-8">
-              <div className={`w-20 h-20 rounded-3xl flex items-center justify-center shadow-sm mb-4 ${
-                bank.type === 'atm' ? 'bg-emerald-50' : 
-                bank.type === 'rural' ? 'bg-amber-50' : 'bg-blue-50'
-              }`}>
-                {getIcon(bank.type)}
+              <div className="w-24 h-24 rounded-3xl overflow-hidden shadow-md mb-4 flex-shrink-0">
+                <img 
+                  src={bank.image} 
+                  alt={bank.name} 
+                  className="w-full h-full object-cover"
+                />
               </div>
               
               <h2 className="text-2xl font-bold text-slate-900 leading-tight px-4 mb-2">
@@ -213,9 +337,7 @@ export default function BanksPage() {
   return (
     <div className="min-h-screen bg-slate-50 relative pb-32">
       
-      {/* TOP SECTION - Fixed Header 
-        Ensures search and title are always visible but don't overlap site nav
-      */}
+      {/* TOP SECTION - Fixed Header */}
       <div className="sticky top-0 z-30 bg-slate-50/95 backdrop-blur-xl border-b border-slate-200/50 shadow-sm">
         {/* Spacer to push content below the main site navigation */}
         <div className="h-20 md:h-24 w-full bg-transparent pointer-events-none"></div>
@@ -275,18 +397,21 @@ export default function BanksPage() {
               onClick={() => setSelectedBank(bank)}
               className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm flex items-center gap-4 active:scale-[0.97] active:bg-slate-50 transition-all cursor-pointer"
             >
-              <div className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 ${
-                bank.type === 'atm' ? 'bg-emerald-50 text-emerald-600' : 
-                bank.type === 'rural' ? 'bg-amber-50 text-amber-600' : 'bg-blue-50 text-blue-600'
-              }`}>
-                {bank.type === 'atm' ? <CreditCard size={22} /> : <Landmark size={22} />}
+              {/* Image Container */}
+              <div className="w-16 h-16 rounded-xl overflow-hidden shadow-sm flex-shrink-0 bg-slate-100">
+                <img 
+                  src={bank.image} 
+                  alt={bank.name} 
+                  className="w-full h-full object-cover"
+                />
               </div>
 
+              {/* Text Content - No Truncate, Full Visibility */}
               <div className="flex-grow min-w-0">
-                <h3 className="font-bold text-slate-900 text-[15px] leading-snug mb-0.5 truncate">
+                <h3 className="font-bold text-slate-900 text-[15px] leading-snug mb-1">
                   {bank.name}
                 </h3>
-                <p className="text-sm text-slate-500 truncate">
+                <p className="text-sm text-slate-500 leading-snug">
                   {bank.location}
                 </p>
               </div>
