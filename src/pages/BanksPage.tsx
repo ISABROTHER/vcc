@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { 
   Search, 
   MapPin, 
@@ -6,238 +6,312 @@ import {
   Landmark, 
   CreditCard, 
   Building2, 
-  ChevronRight,
-  Info
+  X,
+  Share2,
+  Copy,
+  Clock,
+  ArrowRight,
+  ChevronRight
 } from 'lucide-react';
+
+// --- Types & Data ---
+
+type BankType = 'bank' | 'rural' | 'atm';
 
 interface BankLocation {
   id: number;
   name: string;
   location: string;
-  type: 'bank' | 'rural' | 'atm';
+  type: BankType;
   tags: string[];
+  status?: 'open' | 'closed' | '24/7';
 }
 
 const bankData: BankLocation[] = [
-  {
-    id: 1,
-    name: 'GCB Bank (Main Branch)',
-    location: 'Chapel Square / Opposite Cape Coast Castle',
-    type: 'bank',
-    tags: ['commercial', 'international', 'castle', 'chapel square']
-  },
-  {
-    id: 2,
-    name: 'GCB Bank (UCC Branch)',
-    location: 'UCC Science Area, Near CALC Building',
-    type: 'bank',
-    tags: ['commercial', 'university', 'campus', 'ucc']
-  },
-  {
-    id: 3,
-    name: 'Fidelity Bank',
-    location: '107 Inner Ring Road, Near Kotokuraba',
-    type: 'bank',
-    tags: ['commercial', 'market', 'kotokuraba']
-  },
-  {
-    id: 4,
-    name: 'Absa Bank (Former Barclays)',
-    location: 'Commercial Street, Near Kotokuraba Market',
-    type: 'bank',
-    tags: ['commercial', 'international', 'market', 'kotokuraba']
-  },
-  {
-    id: 5,
-    name: 'CalBank',
-    location: 'Pedu Junction — Opposite Shell Filling Station',
-    type: 'bank',
-    tags: ['commercial', 'pedu']
-  },
-  {
-    id: 6,
-    name: 'ADB Bank (Main)',
-    location: 'Commercial Street, Near Chapel Square',
-    type: 'bank',
-    tags: ['commercial', 'chapel square', 'town']
-  },
-  {
-    id: 7,
-    name: 'ADB Bank (UCC Branch)',
-    location: 'UCC Campus — Near Casely Hayford Hall',
-    type: 'bank',
-    tags: ['commercial', 'university', 'campus', 'ucc']
-  },
-  {
-    id: 8,
-    name: 'Republic Bank',
-    location: 'Tantri — Mancell Block A, Near Lorry Station',
-    type: 'bank',
-    tags: ['commercial', 'tantri', 'transport']
-  },
-  {
-    id: 9,
-    name: 'Prudential Bank',
-    location: 'Kotokraba Market Traffic Light',
-    type: 'bank',
-    tags: ['commercial', 'market', 'kotokuraba']
-  },
-  {
-    id: 10,
-    name: 'Prudential Bank (UCC)',
-    location: 'UCC Main Campus — Near Science Roundabout',
-    type: 'bank',
-    tags: ['commercial', 'university', 'campus', 'ucc']
-  },
-  {
-    id: 11,
-    name: 'Zenith Bank',
-    location: 'UCC New Site — Casford Street, Near Casford Hall',
-    type: 'bank',
-    tags: ['commercial', 'university', 'campus', 'ucc']
-  },
-  {
-    id: 12,
-    name: 'Ecobank ATM',
-    location: 'Kotokraba Road — Near Market Entrance',
-    type: 'atm',
-    tags: ['atm', 'market', 'kotokuraba']
-  },
-  {
-    id: 13,
-    name: 'Kakum Rural Bank',
-    location: 'Kotokuraba Road — Opposite Market Stalls',
-    type: 'rural',
-    tags: ['rural', 'local', 'market']
-  },
-  {
-    id: 14,
-    name: 'Assinman Rural Bank',
-    location: 'Pedu Junction / Kotokuraba Branches',
-    type: 'rural',
-    tags: ['rural', 'local', 'pedu']
-  },
-  {
-    id: 15,
-    name: 'Akatakyiman Rural Bank',
-    location: 'Cape Coast Township (General area)',
-    type: 'rural',
-    tags: ['rural', 'local', 'town']
-  },
-  {
-    id: 16,
-    name: 'GTBank ATM',
-    location: 'F87/3 Kotokuraba Road — Near the Market',
-    type: 'atm',
-    tags: ['atm', 'market', 'kotokuraba']
-  }
+  { id: 1, name: 'GCB Bank (Main Branch)', location: 'Chapel Square / Opposite Cape Coast Castle', type: 'bank', tags: ['commercial', 'castle'], status: 'open' },
+  { id: 2, name: 'GCB Bank (UCC Branch)', location: 'UCC Science Area, Near CALC Building', type: 'bank', tags: ['commercial', 'ucc'], status: 'open' },
+  { id: 3, name: 'Fidelity Bank', location: '107 Inner Ring Road, Near Kotokuraba', type: 'bank', tags: ['commercial', 'market'], status: 'open' },
+  { id: 4, name: 'Absa Bank', location: 'Commercial Street, Near Kotokuraba Market', type: 'bank', tags: ['commercial', 'market'], status: 'open' },
+  { id: 5, name: 'CalBank', location: 'Pedu Junction — Opposite Shell Filling Station', type: 'bank', tags: ['commercial', 'pedu'], status: 'open' },
+  { id: 6, name: 'ADB Bank (Main)', location: 'Commercial Street, Near Chapel Square', type: 'bank', tags: ['commercial', 'town'], status: 'open' },
+  { id: 7, name: 'ADB Bank (UCC Branch)', location: 'UCC Campus — Near Casely Hayford Hall', type: 'bank', tags: ['commercial', 'ucc'], status: 'open' },
+  { id: 8, name: 'Republic Bank', location: 'Tantri — Mancell Block A, Near Lorry Station', type: 'bank', tags: ['commercial', 'tantri'], status: 'open' },
+  { id: 9, name: 'Prudential Bank', location: 'Kotokraba Market Traffic Light', type: 'bank', tags: ['commercial', 'market'], status: 'open' },
+  { id: 10, name: 'Prudential Bank (UCC)', location: 'UCC Main Campus — Near Science Roundabout', type: 'bank', tags: ['commercial', 'ucc'], status: 'open' },
+  { id: 11, name: 'Zenith Bank', location: 'UCC New Site — Casford Street, Near Casford Hall', type: 'bank', tags: ['commercial', 'ucc'], status: 'open' },
+  { id: 12, name: 'Ecobank ATM', location: 'Kotokraba Road — Near Market Entrance', type: 'atm', tags: ['atm', 'market'], status: '24/7' },
+  { id: 13, name: 'Kakum Rural Bank', location: 'Kotokuraba Road — Opposite Market Stalls', type: 'rural', tags: ['rural', 'market'], status: 'open' },
+  { id: 14, name: 'Assinman Rural Bank', location: 'Pedu Junction / Kotokuraba Branches', type: 'rural', tags: ['rural', 'pedu'], status: 'open' },
+  { id: 15, name: 'Akatakyiman Rural Bank', location: 'Cape Coast Township (General area)', type: 'rural', tags: ['rural', 'town'], status: 'open' },
+  { id: 16, name: 'GTBank ATM', location: 'F87/3 Kotokuraba Road — Near the Market', type: 'atm', tags: ['atm', 'market'], status: '24/7' },
 ];
 
-const BankIcon = ({ type }: { type: string }) => {
-  if (type === 'atm') return <CreditCard className="text-emerald-600" size={20} />;
-  if (type === 'rural') return <Building2 className="text-amber-600" size={20} />;
-  return <Landmark className="text-blue-700" size={20} />;
+// --- Helpers ---
+
+const getStatusColor = (status?: string) => {
+  if (status === '24/7') return 'text-emerald-600 bg-emerald-50 border-emerald-100';
+  if (status === 'closed') return 'text-rose-600 bg-rose-50 border-rose-100';
+  return 'text-blue-600 bg-blue-50 border-blue-100';
 };
 
-// Compact List Item Component
-const CompactBankItem = ({ bank }: { bank: BankLocation }) => {
-  const mapQuery = encodeURIComponent(`${bank.name} ${bank.location} Cape Coast Ghana`);
-  const mapUrl = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
+const getIcon = (type: BankType) => {
+  switch (type) {
+    case 'atm': return <CreditCard size={20} className="text-emerald-600" />;
+    case 'rural': return <Building2 size={20} className="text-amber-600" />;
+    default: return <Landmark size={20} className="text-blue-600" />;
+  }
+};
+
+// --- Components ---
+
+const DetailSheet = ({ 
+  bank, 
+  isOpen, 
+  onClose 
+}: { 
+  bank: BankLocation | null, 
+  isOpen: boolean, 
+  onClose: () => void 
+}) => {
+  const [isClosing, setIsClosing] = useState(false);
+
+  useEffect(() => {
+    if (!isOpen) setIsClosing(false);
+  }, [isOpen]);
+
+  const handleClose = () => {
+    setIsClosing(true);
+    setTimeout(() => {
+      onClose();
+      setIsClosing(false);
+    }, 300);
+  };
+
+  if (!bank && !isOpen) return null;
+
+  // Google Maps URL
+  const mapQuery = encodeURIComponent(`${bank?.name} ${bank?.location} Cape Coast Ghana`);
+  const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
 
   return (
-    <a 
-      href={mapUrl}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="group flex items-center gap-4 p-4 hover:bg-slate-50 active:bg-slate-100 transition-colors border-b border-slate-100 last:border-0"
-    >
-      {/* Icon Box */}
-      <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm ${
-        bank.type === 'atm' ? 'bg-emerald-50' : 
-        bank.type === 'rural' ? 'bg-amber-50' : 'bg-blue-50'
-      }`}>
-        <BankIcon type={bank.type} />
-      </div>
+    <>
+      {/* Backdrop */}
+      <div 
+        className={`fixed inset-0 bg-black/40 backdrop-blur-sm z-40 transition-opacity duration-300 ${
+          isOpen && !isClosing ? 'opacity-100' : 'opacity-0 pointer-events-none'
+        }`}
+        onClick={handleClose}
+      />
 
-      {/* Text Content */}
-      <div className="flex-grow min-w-0">
-        <h3 className="text-[15px] font-semibold text-slate-900 truncate">
-          {bank.name}
-        </h3>
-        <p className="text-[13px] text-slate-500 truncate flex items-center gap-1">
-          <MapPin size={12} />
-          {bank.location}
-        </p>
-      </div>
+      {/* Sheet / Modal */}
+      <div 
+        className={`fixed inset-x-0 bottom-0 z-50 bg-white rounded-t-3xl shadow-[0_-8px_30px_rgba(0,0,0,0.12)] transform transition-transform duration-300 cubic-bezier(0.2, 0.9, 0.3, 1) md:inset-x-auto md:left-1/2 md:top-1/2 md:bottom-auto md:-translate-x-1/2 md:-translate-y-1/2 md:w-full md:max-w-md md:rounded-3xl ${
+          isOpen && !isClosing 
+            ? 'translate-y-0 md:-translate-y-1/2' 
+            : 'translate-y-full md:translate-y-10 md:opacity-0'
+        }`}
+      >
+        {bank && (
+          <div className="p-6 pb-10 md:pb-6">
+            {/* Handle Bar (Mobile) */}
+            <div className="w-12 h-1.5 bg-slate-200 rounded-full mx-auto mb-6 md:hidden" />
+            
+            {/* Header */}
+            <div className="flex items-start justify-between mb-6">
+              <div className="flex gap-4">
+                <div className={`w-14 h-14 rounded-2xl flex items-center justify-center shadow-sm ${
+                  bank.type === 'atm' ? 'bg-emerald-50' : 
+                  bank.type === 'rural' ? 'bg-amber-50' : 'bg-blue-50'
+                }`}>
+                  {getIcon(bank.type)}
+                </div>
+                <div>
+                  <h2 className="text-xl font-bold text-slate-900 leading-tight">{bank.name}</h2>
+                  <div className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 mt-2 rounded-full text-xs font-semibold border ${getStatusColor(bank.status)}`}>
+                    <Clock size={12} />
+                    {bank.status === '24/7' ? 'Open 24/7' : 'Standard Hours'}
+                  </div>
+                </div>
+              </div>
+              <button onClick={handleClose} className="p-2 bg-slate-100 rounded-full hover:bg-slate-200 transition">
+                <X size={20} className="text-slate-500" />
+              </button>
+            </div>
 
-      {/* Direction Arrow */}
-      <div className="flex-shrink-0 text-slate-300 group-hover:text-amber-500 transition-colors">
-        <Navigation size={20} />
+            {/* Location Box */}
+            <div className="bg-slate-50 rounded-2xl p-4 border border-slate-100 mb-6 flex gap-3">
+               <MapPin className="text-slate-400 flex-shrink-0 mt-0.5" size={20} />
+               <div className="text-sm text-slate-700 font-medium leading-relaxed">
+                 {bank.location}
+               </div>
+            </div>
+
+            {/* Actions Grid */}
+            <div className="grid grid-cols-2 gap-3">
+              <a 
+                href={googleMapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="col-span-2 flex items-center justify-center gap-2 bg-blue-600 text-white font-semibold py-3.5 rounded-xl active:scale-[0.98] transition hover:bg-blue-700 shadow-lg shadow-blue-200"
+              >
+                <Navigation size={18} />
+                Navigate Now
+              </a>
+              <button 
+                onClick={() => navigator.clipboard.writeText(`${bank.name}, ${bank.location}`)}
+                className="flex items-center justify-center gap-2 bg-white border border-slate-200 text-slate-700 font-semibold py-3.5 rounded-xl active:scale-[0.98] transition hover:bg-slate-50"
+              >
+                <Copy size={18} />
+                Copy
+              </button>
+              <button 
+                 onClick={() => {
+                   if (navigator.share) {
+                     navigator.share({
+                       title: bank.name,
+                       text: `Check out ${bank.name} at ${bank.location}`,
+                       url: googleMapsUrl
+                     }).catch(() => {});
+                   }
+                 }}
+                className="flex items-center justify-center gap-2 bg-white border border-slate-200 text-slate-700 font-semibold py-3.5 rounded-xl active:scale-[0.98] transition hover:bg-slate-50"
+              >
+                <Share2 size={18} />
+                Share
+              </button>
+            </div>
+          </div>
+        )}
       </div>
-    </a>
+    </>
   );
 };
 
 export default function BanksPage() {
   const [searchTerm, setSearchTerm] = useState('');
+  const [activeTab, setActiveTab] = useState<'All' | 'ATM' | 'Bank'>('All');
+  const [selectedBank, setSelectedBank] = useState<BankLocation | null>(null);
 
+  // Filter Logic
   const filteredBanks = useMemo(() => {
     const lowerTerm = searchTerm.toLowerCase();
-    return bankData.filter(bank => 
-      bank.name.toLowerCase().includes(lowerTerm) || 
-      bank.location.toLowerCase().includes(lowerTerm) ||
-      bank.tags.some(tag => tag.includes(lowerTerm))
-    );
-  }, [searchTerm]);
+    return bankData.filter(bank => {
+      // 1. Search Text Match
+      const matchesSearch = 
+        bank.name.toLowerCase().includes(lowerTerm) || 
+        bank.location.toLowerCase().includes(lowerTerm) ||
+        bank.tags.some(tag => tag.includes(lowerTerm));
+
+      // 2. Tab Match
+      let matchesTab = true;
+      if (activeTab === 'ATM') matchesTab = bank.type === 'atm';
+      if (activeTab === 'Bank') matchesTab = bank.type === 'bank' || bank.type === 'rural';
+
+      return matchesSearch && matchesTab;
+    });
+  }, [searchTerm, activeTab]);
 
   return (
-    <div className="min-h-screen bg-slate-50 pt-20 pb-24">
-      <div className="max-w-xl mx-auto">
-        
-        {/* Header & Search Container */}
-        <div className="px-4 sm:px-6 pb-4 pt-4 bg-slate-50 sticky top-16 z-30 backdrop-blur-xl bg-opacity-90">
-          <h1 className="text-2xl font-bold text-slate-900 mb-1">Banks & ATMs</h1>
-          <p className="text-sm text-slate-500 mb-4">Find cash & services nearby</p>
+    <div className="min-h-screen bg-slate-50 relative pb-20">
+      
+      {/* --- Modern Header Section --- */}
+      <div className="bg-white pb-6 pt-24 px-4 sm:px-6 shadow-[0_1px_15px_rgba(0,0,0,0.03)] rounded-b-[2rem] z-10 relative">
+        <div className="max-w-2xl mx-auto">
+          <div className="flex items-end justify-between mb-6">
+            <div>
+               <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">
+                Finance
+              </h1>
+              <p className="text-slate-500 font-medium">Find ATMs & branches nearby</p>
+            </div>
+            <div className="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center text-slate-400">
+               <MapPin size={20} />
+            </div>
+          </div>
 
-          {/* Compact Search Bar */}
-          <div className="relative">
-            <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
-              <Search className="h-4 w-4 text-slate-400" />
+          {/* Search Input - Floating Style */}
+          <div className="relative mb-6 group">
+            <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+              <Search className="h-5 w-5 text-slate-400 group-focus-within:text-blue-500 transition-colors" />
             </div>
             <input
               type="text"
-              placeholder="Search 'UCC', 'Market'..."
+              placeholder="Search 'UCC', 'Kotokuraba'..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="block w-full pl-10 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 text-sm shadow-sm"
+              className="block w-full pl-12 pr-4 py-4 bg-slate-50 border-0 rounded-2xl text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-blue-500/20 focus:bg-white transition-all shadow-sm font-medium text-[16px]"
             />
           </div>
-        </div>
 
-        {/* Main List Container */}
-        <div className="mx-4 sm:mx-6 bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
-          {filteredBanks.length > 0 ? (
-            <div className="divide-y divide-slate-100">
-              {filteredBanks.map((bank) => (
-                <CompactBankItem key={bank.id} bank={bank} />
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-12 px-4">
-              <p className="text-slate-500 text-sm">No results found for "{searchTerm}"</p>
-            </div>
-          )}
-        </div>
-
-        {/* Footer Tip */}
-        <div className="mt-6 px-6 text-center">
-          <div className="inline-flex items-center gap-2 bg-blue-50 text-blue-700 px-3 py-1.5 rounded-full text-xs font-medium">
-            <Info size={14} />
-            Most banks open Mon-Fri 8:30am - 4pm
+          {/* Filter Tabs - Pill Style */}
+          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar">
+            {['All', 'Bank', 'ATM'].map((tab) => (
+              <button
+                key={tab}
+                onClick={() => setActiveTab(tab as any)}
+                className={`px-5 py-2.5 rounded-full text-sm font-bold whitespace-nowrap transition-all ${
+                  activeTab === tab 
+                    ? 'bg-slate-900 text-white shadow-lg shadow-slate-200 scale-105' 
+                    : 'bg-slate-50 text-slate-500 hover:bg-slate-100'
+                }`}
+              >
+                {tab === 'Bank' ? 'Banks & Rural' : tab}
+              </button>
+            ))}
           </div>
         </div>
-
       </div>
+
+      {/* --- List Content --- */}
+      <div className="max-w-2xl mx-auto px-4 sm:px-6 py-8">
+        {filteredBanks.length > 0 ? (
+          <div className="grid gap-3">
+            {filteredBanks.map((bank) => (
+              <div 
+                key={bank.id}
+                onClick={() => setSelectedBank(bank)}
+                className="group bg-white p-4 rounded-2xl border border-slate-100 shadow-sm flex items-center gap-4 transition-all active:scale-[0.98] hover:shadow-md hover:border-blue-100 cursor-pointer"
+              >
+                {/* Icon Box */}
+                <div className={`w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0 transition-colors ${
+                  bank.type === 'atm' ? 'bg-emerald-50 text-emerald-600' : 
+                  bank.type === 'rural' ? 'bg-amber-50 text-amber-600' : 'bg-blue-50 text-blue-600'
+                }`}>
+                  {bank.type === 'atm' ? <CreditCard size={20} /> : <Landmark size={20} />}
+                </div>
+
+                {/* Text Info */}
+                <div className="flex-grow min-w-0">
+                  <div className="flex justify-between items-start">
+                     <h3 className="font-bold text-slate-900 text-[15px] truncate pr-2">
+                      {bank.name}
+                    </h3>
+                  </div>
+                  <p className="text-sm text-slate-500 truncate mt-0.5">
+                    {bank.location}
+                  </p>
+                </div>
+
+                {/* Arrow */}
+                <ChevronRight size={18} className="text-slate-300 group-hover:text-blue-500 transition-colors" />
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-20 opacity-50">
+            <Building2 className="mx-auto mb-4 text-slate-400" size={48} />
+            <p className="text-slate-500 font-medium">No results found.</p>
+          </div>
+        )}
+      </div>
+
+      {/* --- Detail Overlay (Modern AGI "Open in Site" feel) --- */}
+      <DetailSheet 
+        bank={selectedBank} 
+        isOpen={!!selectedBank} 
+        onClose={() => setSelectedBank(null)} 
+      />
+
     </div>
   );
 }
