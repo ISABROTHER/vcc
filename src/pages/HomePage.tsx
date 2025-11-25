@@ -12,7 +12,6 @@ import {
 
 import Hero from '../components/Hero';
 import WhyVisit from '../components/WhyVisit';
-import Heritage from '../components/Heritage';
 import CallToAction from '../components/CallToAction';
 import BottomNav from '../components/BottomNav';
 
@@ -129,7 +128,7 @@ const EssentialExplorerGrid = () => {
   );
 };
 
-// NEW: A concise Highlights section to replace the long list
+// Highlights section
 const FeaturedHighlights = () => {
   const highlights = [
     {
@@ -208,7 +207,7 @@ export default function HomePage() {
       <Hero />
       <EssentialExplorerGrid />
       <WhyVisit />
-      <Heritage />
+      {/* Heritage Section Removed */}
       <FeaturedHighlights />
       <CallToAction />
       <BottomNav />
