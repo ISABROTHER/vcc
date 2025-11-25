@@ -7,13 +7,11 @@ import {
   Share2,
   Copy,
   Clock,
-  ChevronRight,
   CreditCard,
   Landmark,
   LocateFixed,
-  Sparkles,
   ArrowUpRight,
-  ShieldCheck
+  Filter
 } from 'lucide-react';
 
 // --- Types & Data ---
@@ -103,7 +101,6 @@ const bankData: BankLocation[] = [
 
 // --- Helpers ---
 
-// Haversine Formula for distance
 function calculateDistance(lat1: number, lon1: number, lat2: number, lon2: number) {
   const R = 6371; 
   const dLat = (lat2 - lat1) * (Math.PI/180);
@@ -114,14 +111,6 @@ function calculateDistance(lat1: number, lon1: number, lat2: number, lon2: numbe
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
   return R * c; 
 }
-
-// "Wealth Concierge" Insight Logic
-const getSmartInsight = (count: number, hasUserLoc: boolean) => {
-  const hour = new Date().getHours();
-  if (hour > 17 || hour < 6) return { text: "It's after hours. Showing safe, 24/7 ATM locations.", icon: ShieldCheck };
-  if (hasUserLoc) return { text: `${count} locations sorted by proximity to you.`, icon: MapPin };
-  return { text: "Commercial Street has the highest concentration of banks.", icon: Sparkles };
-};
 
 // --- Detail Sheet Component ---
 
@@ -164,35 +153,35 @@ const DetailSheet = ({
         onClick={handleClose}
       />
       <div 
-        className={`fixed inset-x-0 bottom-0 z-[100] bg-white rounded-t-[2.5rem] shadow-2xl transform transition-transform duration-300 cubic-bezier(0.2, 0.9, 0.3, 1) md:inset-x-auto md:left-1/2 md:top-1/2 md:bottom-auto md:-translate-x-1/2 md:-translate-y-1/2 md:w-full md:max-w-md md:rounded-3xl ${
+        className={`fixed inset-x-0 bottom-0 z-[100] bg-white rounded-t-[2rem] shadow-2xl transform transition-transform duration-300 cubic-bezier(0.2, 0.9, 0.3, 1) md:inset-x-auto md:left-1/2 md:top-1/2 md:bottom-auto md:-translate-x-1/2 md:-translate-y-1/2 md:w-full md:max-w-md md:rounded-3xl ${
           isOpen && !isClosing 
             ? 'translate-y-0 md:-translate-y-1/2' 
             : 'translate-y-full md:translate-y-10'
         }`}
       >
         {bank && (
-          <div className="p-8 pb-10 md:pb-8 relative">
-            <div className="w-12 h-1 bg-slate-200 rounded-full mx-auto mb-8 md:hidden" />
+          <div className="p-6 pb-10 md:pb-6 relative">
+            <div className="w-12 h-1 bg-slate-200 rounded-full mx-auto mb-6 md:hidden" />
             
             <button 
               onClick={handleClose} 
-              className="absolute top-6 right-6 p-2 bg-slate-50 rounded-full text-slate-400 hover:bg-slate-100 hover:text-slate-600 transition"
+              className="absolute top-5 right-5 p-2 bg-slate-50 rounded-full text-slate-400 hover:bg-slate-100 hover:text-slate-600 transition"
             >
               <X size={20} />
             </button>
 
             {/* Header */}
-            <div className="flex items-start gap-6 mb-8">
-              <div className="w-20 h-20 rounded-2xl overflow-hidden shadow-sm flex-shrink-0 bg-slate-100 border border-slate-100">
+            <div className="flex items-center gap-5 mb-6">
+              <div className="w-16 h-16 rounded-xl overflow-hidden shadow-sm flex-shrink-0 bg-slate-100 border border-slate-100">
                  <img src={bank.image} alt={bank.name} className="w-full h-full object-cover" />
               </div>
               <div>
-                <h2 className="text-2xl font-bold text-slate-900 leading-tight mb-2">
+                <h2 className="text-xl font-bold text-slate-900 leading-tight mb-1">
                   {bank.name}
                 </h2>
                 <div className="flex flex-wrap gap-2">
                    {bank.services.slice(0, 2).map(s => (
-                     <span key={s} className="px-2 py-1 bg-slate-100 text-slate-600 text-xs font-semibold rounded-md">
+                     <span key={s} className="px-2 py-0.5 bg-slate-100 text-slate-600 text-[10px] font-bold uppercase tracking-wider rounded-md">
                        {s}
                      </span>
                    ))}
@@ -200,59 +189,48 @@ const DetailSheet = ({
               </div>
             </div>
 
-            {/* Key Information Grid */}
-            <div className="grid grid-cols-3 gap-4 mb-8">
-              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-100 text-center">
-                <Clock className="w-5 h-5 mx-auto mb-2 text-slate-400" />
-                <p className="text-xs font-bold text-slate-900 uppercase tracking-wide mb-1">Status</p>
-                <p className={`text-sm font-semibold ${bank.status === 'open' ? 'text-emerald-600' : 'text-slate-500'}`}>
-                  {bank.status === '24/7' ? '24/7' : bank.status === 'open' ? 'Open' : 'Closed'}
+            {/* Stats */}
+            <div className="flex justify-between gap-2 mb-6">
+              <div className="flex-1 p-3 rounded-xl bg-slate-50 border border-slate-100 text-center">
+                <p className="text-[10px] uppercase tracking-wider text-slate-400 font-bold mb-0.5">Status</p>
+                <p className={`text-sm font-bold ${bank.status === 'open' ? 'text-emerald-600' : 'text-slate-900'}`}>
+                  {bank.status === '24/7' ? '24/7' : 'Open'}
                 </p>
               </div>
-              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-100 text-center">
-                <Navigation className="w-5 h-5 mx-auto mb-2 text-slate-400" />
-                <p className="text-xs font-bold text-slate-900 uppercase tracking-wide mb-1">Distance</p>
-                <p className="text-sm font-semibold text-slate-900">
+              <div className="flex-1 p-3 rounded-xl bg-slate-50 border border-slate-100 text-center">
+                <p className="text-[10px] uppercase tracking-wider text-slate-400 font-bold mb-0.5">Distance</p>
+                <p className="text-sm font-bold text-slate-900">
                   {distance ? `${distance.toFixed(1)} km` : '--'}
                 </p>
               </div>
-              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-100 text-center">
-                <Clock className="w-5 h-5 mx-auto mb-2 text-slate-400" />
-                <p className="text-xs font-bold text-slate-900 uppercase tracking-wide mb-1">Wait</p>
-                <p className="text-sm font-semibold text-slate-900">{bank.waitTime}</p>
+              <div className="flex-1 p-3 rounded-xl bg-slate-50 border border-slate-100 text-center">
+                <p className="text-[10px] uppercase tracking-wider text-slate-400 font-bold mb-0.5">Wait</p>
+                <p className="text-sm font-bold text-slate-900">{bank.waitTime}</p>
               </div>
             </div>
 
-            {/* Address */}
-            <div className="mb-8">
-              <p className="text-xs font-bold text-slate-400 uppercase tracking-wide mb-2">Location</p>
-              <p className="text-lg font-medium text-slate-900 leading-relaxed">
-                {bank.location}
-              </p>
-            </div>
-
-            {/* Primary Action */}
+            {/* Navigate */}
             <a 
               href={googleMapsUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-3 w-full bg-slate-900 text-white font-bold text-lg py-4 rounded-2xl hover:bg-black transition-all shadow-xl shadow-slate-200 active:scale-[0.98]"
+              className="flex items-center justify-center gap-2 w-full bg-slate-900 text-white font-bold text-base py-3.5 rounded-xl hover:bg-black transition-all shadow-lg active:scale-[0.98] mb-3"
             >
-              <Navigation size={20} />
+              <Navigation size={18} />
               Navigate Now
             </a>
             
-            <div className="grid grid-cols-2 gap-4 mt-4">
+            <div className="grid grid-cols-2 gap-3">
                <button 
                   onClick={() => navigator.clipboard.writeText(`${bank.name}, ${bank.location}`)}
-                  className="py-3 text-sm font-semibold text-slate-600 hover:text-slate-900 transition flex items-center justify-center gap-2"
+                  className="py-2.5 text-xs font-bold text-slate-600 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 transition flex items-center justify-center gap-2"
                 >
-                  <Copy size={16} /> Copy Address
+                  <Copy size={14} /> Copy Address
                </button>
                <button 
-                  className="py-3 text-sm font-semibold text-slate-600 hover:text-slate-900 transition flex items-center justify-center gap-2"
+                  className="py-2.5 text-xs font-bold text-slate-600 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 transition flex items-center justify-center gap-2"
                 >
-                  <Share2 size={16} /> Share Location
+                  <Share2 size={14} /> Share
                </button>
             </div>
           </div>
@@ -318,147 +296,133 @@ export default function BanksPage() {
     }
   };
 
-  const insight = getSmartInsight(processedBanks.length, !!userLocation);
-
   return (
     <div className="min-h-screen bg-white relative pb-32">
       
-      {/* HEADER SECTION 
-        Generous top padding to 'distance the header' from content
+      {/* COMPACT STICKY HEADER 
+          Reduced height and integrated controls to save screen space
       */}
-      <div className="sticky top-0 z-30 bg-white/95 backdrop-blur-xl border-b border-slate-100 transition-all">
-        {/* Spacer for Site Navigation */}
-        <div className="h-20 w-full bg-transparent pointer-events-none"></div>
+      <div className="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-100 shadow-[0_4px_20px_rgba(0,0,0,0.02)]">
+        {/* Spacer for Site Navigation (Reduced) */}
+        <div className="h-16 w-full bg-transparent pointer-events-none"></div>
 
-        <div className="px-6 pb-6 max-w-2xl mx-auto space-y-6">
-          {/* Top Row: Title + Locate Action */}
-          <div className="flex items-end justify-between pt-4">
-            <div>
-              <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">
-                Finance
-              </h1>
-              <p className="text-slate-400 font-medium text-sm mt-1">
-                Cape Coast Directory
-              </p>
+        <div className="px-4 pb-3 pt-2 max-w-2xl mx-auto">
+          {/* Row 1: Title + Tabs (Inline to save space) */}
+          <div className="flex items-center justify-between mb-3">
+            <h1 className="text-xl font-extrabold text-slate-900 tracking-tight flex items-center gap-2">
+              Finance 
+              <span className="text-xs font-normal text-slate-400 bg-slate-100 px-2 py-0.5 rounded-full">
+                {processedBanks.length}
+              </span>
+            </h1>
+            
+            {/* Inline Tabs */}
+            <div className="flex bg-slate-100/80 p-1 rounded-lg">
+               {['All', 'Bank', 'ATM'].map((tab) => (
+                <button
+                  key={tab}
+                  onClick={() => setActiveTab(tab as any)}
+                  className={`px-3 py-1 rounded-md text-[11px] font-bold transition-all ${
+                    activeTab === tab 
+                      ? 'bg-white text-slate-900 shadow-sm' 
+                      : 'text-slate-400 hover:text-slate-600'
+                  }`}
+                >
+                  {tab}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Row 2: Compact Search + Locate */}
+          <div className="flex gap-2">
+            <div className="relative group flex-grow">
+              <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
+                <Search className="h-4 w-4 text-slate-400" />
+              </div>
+              <input
+                type="text"
+                placeholder="Search..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="block w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder:text-slate-400 focus:bg-white focus:border-slate-400 focus:ring-0 transition-all font-medium text-sm"
+              />
             </div>
             
             <button 
               onClick={handleLocateMe}
-              className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold transition-all border ${
+              className={`flex-shrink-0 w-11 h-11 flex items-center justify-center rounded-xl border transition-all ${
                 userLocation 
-                  ? 'bg-slate-900 text-white border-slate-900'
-                  : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300'
+                  ? 'bg-emerald-50 text-emerald-600 border-emerald-200'
+                  : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
               }`}
             >
-              <LocateFixed size={14} className={isLocating ? 'animate-spin' : ''} />
-              {userLocation ? 'Sorted by Distance' : 'Nearest to Me'}
+              <LocateFixed size={18} className={isLocating ? 'animate-spin' : ''} />
             </button>
           </div>
-
-          {/* Concierge Insight */}
-          <div className="bg-slate-50 rounded-xl p-4 flex items-center gap-3 border border-slate-100">
-             <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center border border-slate-100 text-slate-900 shadow-sm">
-               <insight.icon size={14} />
-             </div>
-             <p className="text-sm text-slate-600 font-medium leading-tight">
-               {insight.text}
-             </p>
-          </div>
           
-          {/* Search Bar */}
-          <div className="relative group w-full">
-            <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
-              <Search className="h-4 w-4 text-slate-400" />
-            </div>
-            <input
-              type="text"
-              placeholder="Search banks, ATMs, areas..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="block w-full pl-11 pr-4 py-3.5 bg-white border border-slate-200 rounded-xl text-slate-900 placeholder:text-slate-400 focus:border-slate-400 focus:ring-4 focus:ring-slate-100 transition-all font-medium text-base shadow-sm"
-            />
-          </div>
-
-          {/* Minimalist Tabs */}
-          <div className="flex gap-6 border-b border-slate-100">
-            {['All', 'Bank', 'ATM'].map((tab) => (
-              <button
-                key={tab}
-                onClick={() => setActiveTab(tab as any)}
-                className={`pb-3 text-sm font-bold transition-all relative ${
-                  activeTab === tab 
-                    ? 'text-slate-900' 
-                    : 'text-slate-400 hover:text-slate-600'
-                }`}
-              >
-                {tab === 'Bank' ? 'Banks' : tab}
-                {activeTab === tab && (
-                  <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-slate-900 rounded-t-full" />
-                )}
-              </button>
-            ))}
+          {/* Subtle Insight Line (replaces large card) */}
+          <div className="flex items-center gap-2 mt-2 px-1">
+             <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></div>
+             <p className="text-[11px] font-medium text-slate-500">
+               {userLocation ? 'Sorted by distance from you' : 'Most banks are currently open'}
+             </p>
           </div>
         </div>
       </div>
 
-      {/* LIST CONTENT 
-        Clean, spacious list items
-      */}
-      <div className="max-w-2xl mx-auto px-6 py-8 space-y-4">
+      {/* LIST CONTENT */}
+      <div className="max-w-2xl mx-auto px-4 py-4 space-y-3">
         {processedBanks.length > 0 ? (
           processedBanks.map((bank: any) => (
             <div 
               key={bank.id}
               onClick={() => setSelectedBank(bank)}
-              className="group bg-white p-4 rounded-3xl border border-slate-100 shadow-sm flex items-center gap-5 active:scale-[0.99] transition-all cursor-pointer hover:shadow-md hover:border-slate-200"
+              className="group bg-white p-3 rounded-2xl border border-slate-100 shadow-[0_2px_8px_rgba(0,0,0,0.02)] flex items-center gap-4 active:scale-[0.98] transition-all cursor-pointer hover:border-slate-300"
             >
-              {/* Bank Image/Logo */}
-              <div className="w-16 h-16 rounded-2xl overflow-hidden shadow-sm flex-shrink-0 bg-slate-50 border border-slate-100 relative">
+              {/* Image */}
+              <div className="w-14 h-14 rounded-xl overflow-hidden shadow-sm flex-shrink-0 bg-slate-50 border border-slate-100 relative">
                  <img src={bank.image} alt={bank.name} className="w-full h-full object-cover" />
                  {bank.status === 'open' && (
-                    <div className="absolute bottom-1 right-1 w-2.5 h-2.5 bg-emerald-500 border-2 border-white rounded-full"></div>
+                    <div className="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 border-2 border-white rounded-tl-md"></div>
                  )}
               </div>
 
-              <div className="flex-grow min-w-0 py-1">
-                <div className="flex justify-between items-start mb-1">
-                  <h3 className="font-bold text-slate-900 text-lg leading-none truncate pr-2">
+              {/* Info */}
+              <div className="flex-grow min-w-0">
+                <div className="flex justify-between items-start mb-0.5">
+                  <h3 className="font-bold text-slate-900 text-[15px] truncate pr-2">
                     {bank.name}
                   </h3>
                 </div>
                 
-                <p className="text-sm text-slate-500 font-medium truncate mb-2">
+                <p className="text-[13px] text-slate-500 truncate mb-1.5">
                   {bank.location}
                 </p>
 
-                {/* Relevance Tags */}
+                {/* Tags */}
                 <div className="flex items-center gap-2">
                    {bank.distance !== undefined && (
-                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-slate-900 text-white">
+                      <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-slate-900 text-white">
                         {bank.distance.toFixed(1)} km
                       </span>
                    )}
-                   <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 uppercase tracking-wide">
+                   <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-slate-100 text-slate-600 uppercase tracking-wide">
                      {bank.type === 'atm' ? 'ATM' : 'Branch'}
                    </span>
-                   {bank.status === '24/7' && (
-                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700 uppercase tracking-wide">
-                        24/7
-                      </span>
-                   )}
                 </div>
               </div>
 
-              <div className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center flex-shrink-0 group-hover:bg-slate-100 transition-colors">
-                <ArrowUpRight size={20} className="text-slate-400 group-hover:text-slate-900" />
+              {/* Arrow */}
+              <div className="flex-shrink-0 text-slate-300">
+                <ArrowUpRight size={20} />
               </div>
             </div>
           ))
         ) : (
-          <div className="text-center py-24 opacity-40">
-            <Building2 className="mx-auto mb-6 text-slate-400" size={64} />
-            <p className="text-slate-900 font-bold text-lg">No banks found</p>
-            <p className="text-slate-500">Try adjusting your search</p>
+          <div className="text-center py-20 opacity-40">
+            <Building2 className="mx-auto mb-4 text-slate-400" size={48} />
+            <p className="text-slate-900 font-bold">No results</p>
           </div>
         )}
       </div>
