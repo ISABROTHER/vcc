@@ -10,7 +10,6 @@ import {
   Share2,
   Copy,
   Clock,
-  ArrowRight,
   ChevronRight
 } from 'lucide-react';
 
@@ -89,7 +88,6 @@ const DetailSheet = ({
 
   if (!bank && !isOpen) return null;
 
-  // Google Maps URL
   const mapQuery = encodeURIComponent(`${bank?.name} ${bank?.location} Cape Coast Ghana`);
   const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
 
@@ -103,9 +101,9 @@ const DetailSheet = ({
         onClick={handleClose}
       />
 
-      {/* Sheet / Modal */}
+      {/* Sheet */}
       <div 
-        className={`fixed inset-x-0 bottom-0 z-50 bg-white rounded-t-3xl shadow-[0_-8px_30px_rgba(0,0,0,0.12)] transform transition-transform duration-300 cubic-bezier(0.2, 0.9, 0.3, 1) md:inset-x-auto md:left-1/2 md:top-1/2 md:bottom-auto md:-translate-x-1/2 md:-translate-y-1/2 md:w-full md:max-w-md md:rounded-3xl ${
+        className={`fixed inset-x-0 bottom-0 z-50 bg-white rounded-t-3xl shadow-[0_-8px_30px_rgba(0,0,0,0.12)] transform transition-transform duration-300 ease-[cubic-bezier(0.2,0.9,0.3,1)] md:inset-x-auto md:left-1/2 md:top-1/2 md:bottom-auto md:-translate-x-1/2 md:-translate-y-1/2 md:w-full md:max-w-md md:rounded-3xl ${
           isOpen && !isClosing 
             ? 'translate-y-0 md:-translate-y-1/2' 
             : 'translate-y-full md:translate-y-10 md:opacity-0'
@@ -113,10 +111,8 @@ const DetailSheet = ({
       >
         {bank && (
           <div className="p-6 pb-10 md:pb-6">
-            {/* Handle Bar (Mobile) */}
             <div className="w-12 h-1.5 bg-slate-200 rounded-full mx-auto mb-6 md:hidden" />
             
-            {/* Header */}
             <div className="flex items-start justify-between mb-6">
               <div className="flex gap-4">
                 <div className={`w-14 h-14 rounded-2xl flex items-center justify-center shadow-sm ${
@@ -138,7 +134,6 @@ const DetailSheet = ({
               </button>
             </div>
 
-            {/* Location Box */}
             <div className="bg-slate-50 rounded-2xl p-4 border border-slate-100 mb-6 flex gap-3">
                <MapPin className="text-slate-400 flex-shrink-0 mt-0.5" size={20} />
                <div className="text-sm text-slate-700 font-medium leading-relaxed">
@@ -146,7 +141,6 @@ const DetailSheet = ({
                </div>
             </div>
 
-            {/* Actions Grid */}
             <div className="grid grid-cols-2 gap-3">
               <a 
                 href={googleMapsUrl}
@@ -157,6 +151,7 @@ const DetailSheet = ({
                 <Navigation size={18} />
                 Navigate Now
               </a>
+
               <button 
                 onClick={() => navigator.clipboard.writeText(`${bank.name}, ${bank.location}`)}
                 className="flex items-center justify-center gap-2 bg-white border border-slate-200 text-slate-700 font-semibold py-3.5 rounded-xl active:scale-[0.98] transition hover:bg-slate-50"
@@ -164,6 +159,7 @@ const DetailSheet = ({
                 <Copy size={18} />
                 Copy
               </button>
+
               <button 
                  onClick={() => {
                    if (navigator.share) {
@@ -192,29 +188,25 @@ export default function BanksPage() {
   const [activeTab, setActiveTab] = useState<'All' | 'ATM' | 'Bank'>('All');
   const [selectedBank, setSelectedBank] = useState<BankLocation | null>(null);
 
-  // Filter Logic
   const filteredBanks = useMemo(() => {
-    const lowerTerm = searchTerm.toLowerCase();
+    const lower = searchTerm.toLowerCase();
     return bankData.filter(bank => {
-      // 1. Search Text Match
-      const matchesSearch = 
-        bank.name.toLowerCase().includes(lowerTerm) || 
-        bank.location.toLowerCase().includes(lowerTerm) ||
-        bank.tags.some(tag => tag.includes(lowerTerm));
+      const matchSearch =
+        bank.name.toLowerCase().includes(lower) ||
+        bank.location.toLowerCase().includes(lower) ||
+        bank.tags.some(tag => tag.includes(lower));
 
-      // 2. Tab Match
-      let matchesTab = true;
-      if (activeTab === 'ATM') matchesTab = bank.type === 'atm';
-      if (activeTab === 'Bank') matchesTab = bank.type === 'bank' || bank.type === 'rural';
+      let matchTab = true;
+      if (activeTab === 'ATM') matchTab = bank.type === 'atm';
+      if (activeTab === 'Bank') matchTab = bank.type === 'bank' || bank.type === 'rural';
 
-      return matchesSearch && matchesTab;
+      return matchSearch && matchTab;
     });
   }, [searchTerm, activeTab]);
 
   return (
     <div className="min-h-screen bg-slate-50 relative pb-20">
       
-      {/* --- Modern Header Section --- */}
       <div className="bg-white pb-6 pt-24 px-4 sm:px-6 shadow-[0_1px_15px_rgba(0,0,0,0.03)] rounded-b-[2rem] z-10 relative">
         <div className="max-w-2xl mx-auto">
           <div className="flex items-end justify-between mb-6">
@@ -229,7 +221,6 @@ export default function BanksPage() {
             </div>
           </div>
 
-          {/* Search Input - Floating Style */}
           <div className="relative mb-6 group">
             <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
               <Search className="h-5 w-5 text-slate-400 group-focus-within:text-blue-500 transition-colors" />
@@ -243,7 +234,6 @@ export default function BanksPage() {
             />
           </div>
 
-          {/* Filter Tabs - Pill Style */}
           <div className="flex items-center gap-2 overflow-x-auto no-scrollbar">
             {['All', 'Bank', 'ATM'].map((tab) => (
               <button
@@ -262,7 +252,6 @@ export default function BanksPage() {
         </div>
       </div>
 
-      {/* --- List Content --- */}
       <div className="max-w-2xl mx-auto px-4 sm:px-6 py-8">
         {filteredBanks.length > 0 ? (
           <div className="grid gap-3">
@@ -272,7 +261,6 @@ export default function BanksPage() {
                 onClick={() => setSelectedBank(bank)}
                 className="group bg-white p-4 rounded-2xl border border-slate-100 shadow-sm flex items-center gap-4 transition-all active:scale-[0.98] hover:shadow-md hover:border-blue-100 cursor-pointer"
               >
-                {/* Icon Box */}
                 <div className={`w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0 transition-colors ${
                   bank.type === 'atm' ? 'bg-emerald-50 text-emerald-600' : 
                   bank.type === 'rural' ? 'bg-amber-50 text-amber-600' : 'bg-blue-50 text-blue-600'
@@ -280,19 +268,15 @@ export default function BanksPage() {
                   {bank.type === 'atm' ? <CreditCard size={20} /> : <Landmark size={20} />}
                 </div>
 
-                {/* Text Info */}
                 <div className="flex-grow min-w-0">
-                  <div className="flex justify-between items-start">
-                     <h3 className="font-bold text-slate-900 text-[15px] truncate pr-2">
-                      {bank.name}
-                    </h3>
-                  </div>
+                  <h3 className="font-bold text-slate-900 text-[15px] truncate pr-2">
+                    {bank.name}
+                  </h3>
                   <p className="text-sm text-slate-500 truncate mt-0.5">
                     {bank.location}
                   </p>
                 </div>
 
-                {/* Arrow */}
                 <ChevronRight size={18} className="text-slate-300 group-hover:text-blue-500 transition-colors" />
               </div>
             ))}
@@ -305,7 +289,6 @@ export default function BanksPage() {
         )}
       </div>
 
-      {/* --- Detail Overlay (Modern AGI "Open in Site" feel) --- */}
       <DetailSheet 
         bank={selectedBank} 
         isOpen={!!selectedBank} 
